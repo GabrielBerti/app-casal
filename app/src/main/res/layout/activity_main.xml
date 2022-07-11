@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".MainActivity">
+
+    <View
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/shape_main"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_bar"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:layout_alignLeft="@+id/app_bar"
+        android:layout_alignRight="@+id/app_bar"
+        android:layout_alignBottom="@+id/app_bar"
+        android:layout_alignTop="@+id/app_bar" />
+
+    <View
+        android:id="@+id/viewFinancas"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_below="@+id/app_bar"
+        android:layout_marginTop="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="24dp"
+        android:background="@drawable/shape_content" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_alignLeft="@+id/viewFinancas"
+        android:layout_alignRight="@+id/viewFinancas"
+        android:layout_alignBottom="@+id/viewFinancas"
+        android:layout_alignTop="@+id/viewFinancas">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/financas"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="24sp" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/viewViagens"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignTop="@+id/viewFinancas"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="24dp"
+        android:background="@drawable/shape_content" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_alignLeft="@+id/viewViagens"
+        android:layout_alignRight="@+id/viewViagens"
+        android:layout_alignBottom="@+id/viewViagens"
+        android:layout_alignTop="@+id/viewViagens">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/viagens"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="24sp" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/viewMetas"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_below="@+id/viewFinancas"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/shape_content" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_alignLeft="@+id/viewMetas"
+        android:layout_alignRight="@+id/viewMetas"
+        android:layout_alignBottom="@+id/viewMetas"
+        android:layout_alignTop="@+id/viewMetas">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/metas"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="24sp" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/viewReceitas"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/shape_content"
+        android:layout_below="@+id/viewViagens"
+        android:layout_alignParentRight="true" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_alignLeft="@+id/viewReceitas"
+        android:layout_alignRight="@+id/viewReceitas"
+        android:layout_alignBottom="@+id/viewReceitas"
+        android:layout_alignTop="@+id/viewReceitas">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/receitas"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="24sp" />
+
+    </LinearLayout>
+
+
+
+
+
+
+
+</RelativeLayout>
