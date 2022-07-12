@@ -51,7 +51,7 @@ class MetasViewHolder(
             metaConcluidoCheckBox.setTextColor(ContextCompat.getColor(context, R.color.black))
         } else {
             metaConcluidoCheckBox.setText(R.string.meta_nao_concluida)
-            linearMetaItem.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
+            //linearMetaItem.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
         }
     }
 

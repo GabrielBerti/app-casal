@@ -16,7 +16,7 @@
         <EditText
             android:id="@+id/form_transacao_valor"
             android:layout_width="match_parent"
-            android:background="@color/white"
+            android:background="?attr/colorButtonNormal"
             android:layout_height="wrap_content"
             android:hint="@string/valor"
             android:inputType="numberDecimal" />
@@ -31,7 +31,7 @@
             android:id="@+id/form_transacao_data"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="?attr/colorButtonNormal"
             android:focusable="false"
             android:hint="@string/data"
             android:inputType="none"
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/descricao_hint"
             android:layout_marginTop="10dp"
-            android:background="@color/white"
+            android:background="?attr/colorButtonNormal"
             android:inputType="none" />
 
     </com.google.android.material.textfield.TextInputLayout>

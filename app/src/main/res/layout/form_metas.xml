@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/descricao_meta_hint"
             android:layout_marginTop="10dp"
-            android:background="@color/white"
+            android:background="?attr/colorButtonNormal"
             android:inputType="none" />
 
     </com.google.android.material.textfield.TextInputLayout>
