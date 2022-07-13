@@ -36,6 +36,7 @@ class ListaTransacoesAdapter(
         }
 
         holder.itemView.setOnLongClickListener {
+            posicao = position
             false
         }
     }

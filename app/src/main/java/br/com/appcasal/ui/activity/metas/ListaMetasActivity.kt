@@ -1,11 +1,14 @@
 package br.com.appcasal.ui.activity.metas
 
 import android.app.AlertDialog
+import android.content.res.Configuration
 import android.graphics.PorterDuff
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.appcasal.R
@@ -60,16 +63,7 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
         configuraAdapter()
         configuraSpinner()
         configuraFab()
-        configuraTela()
-    }
-
-    private fun configuraTela() {
-        //cor seta do spinner
-        spinnerStatus.background.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP)
-
-        //cor background da tela
-        val tela = findViewById<RelativeLayout>(R.id.relativeLayoutListaMetas)
-        tela.setBackgroundColor(getResources().getColor(R.color.black))
+        //spinnerStatus.background.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP)
     }
 
     private fun configuraAdapter() {
@@ -78,6 +72,8 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
 
         adapter = ListaMetasAdapter(metas, this, this)
         rv.adapter = adapter
+
+
     }
 
     private fun configuraSpinner() {
@@ -95,8 +91,8 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, posicao: Int, id: Long) {
 
-                val text = parent!!.getChildAt(0) as TextView
-                text.setTextColor(getResources().getColor(R.color.white))
+                //val text = parent!!.getChildAt(0) as TextView
+                //text.setTextColor(getResources().getColor(R.color.white))
 
                 when(posicao) {
                     0 -> {

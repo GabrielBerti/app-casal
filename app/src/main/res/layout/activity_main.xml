@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+
     tools:context=".MainActivity">
 
     <View
@@ -18,15 +18,15 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/app_bar"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:textSize="28sp"
-        android:textStyle="bold"
         android:layout_alignLeft="@+id/app_bar"
+        android:layout_alignTop="@+id/app_bar"
         android:layout_alignRight="@+id/app_bar"
         android:layout_alignBottom="@+id/app_bar"
-        android:layout_alignTop="@+id/app_bar" />
+        android:gravity="center"
+        android:text="@string/app_bar"
+        android:textColor="@color/black"
+        android:textSize="28sp"
+        android:textStyle="bold" />
 
     <View
         android:id="@+id/viewFinancas"
@@ -41,12 +41,12 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
         android:layout_alignLeft="@+id/viewFinancas"
+        android:layout_alignTop="@+id/viewFinancas"
         android:layout_alignRight="@+id/viewFinancas"
         android:layout_alignBottom="@+id/viewFinancas"
-        android:layout_alignTop="@+id/viewFinancas">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
@@ -54,8 +54,8 @@
             android:text="@string/financas"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

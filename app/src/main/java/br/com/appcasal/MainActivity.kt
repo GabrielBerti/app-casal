@@ -3,6 +3,7 @@ package br.com.appcasal
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import br.com.appcasal.databinding.ActivityMainBinding
 import br.com.appcasal.ui.activity.financas.ListaTransacoesActivity
 import br.com.appcasal.ui.activity.metas.ListaMetasActivity
@@ -16,9 +17,7 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setListeners()
-
     }
 
     private fun setListeners() {

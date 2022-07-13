@@ -35,14 +35,14 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingBottom="10dp"
+        android:tint="@color/black"
         fab:menu_colorNormal="@color/colorPrimaryVariant"
         fab:menu_colorPressed="@color/colorPrimaryVariant"
         fab:menu_colorRipple="@color/colorPrimaryVariant"
-        fab:menu_labels_colorNormal="#fff"
+        fab:menu_labels_colorNormal="#000"
         fab:menu_labels_ellipsize="end"
         fab:menu_labels_singleLine="true"
-        android:tint="@color/black"
-        fab:menu_labels_textColor="#000">
+        fab:menu_labels_textColor="#AFAEA3">
 
 
         <com.github.clans.fab.FloatingActionButton
@@ -54,6 +54,7 @@
             fab:fab_colorPressed="@color/colorPrimaryVariant"
             fab:fab_colorRipple="@color/colorPrimaryVariant"
             fab:fab_label="@string/adiciona_meta"
+            fab:fab_shadowColor="@color/purple_200"
             fab:fab_size="mini" />
 
     </com.github.clans.fab.FloatingActionMenu>

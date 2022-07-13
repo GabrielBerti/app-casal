@@ -3,6 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Programacao/Android/app-casal/app/src/main/res/drawable/shape_content.xml" value="0.1635" />
+        <entry key="..\:/Programacao/Android/app-casal/app/src/main/res/drawable/shape_main.xml" value="0.1635" />
+        <entry key="..\:/Programacao/Android/app-casal/app/src/main/res/layout/activity_lista_metas.xml" value="0.17074275362318841" />
+        <entry key="..\:/Programacao/Android/app-casal/app/src/main/res/layout/activity_lista_transacoes.xml" value="0.1272644927536232" />
+        <entry key="..\:/Programacao/Android/app-casal/app/src/main/res/layout/activity_main.xml" value="0.17074275362318841" />
+        <entry key="..\:/Programacao/Android/app-casal/app/src/main/res/layout/drop_down_item.xml" value="0.15" />
+        <entry key="..\:/Programacao/Android/app-casal/app/src/main/res/layout/form_metas.xml" value="0.1272644927536232" />
+        <entry key="..\:/Programacao/Android/app-casal/app/src/main/res/layout/resumo_card.xml" value="0.25" />
         <entry key="..\:/Users/PC Gabriel/AndroidStudioProjects/AppCasal/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1105" />
         <entry key="..\:/Users/PC Gabriel/AndroidStudioProjects/AppCasal/app/src/main/res/drawable-v24/icone_transacao_item_biel.xml" value="0.1" />
         <entry key="..\:/Users/PC Gabriel/AndroidStudioProjects/AppCasal/app/src/main/res/drawable-v24/icone_transacao_item_mari.xml" value="0.1135" />

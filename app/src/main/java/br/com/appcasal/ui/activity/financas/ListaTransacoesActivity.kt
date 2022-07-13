@@ -65,7 +65,6 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
         transacoes = transacaoDao.buscaTodos()
 
         configuraAdapter()
-        configuraTela()
         configuraResumo()
         configuraFab()
     }
@@ -76,12 +75,6 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
 
         adapter = ListaTransacoesAdapter(transacoes, this, this)
         rv.adapter = adapter
-    }
-
-    private fun configuraTela() {
-        //cor background da tela
-        val tela = findViewById<RelativeLayout>(R.id.relativeLayoutListaTransacoes)
-        tela.setBackgroundColor(getResources().getColor(R.color.black))
     }
 
     override fun clickTransacao(transacao: Transacao) {
