@@ -16,6 +16,9 @@
     <string name="viagens">Viagens</string>
     <string name="metas">Metas</string>
     <string name="receitas">Receitas</string>
+    <string name="adicionar_receita">Adicionar receita</string>
+    <string name="ingredientes">Ingredientes</string>
+    <string name="ingredientes_lista_compra">Ingredientes(lista de compras)</string>
     <string name="biel">Biel</string>
     <string name="mari">Mari</string>
     <string name="total">Total</string>
@@ -24,15 +27,25 @@
     <string name="descricao">Descrição</string>
     <string name="descricao_hint">Descrição do lançamento</string>
     <string name="descricao_meta_hint">Descrição da meta</string>
+    <string name="descricao_ingrediente_hint">Descrição do ingrediente</string>
     <string name="adiciona_lancamento_biel">Adiciona lançamento Biel</string>
     <string name="adiciona_lancamento_mari">Adiciona lançamento Mari</string>
     <string name="adiciona_meta">Adiciona meta</string>
+    <string name="adiciona_receita">Adiciona receita</string>
+    <string name="adiciona_ingrediente">Adiciona ingrediente</string>
     <string name="altera_lancamento_biel">Altera Lançamento</string>
     <string name="altera_lancamento_mari">Altera Lançamento</string>
     <string name="altera_meta">Altera meta</string>
+    <string name="altera_receita">Alterar receita</string>
+    <string name="detalhe_receita">Detalhe receita</string>
+    <string name="altera_ingrediente">Altera ingrediente</string>
     <string name="meta_concluida">Concluída</string>
     <string name="meta_nao_concluida">A fazer</string>
     <string name="todas">Todas</string>
+    <string name="nome_receita">Nome da receita</string>
+    <string name="modo_preparo">Modo de preparo</string>
+    <string name="inserir_ingrediente">Inserir ingrediente</string>
+    <string name="salvar_receita">Salvar receita</string>
 
     <string-array name="lista_status">
         <item>Concluído</item>

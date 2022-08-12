@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+    <style name="ButtonBaseStyle" parent="Widget.AppCompat.Button">
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:elevation">0dp</item>
+        <item name="android:textSize">@dimen/primary_button</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="ButtonFilledGreen" parent="ButtonBaseStyle">
+        <item name="android:background">@drawable/btn_redondo</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+</resources>

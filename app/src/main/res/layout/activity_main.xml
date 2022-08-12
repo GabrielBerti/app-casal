@@ -24,7 +24,7 @@
         android:layout_alignBottom="@+id/app_bar"
         android:gravity="center"
         android:text="@string/app_bar"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="28sp"
         android:textStyle="bold" />
 

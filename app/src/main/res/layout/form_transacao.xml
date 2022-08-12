@@ -16,8 +16,8 @@
         <EditText
             android:id="@+id/form_transacao_valor"
             android:layout_width="match_parent"
-            android:background="?attr/colorButtonNormal"
             android:layout_height="wrap_content"
+            android:background="?attr/colorButtonNormal"
             android:hint="@string/valor"
             android:inputType="numberDecimal" />
 
@@ -35,6 +35,7 @@
             android:focusable="false"
             android:hint="@string/data"
             android:inputType="none"
+            android:layout_marginTop="10dp"
             tools:text="11/20/2014" />
 
     </com.google.android.material.textfield.TextInputLayout>

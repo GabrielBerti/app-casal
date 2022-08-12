@@ -36,6 +36,26 @@
             android:exported="true"
             android:label="@string/metas"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activity.receitas.ListaReceitasActivity"
+            android:exported="true"
+            android:label="@string/receitas"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activity.receitas.cadastro.FormReceitasActivity"
+            android:exported="true"
+            android:label="@string/adicionar_receita"
+            android:screenOrientation="portrait"
+            tools:ignore="Instantiatable" />
+
+        <activity
+            android:name=".ui.activity.receitas.detalhe.DetalheReceitaActivity"
+            android:exported="true"
+            android:label="@string/detalhe_receita"
+            android:screenOrientation="portrait"
+            tools:ignore="Instantiatable" />
     </application>
 
 </manifest>

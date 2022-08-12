@@ -1,17 +1,18 @@
 package br.com.appcasal.ui.activity.financas
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.ViewGroup
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.alura.financask.extension.formataParaBrasileiro
+import br.com.appcasal.MainActivity
 import br.com.appcasal.R
 import br.com.appcasal.dao.AppDatabase
 import br.com.appcasal.dao.TransacaoDAO
@@ -19,8 +20,6 @@ import br.com.appcasal.databinding.ActivityListaTransacoesBinding
 import br.com.appcasal.model.Resumo
 import br.com.appcasal.model.Tipo
 import br.com.appcasal.model.Transacao
-import br.com.appcasal.ui.adapter.financas.ClickTransacao
-import br.com.appcasal.ui.adapter.financas.ListaTransacoesAdapter
 import br.com.appcasal.ui.dialog.financas.AdicionaTransacaoDialog
 import br.com.appcasal.ui.dialog.financas.AlteraTransacaoDialog
 import java.math.BigDecimal
@@ -64,9 +63,15 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
         transacaoDao = db.transacaoDao()
         transacoes = transacaoDao.buscaTodos()
 
+        setToolbar()
         configuraAdapter()
         configuraResumo()
         configuraFab()
+    }
+
+    private fun setToolbar() {
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setHomeButtonEnabled(true)
     }
 
     private fun configuraAdapter() {
@@ -149,6 +154,16 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
                 if (transacoes.isNotEmpty()) {
                     dialogRemoveTransacoes()
                 }
+                true
+            }
+            android.R.id.home -> {
+                startActivity(
+                    Intent(
+                        this,
+                        MainActivity::class.java
+                    )
+                )
+                finishAffinity()
                 true
             }
             else -> super.onOptionsItemSelected(item)

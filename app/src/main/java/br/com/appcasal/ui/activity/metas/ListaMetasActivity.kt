@@ -1,23 +1,19 @@
 package br.com.appcasal.ui.activity.metas
 
 import android.app.AlertDialog
-import android.content.res.Configuration
-import android.graphics.PorterDuff
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import br.com.appcasal.MainActivity
 import br.com.appcasal.R
 import br.com.appcasal.dao.AppDatabase
 import br.com.appcasal.dao.MetaDAO
 import br.com.appcasal.databinding.ActivityListaMetasBinding
 import br.com.appcasal.model.Meta
-import br.com.appcasal.ui.adapter.metas.ClickMeta
-import br.com.appcasal.ui.adapter.metas.ListaMetasAdapter
 import br.com.appcasal.ui.dialog.metas.AdicionaMetaDialog
 import br.com.appcasal.ui.dialog.metas.AlteraMetaDialog
 
@@ -60,10 +56,16 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
         metaDao = db.metaDao()
         metas = metaDao.buscaTodos()
 
+        setToolbar()
         configuraAdapter()
         configuraSpinner()
         configuraFab()
         //spinnerStatus.background.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP)
+    }
+
+    private fun setToolbar() {
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setHomeButtonEnabled(true)
     }
 
     private fun configuraAdapter() {
@@ -134,6 +136,16 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
                     dialogRemoveMetas()
                 }
 
+                true
+            }
+            android.R.id.home -> {
+                startActivity(
+                    Intent(
+                        this,
+                        MainActivity::class.java
+                    )
+                )
+                finishAffinity()
                 true
             }
             else -> super.onOptionsItemSelected(item)

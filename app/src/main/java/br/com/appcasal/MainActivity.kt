@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import br.com.appcasal.databinding.ActivityMainBinding
 import br.com.appcasal.ui.activity.financas.ListaTransacoesActivity
 import br.com.appcasal.ui.activity.metas.ListaMetasActivity
+import br.com.appcasal.ui.activity.receitas.ListaReceitasActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,6 +18,8 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+
         setListeners()
     }
 
@@ -36,7 +39,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.viewReceitas.setOnClickListener {
-
+            val intent = Intent(this, ListaReceitasActivity::class.java)
+            startActivity(intent)
         }
     }
 }

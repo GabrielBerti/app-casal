@@ -1,4 +1,4 @@
-package br.com.appcasal.ui.adapter.financas
+package br.com.appcasal.ui.activity.financas
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.appcasal.R
 import br.com.appcasal.model.Transacao
-import br.com.appcasal.ui.activity.financas.TransacoesViewHolder
 
 class ListaTransacoesAdapter(
     private var transacoes: List<Transacao>,

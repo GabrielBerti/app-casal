@@ -1,4 +1,4 @@
-package br.com.appcasal.ui.adapter.metas
+package br.com.appcasal.ui.activity.metas
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.appcasal.R
 import br.com.appcasal.model.Meta
-import br.com.appcasal.ui.activity.metas.MetasViewHolder
 
 class ListaMetasAdapter(
     private var metas: List<Meta>,
