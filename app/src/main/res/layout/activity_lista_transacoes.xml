@@ -21,9 +21,8 @@
             android:layout_alignBottom="@id/lista_transacoes_resumo"
             android:layout_alignParentBottom="true"
             android:divider="@null"
+            android:layout_marginTop="2dp"
             android:dividerHeight="0dp" />
-
-
 
     </LinearLayout>
 

@@ -8,13 +8,14 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
         android:elevation="10dp">
 
         <LinearLayout
             android:id="@+id/linear_ingrediente_item"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/black"
+            tools:background="@color/white"
             android:orientation="horizontal">
 
                 <TextView
@@ -22,7 +23,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:textSize="20dp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     tools:text="Strogronoff" />
         </LinearLayout>

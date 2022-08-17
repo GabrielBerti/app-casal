@@ -23,18 +23,32 @@ class IngredientesDetalheViewHolder(
 
     fun bind(ingredientes: List<Ingrediente>, posicao: Int) {
         val ingrediente = ingredientes[posicao]
-        adicionaDescricaoIngrediente(ingrediente)
+        iniciaDescricaoIngrediente(ingrediente)
+        iniciaCheckBox(ingrediente)
+        setListeners()
+    }
 
+    private fun setListeners() {
         checkBoxIngrediente.setOnClickListener {
-            if(it.isSelected) {
-                ingredienteDescricao.paintFlags = ingredienteDescricao.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            if (it.isSelected) {
+                ingredienteDescricao.paintFlags =
+                    ingredienteDescricao.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             } else {
-                ingredienteDescricao.paintFlags = ingredienteDescricao.paintFlags xor Paint.STRIKE_THRU_TEXT_FLAG
+                ingredienteDescricao.paintFlags =
+                    ingredienteDescricao.paintFlags xor Paint.STRIKE_THRU_TEXT_FLAG
             }
         }
     }
 
-    private fun adicionaDescricaoIngrediente(ingrediente: Ingrediente) {
+    private fun iniciaCheckBox(ingrediente: Ingrediente) {
+        checkBoxIngrediente.isChecked = ingrediente.marcado
+        if (checkBoxIngrediente.isChecked) {
+            ingredienteDescricao.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+        } else {
+        }
+    }
+
+    private fun iniciaDescricaoIngrediente(ingrediente: Ingrediente) {
         ingredienteDescricao.text = ingrediente.descricao
     }
 

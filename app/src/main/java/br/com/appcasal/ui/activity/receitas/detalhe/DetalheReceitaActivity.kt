@@ -16,8 +16,9 @@ import br.com.appcasal.databinding.ActivityReceitaDetalheBinding
 import br.com.appcasal.model.Ingrediente
 import br.com.appcasal.model.Receita
 import br.com.appcasal.ui.activity.receitas.ListaReceitasActivity
+import br.com.appcasal.ui.activity.receitas.detalhe.ListaIngredientesDetalheAdapter.CheckouIngrediente
 
-class DetalheReceitaActivity : AppCompatActivity() {
+class DetalheReceitaActivity : AppCompatActivity(), CheckouIngrediente {
 
     private lateinit var activityReceitaDetalhe: ActivityReceitaDetalheBinding
     private lateinit var adapter: ListaIngredientesDetalheAdapter
@@ -79,7 +80,7 @@ class DetalheReceitaActivity : AppCompatActivity() {
         rv = findViewById(R.id.lista_ingredientes_detalhe_listview)
         rv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        adapter = ListaIngredientesDetalheAdapter(ingredientes, this, resources.getDrawable(R.drawable.line2))
+        adapter = ListaIngredientesDetalheAdapter(ingredientes, this, this)
         rv.adapter = adapter
     }
 
@@ -97,5 +98,11 @@ class DetalheReceitaActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun atualizaIngrediente(position: Int, isChecked: Boolean) {
+        ingredientes[position].marcado = isChecked
+        ingredienteDAO.altera(ingredientes[position])
+        rv.adapter = ListaIngredientesDetalheAdapter(ingredientes, this, this)
     }
 }

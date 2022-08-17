@@ -15,7 +15,7 @@ import br.com.appcasal.model.Ingrediente
 class ListaIngredientesDetalheAdapter(
     private var ingredientes: List<Ingrediente>,
     private var context: Context,
-    private var drawableLine: Drawable
+    private var checkouIngrediente: CheckouIngrediente
     ) :
     RecyclerView.Adapter<IngredientesDetalheViewHolder>() {
 
@@ -42,21 +42,26 @@ class ListaIngredientesDetalheAdapter(
 
     override fun onBindViewHolder(holder: IngredientesDetalheViewHolder, position: Int) {
         holder.bind(ingredientes, position)
-        setupCheckBox(holder)
+        setupCheckBox(holder, position)
     }
 
-    private fun setupCheckBox(holder: IngredientesDetalheViewHolder) {
+    private fun setupCheckBox(holder: IngredientesDetalheViewHolder, position: Int) {
         holder.checkBoxIngrediente.buttonTintList = ColorStateList(
             CHECK_BOX_STATES,
             CHECK_BOX_COLORS
         )
 
         holder.checkBoxIngrediente.setOnCheckedChangeListener { _, isChecked ->
+            checkouIngrediente.atualizaIngrediente(position, isChecked)
             holder.checkBoxIngrediente.isChecked = isChecked
         }
     }
 
     override fun getItemCount(): Int {
         return ingredientes.size
+    }
+
+    interface CheckouIngrediente {
+        fun atualizaIngrediente(position: Int, isChecked: Boolean)
     }
 }

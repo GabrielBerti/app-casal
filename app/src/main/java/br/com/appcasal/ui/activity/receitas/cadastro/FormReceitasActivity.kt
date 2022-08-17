@@ -85,6 +85,7 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
                 ingredientes = ingredienteDAO.buscaIngredientesByReceita(receitaId)
                 supportActionBar!!.title = resources.getString(R.string.altera_receita)
             } else {
+                ingredientes = mutableListOf()
                 supportActionBar!!.title = resources.getString(R.string.adicionar_receita)
             }
         }
@@ -127,15 +128,14 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
                 Toast.LENGTH_LONG
             ).show()
 
-            val it = Intent(this, ListaReceitasActivity::class.java)
-            startActivity(it)
+            finish()
         }
     }
 
     private fun insereIngredientes(receitaId: Long) {
         ingredientes.forEach {
             if (!isUpdated(it.id)) {
-                ingredienteDAO.adiciona(Ingrediente(it.id, it.descricao, receitaId))
+                ingredienteDAO.adiciona(Ingrediente(it.id, it.descricao, false, receitaId))
             }
         }
     }
@@ -201,6 +201,7 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
 
     private fun remove(posicao: Int) {
         if (isUpdated(ingredientes[posicao].id)) {
+            //insere os ingredientes q ainda nao foram inseridos para nao perde-los quando atualizar adapter
             insereIngredientes(receitaId)
             ingredienteDAO.remove(ingredientes[posicao])
             adapter.notifyItemRemoved(posicao)

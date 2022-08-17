@@ -3,7 +3,6 @@ package br.com.appcasal.dao.converter
 import androidx.room.TypeConverter
 import br.com.appcasal.model.Tipo
 import java.math.BigDecimal
-import java.util.*
 
 class Converters {
 

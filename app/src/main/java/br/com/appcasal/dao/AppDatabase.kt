@@ -10,7 +10,7 @@ import br.com.appcasal.model.Meta
 import br.com.appcasal.model.Receita
 import br.com.appcasal.model.Transacao
 
-@Database(entities = [Transacao::class, Meta::class, Receita::class, Ingrediente::class], version = 4)
+@Database(entities = [Transacao::class, Meta::class, Receita::class, Ingrediente::class], version = 5)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
@@ -21,16 +21,16 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
         fun instancia(context: Context): AppDatabase {
-            val MIGRATION_3_4: Migration = object : Migration(3, 4) {
+            val MIGRATION_4_5: Migration = object : Migration(4, 5) {
                 override fun migrate(database: SupportSQLiteDatabase) {
                     // Remove a tabela antiga
                    // database.execSQL("ALTER TABLE transacao DROP COLUMN categoria")
                     //database.execSQL("ALTER TABLE transacao ADD COLUMN fsdf TEXT")
                     // cria nova tabela
-                    database.execSQL(
+                    /*database.execSQL(
                         "CREATE TABLE Meta (id INTEGER NOT NULL, descricao TEXT NOT NULL, concluido INTEGER NOT NULL, " +
                                 "PRIMARY KEY(id))"
-                    )
+                    )*/
 
                     database.execSQL("DROP TABLE Receita")
 
@@ -39,10 +39,13 @@ abstract class AppDatabase : RoomDatabase() {
                                 "PRIMARY KEY(id))"
                     )
 
-                    database.execSQL(
-                        "CREATE TABLE Ingrediente (id INTEGER NOT NULL, descricao TEXT NOT NULL, receita_id INTEGER NOT NULL," +
-                                "PRIMARY KEY(id) ,FOREIGN KEY(receita_id) REFERENCES Receita(id))"
-                    )
+                   database.execSQL("DROP TABLE Ingrediente")
+                   database.execSQL(
+                       "CREATE TABLE Ingrediente (id INTEGER NOT NULL, descricao TEXT NOT NULL, marcado INTEGER NOT NULL, receitaId INTEGER NOT NULL, " +
+                               "PRIMARY KEY(id), FOREIGN KEY(receitaId) REFERENCES Receita(id))"
+                   )
+
+                    database.execSQL("CREATE INDEX IF NOT EXISTS 'index_Ingrediente_receitaId' ON 'Ingrediente' ('receitaId')")
                 }
             }
 
@@ -51,7 +54,7 @@ abstract class AppDatabase : RoomDatabase() {
                 AppDatabase::class.java,
                 "app_casal.db"
             ).allowMainThreadQueries()
-                .addMigrations(MIGRATION_3_4)
+                .addMigrations(MIGRATION_4_5)
                 .build()
         }
     }

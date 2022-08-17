@@ -8,13 +8,16 @@ import android.view.ViewGroup
 import android.widget.EditText
 import br.com.appcasal.R
 import br.com.appcasal.model.Ingrediente
+import br.com.appcasal.util.Util
+
 
 abstract class FormularioIngredienteDialog(
-        private val context: Context,
-        private val viewGroup: ViewGroup) {
+    private val context: Context,
+    private val viewGroup: ViewGroup) {
 
+    private var util = Util()
     private val viewCriada = criaLayout()
-    protected val campoDescricaoIngrediente = viewCriada.findViewById<EditText>(R.id.descricao_ingrediente)
+    protected lateinit var campoDescricaoIngrediente: EditText
     abstract protected val tituloBotaoPositivo: String
 
     fun chama(id: Long?, idReceita: Long, delegate: (ingrediente: Ingrediente) -> Unit) {
@@ -37,15 +40,19 @@ abstract class FormularioIngredienteDialog(
                 if(id == null) {
                     ingredienteCriado = Ingrediente(
                         receitaId = idReceita,
-                        descricao = campoDescricaoIngredienteEmTexto
+                        descricao = campoDescricaoIngredienteEmTexto,
+                        marcado = false
                     )
                 } else {
                     ingredienteCriado = Ingrediente(
                         id = id,
                         receitaId = idReceita,
-                        descricao = campoDescricaoIngredienteEmTexto
+                        descricao = campoDescricaoIngredienteEmTexto,
+                        marcado = false
                     )
                 }
+
+                util.hideKeyboard(campoDescricaoIngrediente, context)
 
                 delegate(ingredienteCriado)
             }
@@ -56,9 +63,14 @@ abstract class FormularioIngredienteDialog(
     abstract protected fun tituloPor(): Int
 
     private fun criaLayout(): View {
-        return LayoutInflater.from(context)
-                .inflate(R.layout.form_ingrediente,
-                        viewGroup,
-                        false)
+        val view = LayoutInflater.from(context)
+            .inflate(R.layout.form_ingrediente,
+                viewGroup,
+                false)
+
+        campoDescricaoIngrediente = view.findViewById<EditText>(R.id.descricao_ingrediente)
+        util.showKeyboard(campoDescricaoIngrediente, context)
+
+        return view
     }
 }
