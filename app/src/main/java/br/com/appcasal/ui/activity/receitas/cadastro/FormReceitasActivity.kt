@@ -90,8 +90,6 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
             }
         }
     }
-    //git remote set-url origin git@github.com:GabrielBerti/repo.git
-    //git remote add origin https://{GabrielBerti}:{Biel123321!}@github.com/{GabrielBerti}/project.git
 
     private fun setListeners() {
         activityFormReceitas.btnInsereIngrediente.setOnClickListener() {
