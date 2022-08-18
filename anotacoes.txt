@@ -6,5 +6,5 @@
 
 
 
--- quando der erro de server:
+-- quando der erro de server(Invocation failed Unexpected end of file from server):
 git remote set-url origin https://github.com/GabrielBerti/app-casal
