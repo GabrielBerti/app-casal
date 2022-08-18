@@ -1,0 +1,10 @@
+-- criar snack bar para mensagens
+-- validacao de campos
+-- ao alterar o nome da receita a UI nao é atualizada
+-- trocar botao inserir ingrediente por FAB ??
+
+
+
+
+-- quando der erro de server:
+git remote set-url origin https://github.com/GabrielBerti/app-casal
