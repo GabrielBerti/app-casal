@@ -12,6 +12,9 @@ interface IngredienteDAO {
     @Query("DELETE FROM Ingrediente WHERE receitaId == :receitaId")
     fun deleteIngredientesByReceita(receitaId: Long)
 
+    @Query("UPDATE Ingrediente SET marcado = 0")
+    fun desmarcaTodosIngredientes()
+
     @Insert
     fun adiciona(ingrediente: Ingrediente)
 

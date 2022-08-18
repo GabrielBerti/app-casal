@@ -1,9 +1,11 @@
 package br.com.appcasal.ui.activity.receitas.detalhe
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,6 +29,7 @@ class DetalheReceitaActivity : AppCompatActivity(), CheckouIngrediente {
     private var receitaId: Long = 0L
     private lateinit var receitaNome: TextView
     private lateinit var receitaDescricao: TextView
+    private lateinit var buttonDesmarcaTodosIngredientes: Button
 
     private var ingredientes: MutableList<Ingrediente> = Companion.ingredientes
     private lateinit var receitaSelected: List<Receita>
@@ -51,12 +54,20 @@ class DetalheReceitaActivity : AppCompatActivity(), CheckouIngrediente {
 
         receitaNome = findViewById<TextView>(R.id.receita_nome_detalhe)
         receitaDescricao = findViewById<TextView>(R.id.receita_descricao_detalhe)
+        buttonDesmarcaTodosIngredientes = findViewById<Button>(R.id.desmarcar_tudo)
 
         ingredienteDAO = db.ingredienteDao()
         receitaDao = db.receitaDao()
 
+        setListeners()
         setLayout()
         configuraAdapter()
+    }
+
+    private fun setListeners() {
+        buttonDesmarcaTodosIngredientes.setOnClickListener() {
+            dialogDesmarcaTodosIngredientes()
+        }
     }
 
     private fun setLayout() {
@@ -80,8 +91,37 @@ class DetalheReceitaActivity : AppCompatActivity(), CheckouIngrediente {
         rv = findViewById(R.id.lista_ingredientes_detalhe_listview)
         rv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        adapter = ListaIngredientesDetalheAdapter(ingredientes, this, this)
+        atualizaAdapter()
         rv.adapter = adapter
+    }
+
+    private fun atualizaAdapter() {
+        adapter = ListaIngredientesDetalheAdapter(ingredientes, this, this)
+    }
+
+    private fun dialogDesmarcaTodosIngredientes() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+
+        builder.setTitle("Limpar")
+        builder.setMessage("Desmarcar todos ingredientes?")
+
+        builder.setPositiveButton(
+            "Sim"
+        ) { _, _ ->
+            ingredienteDAO.desmarcaTodosIngredientes()
+            ingredientes = ingredienteDAO.buscaIngredientesByReceita(receitaId)
+            atualizaAdapter()
+            rv.adapter = adapter
+        }
+
+        builder.setNegativeButton(
+            "Não"
+        ) { _, _ ->
+            null
+        }
+
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.show()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -103,6 +143,6 @@ class DetalheReceitaActivity : AppCompatActivity(), CheckouIngrediente {
     override fun atualizaIngrediente(position: Int, isChecked: Boolean) {
         ingredientes[position].marcado = isChecked
         ingredienteDAO.altera(ingredientes[position])
-        rv.adapter = ListaIngredientesDetalheAdapter(ingredientes, this, this)
+        atualizaAdapter()
     }
 }

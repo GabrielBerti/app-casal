@@ -47,7 +47,7 @@ class MetasViewHolder(
     private fun adicionaCheckBox(meta: Meta) {
         if (meta.concluido) {
             metaConcluidoCheckBox.setText(R.string.meta_concluida)
-            linearMetaItem.setBackgroundColor(ContextCompat.getColor(context, R.color.concluido))
+            linearMetaItem.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimaryVariant))
             metaConcluidoCheckBox.setTextColor(ContextCompat.getColor(context, R.color.black))
         } else {
             metaConcluidoCheckBox.setText(R.string.meta_nao_concluida)

@@ -18,7 +18,8 @@
     <string name="receitas">Receitas</string>
     <string name="adicionar_receita">Adicionar receita</string>
     <string name="ingredientes">Ingredientes</string>
-    <string name="ingredientes_lista_compra">Ingredientes(lista de compras)</string>
+    <string name="ingredientes_lista_compra">Ingredientes(compras)</string>
+    <string name="desmarcar_tudo">Desmarcar tudo</string>
     <string name="biel">Biel</string>
     <string name="mari">Mari</string>
     <string name="total">Total</string>

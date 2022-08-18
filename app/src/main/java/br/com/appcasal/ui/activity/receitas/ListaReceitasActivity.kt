@@ -110,7 +110,7 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
 
         builder.setTitle("Limpar")
-        builder.setMessage("Zerar receitas")
+        builder.setMessage("Zerar receitas ?")
 
         builder.setPositiveButton(
             "Sim"

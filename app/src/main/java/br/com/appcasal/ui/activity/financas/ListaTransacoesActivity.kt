@@ -174,7 +174,7 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
 
         builder.setTitle("Limpar")
-        builder.setMessage("Zerar transacoes")
+        builder.setMessage("Zerar transacoes ?")
 
         builder.setPositiveButton(
             "Sim"

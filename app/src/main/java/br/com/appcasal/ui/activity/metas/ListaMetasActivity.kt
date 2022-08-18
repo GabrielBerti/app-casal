@@ -156,7 +156,7 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
 
         builder.setTitle("Limpar")
-        builder.setMessage("Zerar metas")
+        builder.setMessage("Zerar metas ?")
 
         builder.setPositiveButton(
             "Sim"
