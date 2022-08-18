@@ -122,12 +122,8 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
             val ultimaReceitaInserida = receitaDAO.buscaUltimaReceitaInserida()
             insereIngredientes(ultimaReceitaInserida.id)
 
-            Toast.makeText(
-                this,
-                "Receita inserida com sucesso!",
-                Toast.LENGTH_LONG
-            ).show()
-
+            val intent = Intent()
+            setResult(ListaReceitasActivity.retornoSucesso, intent)
             finish()
         }
     }

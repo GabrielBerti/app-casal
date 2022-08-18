@@ -2,8 +2,9 @@ package br.com.appcasal.ui.activity.receitas
 
 import android.app.AlertDialog
 import android.content.Intent
-import android.os.Bundle
 import android.view.*
+import android.widget.LinearLayout
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,27 +15,24 @@ import br.com.appcasal.dao.IngredienteDAO
 import br.com.appcasal.dao.ReceitaDAO
 import br.com.appcasal.databinding.ActivityListaReceitasBinding
 import br.com.appcasal.model.Receita
-import br.com.appcasal.ui.activity.receitas.detalhe.DetalheReceitaActivity
+import br.com.appcasal.model.TipoSnackbar
 import br.com.appcasal.ui.activity.receitas.cadastro.FormReceitasActivity
+import br.com.appcasal.ui.activity.receitas.detalhe.DetalheReceitaActivity
+import br.com.appcasal.util.Util
 
 class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
 
     private lateinit var activityListaReceitas: ActivityListaReceitasBinding
+    private lateinit var llListaReceitas: LinearLayout
     private lateinit var adapter: ListaReceitasAdapter
     private lateinit var rv: RecyclerView
+    private var util = Util()
 
     private var receitas: List<Receita> = Companion.receitas
 
     companion object {
         private val receitas: MutableList<Receita> = mutableListOf()
-    }
-
-    private val viewDaActivity by lazy {
-        window.decorView
-    }
-
-    private val viewGroupDaActivity by lazy {
-        viewDaActivity as ViewGroup
+        val retornoSucesso = 100
     }
 
     private val db by lazy {
@@ -44,12 +42,22 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
     private lateinit var receitaDao: ReceitaDAO
     private lateinit var ingredienteDAO: IngredienteDAO
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    var abrirActivityCadastro = registerForActivityResult(
+        StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == retornoSucesso) {
+            createSnackBar(TipoSnackbar.SUCESSO)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
         activityListaReceitas = ActivityListaReceitasBinding.inflate(layoutInflater)
         val view = activityListaReceitas.root
 
         setContentView(view)
+
+        llListaReceitas = findViewById<LinearLayout>(R.id.ll_lista_receitas)
 
         ingredienteDAO = db.ingredienteDao()
         receitaDao = db.receitaDao()
@@ -71,6 +79,10 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
 
         adapter = ListaReceitasAdapter(receitas, this, this)
         rv.adapter = adapter
+    }
+
+    private fun createSnackBar(tipoSnackbar: TipoSnackbar) {
+        util.createSnackBar(llListaReceitas, resources.getString(R.string.receita_inserida_sucesso), resources, tipoSnackbar)
     }
 
     override fun clickReceita(receita: Receita) {
@@ -140,7 +152,7 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
         val it = Intent(this, FormReceitasActivity::class.java)
 
         it.putExtra("receitaId", "0")
-        startActivity(it)
+        abrirActivityCadastro.launch(it)
     }
 
     private fun atualizaReceitas() {

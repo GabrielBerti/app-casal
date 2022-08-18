@@ -1,6 +1,6 @@
--- criar snack bar para mensagens
--- validacao de campos
--- ao alterar o nome da receita a UI nao é atualizada
+-- validacao de campos(com snack bar de erro)
+-- adicionar snackbar de sucesso nas telas
+-- verificar erro intermitente ao excluir todas receitas
 -- trocar botao inserir ingrediente por FAB ??
 
 

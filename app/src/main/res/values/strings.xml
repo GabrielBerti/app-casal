@@ -47,6 +47,8 @@
     <string name="modo_preparo">Modo de preparo</string>
     <string name="inserir_ingrediente">Inserir ingrediente</string>
     <string name="salvar_receita">Salvar receita</string>
+    <string name="receita_inserida_sucesso">Receita inserida com sucesso !</string>
+    <string name="fechar">Fechar</string>
 
     <string-array name="lista_status">
         <item>Concluído</item>
