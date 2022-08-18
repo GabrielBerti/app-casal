@@ -19,11 +19,12 @@ import br.com.appcasal.model.TipoSnackbar
 import br.com.appcasal.ui.activity.receitas.cadastro.FormReceitasActivity
 import br.com.appcasal.ui.activity.receitas.detalhe.DetalheReceitaActivity
 import br.com.appcasal.util.Util
+import com.github.clans.fab.FloatingActionMenu
 
 class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
 
     private lateinit var activityListaReceitas: ActivityListaReceitasBinding
-    private lateinit var llListaReceitas: LinearLayout
+    private lateinit var fabAdicionaReceita: FloatingActionMenu
     private lateinit var adapter: ListaReceitasAdapter
     private lateinit var rv: RecyclerView
     private var util = Util()
@@ -57,7 +58,7 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
 
         setContentView(view)
 
-        llListaReceitas = findViewById<LinearLayout>(R.id.ll_lista_receitas)
+        fabAdicionaReceita = findViewById<FloatingActionMenu>(R.id.fab_adiciona_receita)
 
         ingredienteDAO = db.ingredienteDao()
         receitaDao = db.receitaDao()
@@ -82,7 +83,7 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
     }
 
     private fun createSnackBar(tipoSnackbar: TipoSnackbar) {
-        util.createSnackBar(llListaReceitas, resources.getString(R.string.receita_inserida_sucesso), resources, tipoSnackbar)
+        util.createSnackBar(fabAdicionaReceita, resources.getString(R.string.receita_inserida_sucesso), resources, tipoSnackbar)
     }
 
     override fun clickReceita(receita: Receita) {
@@ -127,8 +128,7 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
         builder.setPositiveButton(
             "Sim"
         ) { _, _ ->
-            receitaDao.removeAll()
-            atualizaReceitas()
+            removeTodasReceitas()
         }
 
         builder.setNegativeButton(
@@ -183,6 +183,14 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
         ingredienteDAO.deleteIngredientesByReceita(receitas[posicao].id)
         receitaDao.remove(receitas[posicao])
         adapter.notifyItemRemoved(posicao)
+        atualizaReceitas()
+    }
+
+    private fun removeTodasReceitas() {
+        receitas.forEach { receita ->
+            ingredienteDAO.deleteIngredientesByReceita(receita.id)
+            receitaDao.remove(receita)
+        }
         atualizaReceitas()
     }
 

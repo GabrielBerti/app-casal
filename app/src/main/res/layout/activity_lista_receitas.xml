@@ -22,7 +22,7 @@
     </LinearLayout>
 
     <com.github.clans.fab.FloatingActionMenu
-        android:id="@+id/lista_receitas_adiciona_menu"
+        android:id="@+id/fab_adiciona_receita"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
@@ -53,5 +53,7 @@
             fab:fab_size="mini" />
 
     </com.github.clans.fab.FloatingActionMenu>
+
+
 
 </RelativeLayout>
