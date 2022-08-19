@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/relativeLayoutListaMetas"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_lista_receitas"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -21,39 +23,16 @@
 
     </LinearLayout>
 
-    <com.github.clans.fab.FloatingActionMenu
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_adiciona_receita"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"
-        android:tint="@color/black"
-        fab:menu_colorNormal="@color/colorPrimaryVariant"
-        fab:menu_colorPressed="@color/colorPrimaryVariant"
-        fab:menu_colorRipple="@color/colorPrimaryVariant"
-        fab:menu_labels_colorNormal="#000"
-        fab:menu_labels_ellipsize="end"
-        fab:menu_labels_singleLine="true"
-        fab:menu_labels_textColor="#AFAEA3">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        fab:backgroundTint="@color/colorPrimaryVariant"
+        android:src="@drawable/ic_plus"
+        android:clickable="true" />
 
-
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/lista_receitas_adiciona"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_pizza"
-            fab:fab_colorNormal="@color/colorPrimaryVariant"
-            fab:fab_colorPressed="@color/colorPrimaryVariant"
-            fab:fab_colorRipple="@color/colorPrimaryVariant"
-            fab:fab_label="@string/adiciona_receita"
-            fab:fab_shadowColor="@color/purple_200"
-            fab:fab_size="mini" />
-
-    </com.github.clans.fab.FloatingActionMenu>
-
-
-
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

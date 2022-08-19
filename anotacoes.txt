@@ -1,7 +1,6 @@
--- validacao de campos(com snack bar de erro)
--- adicionar snackbar de sucesso nas telas
--- trocar botao inserir ingrediente por FAB ??
-
+-- validacao de campos(com snack bar de erro) em todos modulos
+-- trocar botao inserir ingrediente por FAB ?? (video no celular)
+-- snackbar com fab no crud de metas e transacoes
 
 
 

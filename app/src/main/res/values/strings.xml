@@ -48,6 +48,9 @@
     <string name="inserir_ingrediente">Inserir ingrediente</string>
     <string name="salvar_receita">Salvar receita</string>
     <string name="receita_inserida_sucesso">Receita inserida com sucesso !</string>
+    <string name="receita_alterada_sucesso">Receita alterada com sucesso !</string>
+    <string name="receita_removida_sucesso">Receita removida com sucesso !</string>
+    <string name="receitas_removidas_sucesso">Receitas removidas com sucesso !</string>
     <string name="fechar">Fechar</string>
 
     <string-array name="lista_status">

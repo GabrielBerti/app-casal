@@ -3,9 +3,9 @@ package br.com.appcasal.ui.activity.receitas
 import android.app.AlertDialog
 import android.content.Intent
 import android.view.*
-import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.appcasal.MainActivity
@@ -19,21 +19,25 @@ import br.com.appcasal.model.TipoSnackbar
 import br.com.appcasal.ui.activity.receitas.cadastro.FormReceitasActivity
 import br.com.appcasal.ui.activity.receitas.detalhe.DetalheReceitaActivity
 import br.com.appcasal.util.Util
-import com.github.clans.fab.FloatingActionMenu
 
 class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
 
     private lateinit var activityListaReceitas: ActivityListaReceitasBinding
-    private lateinit var fabAdicionaReceita: FloatingActionMenu
+    private lateinit var clReceita: CoordinatorLayout
     private lateinit var adapter: ListaReceitasAdapter
     private lateinit var rv: RecyclerView
     private var util = Util()
+    private var isOnResume: Boolean = false
 
     private var receitas: List<Receita> = Companion.receitas
 
     companion object {
         private val receitas: MutableList<Receita> = mutableListOf()
         val retornoSucesso = 100
+        val INSERT = "INSERT"
+        val UPDATE = "UPDATE"
+        var insertOrUpdate = ""
+        var msgSnackBar: String = ""
     }
 
     private val db by lazy {
@@ -47,7 +51,15 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
         StartActivityForResult()
     ) { result ->
         if (result.resultCode == retornoSucesso) {
-            createSnackBar(TipoSnackbar.SUCESSO)
+            isOnResume = true
+
+            msgSnackBar = if(insertOrUpdate == INSERT) {
+                resources.getString(R.string.receita_inserida_sucesso)
+            } else {
+                resources.getString(R.string.receita_alterada_sucesso)
+            }
+
+            insertOrUpdate = ""
         }
     }
 
@@ -58,7 +70,7 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
 
         setContentView(view)
 
-        fabAdicionaReceita = findViewById<FloatingActionMenu>(R.id.fab_adiciona_receita)
+        clReceita = findViewById<CoordinatorLayout>(R.id.cl_lista_receitas)
 
         ingredienteDAO = db.ingredienteDao()
         receitaDao = db.receitaDao()
@@ -67,6 +79,10 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
         setToolbar()
         configuraAdapter()
         setListeners()
+
+        if (isOnResume) {
+            createSnackBar(TipoSnackbar.SUCESSO, msgSnackBar)
+        }
     }
 
     private fun setToolbar() {
@@ -82,8 +98,8 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
         rv.adapter = adapter
     }
 
-    private fun createSnackBar(tipoSnackbar: TipoSnackbar) {
-        util.createSnackBar(fabAdicionaReceita, resources.getString(R.string.receita_inserida_sucesso), resources, tipoSnackbar)
+    private fun createSnackBar(tipoSnackbar: TipoSnackbar, msg: String) {
+        util.createSnackBar(clReceita, msg, resources, tipoSnackbar)
     }
 
     override fun clickReceita(receita: Receita) {
@@ -112,6 +128,7 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
                         MainActivity::class.java
                     )
                 )
+                isOnResume = false
                 finishAffinity()
                 true
             }
@@ -129,6 +146,7 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
             "Sim"
         ) { _, _ ->
             removeTodasReceitas()
+            createSnackBar(TipoSnackbar.SUCESSO, resources.getString(R.string.receitas_removidas_sucesso))
         }
 
         builder.setNegativeButton(
@@ -142,17 +160,10 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
     }
 
     private fun setListeners() {
-        activityListaReceitas.listaReceitasAdiciona
+        activityListaReceitas.fabAdicionaReceita
             .setOnClickListener {
                 abreTelaDeCadastro()
             }
-    }
-
-    private fun abreTelaDeCadastro() {
-        val it = Intent(this, FormReceitasActivity::class.java)
-
-        it.putExtra("receitaId", "0")
-        abrirActivityCadastro.launch(it)
     }
 
     private fun atualizaReceitas() {
@@ -173,6 +184,7 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
             2 -> {
                 remove(posicao)
                 adapter.notifyItemRemoved(posicao)
+                createSnackBar(TipoSnackbar.SUCESSO, resources.getString(R.string.receita_removida_sucesso))
             }
         }
 
@@ -194,15 +206,26 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
         atualizaReceitas()
     }
 
+    private fun abreTelaDeCadastro() {
+        val it = Intent(this, FormReceitasActivity::class.java)
+        it.putExtra("receitaId", "0")
+        isOnResume = false
+        insertOrUpdate = INSERT
+        abrirActivityCadastro.launch(it)
+    }
+
     private fun abreTelaDeAlteracao(receita: Receita) {
         val it = Intent(this, FormReceitasActivity::class.java)
         it.putExtra("receitaId", receita.id.toString())
-        startActivity(it)
+        isOnResume = false
+        insertOrUpdate = UPDATE
+        abrirActivityCadastro.launch(it)
     }
 
     private fun chamaDetalheReceita(receita: Receita) {
         val it = Intent(this, DetalheReceitaActivity::class.java)
         it.putExtra("receitaId", receita.id.toString())
+        isOnResume = false
         startActivity(it)
     }
 
