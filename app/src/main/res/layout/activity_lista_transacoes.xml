@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/relativeLayoutListaTransacoes"
+    android:id="@+id/cl_lista_transacoes"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -26,49 +28,87 @@
 
     </LinearLayout>
 
-    <com.github.clans.fab.FloatingActionMenu
-        android:id="@+id/lista_transacoes_adiciona_menu"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"
-        android:tint="@color/black"
-        fab:menu_colorNormal="@color/colorPrimaryVariant"
-        fab:menu_colorPressed="@color/colorPrimaryVariant"
-        fab:menu_colorRipple="@color/colorPrimaryVariant"
-        fab:menu_labels_colorNormal="#000"
-        fab:menu_labels_ellipsize="end"
-        fab:menu_labels_singleLine="true"
-        fab:menu_labels_textColor="#AFAEA3">
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_adiciona_transacao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        app:elevation="6dp"
+        android:backgroundTint="@color/colorPrimaryVariant"
+        app:pressedTranslationZ="12dp"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_plus" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_adiciona_transacao_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        app:elevation="6dp"
+        android:visibility="invisible"
+        android:backgroundTint="@color/colorPrimaryVariant"
+        app:pressedTranslationZ="12dp"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_close" />
 
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/lista_transacoes_adiciona_saldo_biel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_transacao"
-            fab:fab_colorNormal="@color/biel"
-            fab:fab_colorPressed="@color/biel"
-            fab:fab_colorRipple="@color/biel"
-            fab:fab_label="@string/adiciona_lancamento_biel"
-            fab:fab_shadowColor="@color/purple_200"
-            fab:fab_size="mini" />
+    <TextView
+        android:id="@+id/tv_adiciona_lcto_biel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="75dp"
+        android:layout_marginBottom="94dp"
+        android:text="@string/adiciona_lancamento_biel"
+        android:visibility="invisible"
+        android:background="@color/purple_200"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/lista_transacoes_adiciona_saldo_mari"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_transacao"
-            fab:fab_colorNormal="@color/mari"
-            fab:fab_colorPressed="@color/mari"
-            fab:fab_colorRipple="@color/mari"
-            fab:fab_label="@string/adiciona_lancamento_mari"
-            fab:fab_shadowColor="@color/purple_200"
-            fab:fab_size="mini" />
+    <com.github.clans.fab.FloatingActionButton
+        android:id="@+id/lista_transacoes_adiciona_saldo_biel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_transacao"
+        android:visibility="invisible"
+        android:layout_marginBottom="75dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="20dp"
+        fab:fab_colorNormal="@color/biel"
+        fab:fab_colorPressed="@color/biel"
+        fab:fab_colorRipple="@color/biel"
+        fab:fab_label="@string/adiciona_lancamento_biel"
+        fab:fab_shadowColor="@color/purple_200"
+        fab:fab_size="mini" />
 
-    </com.github.clans.fab.FloatingActionMenu>
+    <TextView
+        android:id="@+id/tv_adiciona_lcto_mari"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:background="@color/purple_200"
+        android:textColor="@color/black"
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="75dp"
+        android:layout_marginBottom="144dp"
+        android:text="@string/adiciona_lancamento_mari" />
 
-</RelativeLayout>
+    <com.github.clans.fab.FloatingActionButton
+        android:id="@+id/lista_transacoes_adiciona_saldo_mari"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:src="@drawable/ic_transacao"
+        android:layout_marginBottom="125dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="20dp"
+        fab:fab_colorNormal="@color/mari"
+        fab:fab_colorPressed="@color/mari"
+        fab:fab_colorRipple="@color/mari"
+        fab:fab_label="@string/adiciona_lancamento_mari"
+        fab:fab_shadowColor="@color/purple_200"
+        fab:fab_size="mini" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

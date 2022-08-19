@@ -23,7 +23,7 @@
         android:layout_alignRight="@+id/app_bar"
         android:layout_alignBottom="@+id/app_bar"
         android:gravity="center"
-        android:text="@string/app_bar"
+        android:text="@string/app_name"
         android:textColor="@color/white"
         android:textSize="28sp"
         android:textStyle="bold" />

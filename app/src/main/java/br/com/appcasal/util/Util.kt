@@ -46,4 +46,31 @@ class Util {
         snackbar.show()
     }
 
+    fun createSnackBarWithReturn(view: View, msg: String, resources: Resources, tipoSnackbar: TipoSnackbar, visibility: Int): Snackbar {
+        val colorBackground = if(tipoSnackbar == TipoSnackbar.SUCESSO) {
+            resources.getColor(R.color.colorPrimaryVariant)
+        } else {
+            resources.getColor(R.color.red)
+        }
+
+        // Create the Snackbar
+        val snackbar = Snackbar.make(view, msg, Snackbar.LENGTH_LONG)
+            .setTextColor(Color.WHITE)
+            .setActionTextColor(Color.WHITE)
+            .setBackgroundTint(colorBackground)
+            .setAction(resources.getString(R.string.fechar)) {
+                null
+            }
+
+        val layout = snackbar.view
+
+        layout.setPadding(40, 15, 15, 50)
+        layout.updatePadding(0, 0, 0, 50)
+        if(visibility == View.VISIBLE) {
+            snackbar.show()
+        }
+
+        return snackbar
+    }
+
 }

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.appcasal.MainActivity
@@ -14,15 +15,18 @@ import br.com.appcasal.dao.AppDatabase
 import br.com.appcasal.dao.MetaDAO
 import br.com.appcasal.databinding.ActivityListaMetasBinding
 import br.com.appcasal.model.Meta
+import br.com.appcasal.model.TipoSnackbar
 import br.com.appcasal.ui.dialog.metas.AdicionaMetaDialog
 import br.com.appcasal.ui.dialog.metas.AlteraMetaDialog
-
+import br.com.appcasal.util.Util
 
 class ListaMetasActivity : AppCompatActivity(), ClickMeta {
 
     private lateinit var activityListaMetas: ActivityListaMetasBinding
+    private lateinit var clMetas: CoordinatorLayout
     private lateinit var adapter: ListaMetasAdapter
     private lateinit var rv: RecyclerView
+    private var util = Util()
 
     private lateinit var spinnerStatus: Spinner
 
@@ -56,6 +60,8 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
         metaDao = db.metaDao()
         metas = metaDao.buscaTodos()
 
+        clMetas = findViewById<CoordinatorLayout>(R.id.cl_lista_metas)
+
         setToolbar()
         configuraAdapter()
         configuraSpinner()
@@ -74,8 +80,6 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
 
         adapter = ListaMetasAdapter(metas, this, this)
         rv.adapter = adapter
-
-
     }
 
     private fun configuraSpinner() {
@@ -163,6 +167,7 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
         ) { _, _ ->
             metaDao.removeAll()
             atualizaMetas()
+            createSnackBar(TipoSnackbar.SUCESSO, resources.getString(R.string.metas_removidas_sucesso))
         }
 
         builder.setNegativeButton(
@@ -176,17 +181,9 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
     }
 
     private fun configuraFab() {
-        activityListaMetas.listaMetasAdiciona
+        activityListaMetas.fabAdicionaMeta
             .setOnClickListener {
                 chamaDialogDeAdicao()
-            }
-    }
-
-    private fun chamaDialogDeAdicao() {
-        AdicionaMetaDialog(viewGroupDaActivity, this)
-            .chama(null, false) { metaCriada ->
-                adiciona(metaCriada)
-                activityListaMetas.listaMetasAdicionaMenu.close(true)
             }
     }
 
@@ -213,11 +210,13 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
             1 -> {
                 metas[posicao].concluido = true
                 altera(metas[posicao])
+                createSnackBar(TipoSnackbar.SUCESSO, resources.getString(R.string.meta_concluida_sucesso))
             }
 
             2 -> {
                 remove(posicao)
                 adapter.notifyItemRemoved(posicao)
+                createSnackBar(TipoSnackbar.SUCESSO, resources.getString(R.string.meta_removida_sucesso))
             }
         }
 
@@ -230,10 +229,19 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
         atualizaMetas()
     }
 
+    private fun chamaDialogDeAdicao() {
+        AdicionaMetaDialog(viewGroupDaActivity, this)
+            .chama(null, false) { metaCriada ->
+                adiciona(metaCriada)
+                createSnackBar(TipoSnackbar.SUCESSO, resources.getString(R.string.meta_inserida_sucesso))
+            }
+    }
+
     private fun chamaDialogDeAlteracao(meta: Meta) {
         AlteraMetaDialog(viewGroupDaActivity, this)
             .chama(meta, meta.id, meta.concluido) { metaAlterada ->
                 altera(metaAlterada)
+                createSnackBar(TipoSnackbar.SUCESSO, resources.getString(R.string.meta_alterada_sucesso))
             }
     }
 
@@ -242,5 +250,7 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
         atualizaMetas()
     }
 
-
+    private fun createSnackBar(tipoSnackbar: TipoSnackbar, msg: String) {
+        util.createSnackBar(clMetas, msg, resources, tipoSnackbar)
+    }
 }

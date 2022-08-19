@@ -3,12 +3,10 @@ package br.com.appcasal.ui.activity.financas
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.alura.financask.extension.formataParaBrasileiro
@@ -19,9 +17,12 @@ import br.com.appcasal.dao.TransacaoDAO
 import br.com.appcasal.databinding.ActivityListaTransacoesBinding
 import br.com.appcasal.model.Resumo
 import br.com.appcasal.model.Tipo
+import br.com.appcasal.model.TipoSnackbar
 import br.com.appcasal.model.Transacao
 import br.com.appcasal.ui.dialog.financas.AdicionaTransacaoDialog
 import br.com.appcasal.ui.dialog.financas.AlteraTransacaoDialog
+import br.com.appcasal.util.Util
+import com.google.android.material.snackbar.Snackbar
 import java.math.BigDecimal
 
 class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
@@ -29,12 +30,16 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
     private lateinit var activityListaTransacoes: ActivityListaTransacoesBinding
     private lateinit var adapter: ListaTransacoesAdapter
     private lateinit var rv: RecyclerView
+    private var util = Util()
+    private lateinit var clTransacoes: CoordinatorLayout
+    private lateinit var snackbar: Snackbar
 
     private val corBiel = R.color.biel
     private val corMari = R.color.mari
     private val corZerada = R.color.white
 
     private var transacoes: List<Transacao> = Companion.transacoes
+
     companion object {
         private val transacoes: MutableList<Transacao> = mutableListOf()
     }
@@ -63,10 +68,21 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
         transacaoDao = db.transacaoDao()
         transacoes = transacaoDao.buscaTodos()
 
+        clTransacoes = findViewById<CoordinatorLayout>(R.id.cl_lista_transacoes)
+
         setToolbar()
         configuraAdapter()
         configuraResumo()
+
+        //instancia a snackbar
+        createSnackBar(
+            TipoSnackbar.SUCESSO,
+            resources.getString(R.string.transacao_inserida_sucesso),
+            View.GONE
+        )
+
         configuraFab()
+
     }
 
     private fun setToolbar() {
@@ -117,9 +133,9 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
         with(findViewById<TextView>(R.id.resumo_card_total)) {
             setTextColor(cor)
 
-            if(total.toDouble() > 0){
+            if (total.toDouble() > 0) {
                 text = "Mari deve " + total.formataParaBrasileiro() + " para Biel"
-            } else if(total.toDouble() < 0){
+            } else if (total.toDouble() < 0) {
                 text = "Biel deve " + normalizaRetornaValorPositivo(total) + " para Mari"
             } else {
                 text = "Tudo zerado !"
@@ -129,7 +145,7 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
         }
     }
 
-    private fun normalizaRetornaValorPositivo(total: BigDecimal) : String {
+    private fun normalizaRetornaValorPositivo(total: BigDecimal): String {
         val retorno = total * -BigDecimal.ONE
 
         return retorno.formataParaBrasileiro()
@@ -181,6 +197,12 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
         ) { _, _ ->
             transacaoDao.removeAll()
             atualizaTransacoes()
+            controlaCamposFab(View.INVISIBLE, true)
+            createSnackBar(
+                TipoSnackbar.SUCESSO,
+                resources.getString(R.string.transacoes_removidas_sucesso),
+                View.VISIBLE
+            )
         }
 
         builder.setNegativeButton(
@@ -194,21 +216,59 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
     }
 
     private fun configuraFab() {
+
+        activityListaTransacoes.fabAdicionaTransacao
+            .setOnClickListener {
+                snackbar.dismiss()
+                activityListaTransacoes.fabAdicionaTransacaoClose.visibility = View.VISIBLE
+                it.visibility = View.GONE
+                controlaCamposFab(View.VISIBLE, false)
+            }
+
+        activityListaTransacoes.fabAdicionaTransacaoClose
+            .setOnClickListener {
+                activityListaTransacoes.fabAdicionaTransacao.visibility = View.VISIBLE
+                it.visibility = View.GONE
+                controlaCamposFab(View.GONE, false)
+            }
+
         activityListaTransacoes.listaTransacoesAdicionaSaldoBiel
             .setOnClickListener {
                 chamaDialogDeAdicao(Tipo.BIEL)
+                controlaCamposFab(View.GONE, true)
             }
+
+        activityListaTransacoes.tvAdicionaLctoBiel
+            .setOnClickListener {
+                chamaDialogDeAdicao(Tipo.BIEL)
+                controlaCamposFab(View.GONE, true)
+            }
+
         activityListaTransacoes.listaTransacoesAdicionaSaldoMari.setOnClickListener {
             chamaDialogDeAdicao(Tipo.MARI)
+            controlaCamposFab(View.GONE, true)
+        }
+
+        activityListaTransacoes.tvAdicionaLctoMari.setOnClickListener {
+            chamaDialogDeAdicao(Tipo.MARI)
+            controlaCamposFab(View.GONE, true)
         }
     }
 
-    private fun chamaDialogDeAdicao(tipo: Tipo) {
-        AdicionaTransacaoDialog(viewGroupDaActivity, this)
-            .chama(tipo, null) { transacaoCriada ->
-                adiciona(transacaoCriada)
-                activityListaTransacoes.listaTransacoesAdicionaMenu.close(true)
-            }
+    private fun controlaCamposFab(valor: Int, resetVisibilidadeFabsPrincipais: Boolean) {
+        if (resetVisibilidadeFabsPrincipais) {
+            resetVisibilidadeFabsPrincipais()
+        }
+
+        activityListaTransacoes.listaTransacoesAdicionaSaldoBiel.visibility = valor
+        activityListaTransacoes.listaTransacoesAdicionaSaldoMari.visibility = valor
+        activityListaTransacoes.tvAdicionaLctoBiel.visibility = valor
+        activityListaTransacoes.tvAdicionaLctoMari.visibility = valor
+    }
+
+    private fun resetVisibilidadeFabsPrincipais() {
+        activityListaTransacoes.fabAdicionaTransacao.visibility = View.VISIBLE
+        activityListaTransacoes.fabAdicionaTransacaoClose.visibility = View.GONE
     }
 
     private fun adiciona(transacao: Transacao) {
@@ -234,6 +294,13 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
             1 -> {
                 remove(posicao)
                 adapter.notifyItemRemoved(posicao)
+
+                controlaCamposFab(View.INVISIBLE, true)
+                createSnackBar(
+                    TipoSnackbar.SUCESSO,
+                    resources.getString(R.string.transacao_removida_sucesso),
+                    View.VISIBLE
+                )
             }
         }
 
@@ -246,10 +313,28 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
         atualizaTransacoes()
     }
 
+    private fun chamaDialogDeAdicao(tipo: Tipo) {
+        AdicionaTransacaoDialog(viewGroupDaActivity, this)
+            .chama(tipo, null) { transacaoCriada ->
+                adiciona(transacaoCriada)
+                createSnackBar(
+                    TipoSnackbar.SUCESSO,
+                    resources.getString(R.string.transacao_inserida_sucesso),
+                    View.VISIBLE
+                )
+            }
+    }
+
     private fun chamaDialogDeAlteracao(transacao: Transacao) {
         AlteraTransacaoDialog(viewGroupDaActivity, this)
             .chama(transacao, transacao.id) { transacaoAlterada ->
                 altera(transacaoAlterada)
+                controlaCamposFab(View.INVISIBLE, true)
+                createSnackBar(
+                    TipoSnackbar.SUCESSO,
+                    resources.getString(R.string.transacao_alterada_sucesso),
+                    View.VISIBLE
+                )
             }
     }
 
@@ -258,5 +343,8 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
         atualizaTransacoes()
     }
 
-
+    private fun createSnackBar(tipoSnackbar: TipoSnackbar, msg: String, visibility: Int) {
+        snackbar =
+            util.createSnackBarWithReturn(clTransacoes, msg, resources, tipoSnackbar, visibility)
+    }
 }

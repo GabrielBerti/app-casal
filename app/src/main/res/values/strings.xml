@@ -1,25 +1,10 @@
 <resources>
+    <!--geral-->
     <string name="app_name">App Casal</string>
     <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-
-    <string name="app_bar">App do Casal</string>
-
+    <!--modulo financas-->
     <string name="financas">Finanças</string>
-    <string name="viagens">Viagens</string>
-    <string name="metas">Metas</string>
-    <string name="receitas">Receitas</string>
-    <string name="adicionar_receita">Adicionar receita</string>
-    <string name="ingredientes">Ingredientes</string>
-    <string name="ingredientes_lista_compra">Ingredientes(compras)</string>
-    <string name="desmarcar_tudo">Desmarcar tudo</string>
     <string name="biel">Biel</string>
     <string name="mari">Mari</string>
     <string name="total">Total</string>
@@ -28,21 +13,30 @@
     <string name="descricao">Descrição</string>
     <string name="descricao_hint">Descrição do lançamento</string>
     <string name="descricao_meta_hint">Descrição da meta</string>
-    <string name="descricao_ingrediente_hint">Descrição do ingrediente</string>
     <string name="adiciona_lancamento_biel">Adiciona lançamento Biel</string>
     <string name="adiciona_lancamento_mari">Adiciona lançamento Mari</string>
-    <string name="adiciona_meta">Adiciona meta</string>
-    <string name="adiciona_receita">Adiciona receita</string>
-    <string name="adiciona_ingrediente">Adiciona ingrediente</string>
     <string name="altera_lancamento_biel">Altera Lançamento</string>
     <string name="altera_lancamento_mari">Altera Lançamento</string>
+    <string name="transacao_inserida_sucesso">Transação inserida com sucesso !</string>
+    <string name="transacao_alterada_sucesso">Transação alterada com sucesso !</string>
+    <string name="transacao_removida_sucesso">Transação removida com sucesso !</string>
+    <string name="transacoes_removidas_sucesso">Transações removidas com sucesso !</string>
+
+    <!--modulo metas-->
+    <string name="metas">Metas</string>
     <string name="altera_meta">Altera meta</string>
-    <string name="altera_receita">Alterar receita</string>
-    <string name="detalhe_receita">Detalhe receita</string>
-    <string name="altera_ingrediente">Altera ingrediente</string>
     <string name="meta_concluida">Concluída</string>
     <string name="meta_nao_concluida">A fazer</string>
     <string name="todas">Todas</string>
+    <string name="adiciona_meta">Adiciona meta</string>
+    <string name="meta_inserida_sucesso">Meta inserida com sucesso !</string>
+    <string name="meta_alterada_sucesso">Meta alterada com sucesso !</string>
+    <string name="meta_removida_sucesso">Meta removida com sucesso !</string>
+    <string name="metas_removidas_sucesso">Metas removidas com sucesso !</string>
+    <string name="meta_concluida_sucesso">Meta concluída com sucesso !</string>
+
+    <!--modulo receitas-->
+    <string name="receitas">Receitas</string>
     <string name="nome_receita">Nome da receita</string>
     <string name="modo_preparo">Modo de preparo</string>
     <string name="inserir_ingrediente">Inserir ingrediente</string>
@@ -51,8 +45,22 @@
     <string name="receita_alterada_sucesso">Receita alterada com sucesso !</string>
     <string name="receita_removida_sucesso">Receita removida com sucesso !</string>
     <string name="receitas_removidas_sucesso">Receitas removidas com sucesso !</string>
+    <string name="altera_receita">Alterar receita</string>
+    <string name="detalhe_receita">Detalhe receita</string>
+    <string name="altera_ingrediente">Altera ingrediente</string>
+    <string name="descricao_ingrediente_hint">Descrição do ingrediente</string>
+    <string name="adicionar_receita">Adicionar receita</string>
+    <string name="ingredientes">Ingredientes</string>
+    <string name="ingredientes_lista_compra">Ingredientes(compras)</string>
+    <string name="adiciona_receita">Adiciona receita</string>
+    <string name="adiciona_ingrediente">Adiciona ingrediente</string>
+    <string name="desmarcar_tudo">Desmarcar tudo</string>
     <string name="fechar">Fechar</string>
 
+    <!--modulo viagens-->
+    <string name="viagens">Viagens</string>
+
+    <!--exemplo de array-->
     <string-array name="lista_status">
         <item>Concluído</item>
         <item>A fazer</item>
