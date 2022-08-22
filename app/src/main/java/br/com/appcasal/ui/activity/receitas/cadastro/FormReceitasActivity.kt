@@ -2,12 +2,8 @@ package br.com.appcasal.ui.activity.receitas.cadastro
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,9 +14,11 @@ import br.com.appcasal.dao.ReceitaDAO
 import br.com.appcasal.databinding.ActivityFormReceitasBinding
 import br.com.appcasal.model.Ingrediente
 import br.com.appcasal.model.Receita
+import br.com.appcasal.model.TipoSnackbar
 import br.com.appcasal.ui.activity.receitas.ListaReceitasActivity
 import br.com.appcasal.ui.dialog.ingredientes.AdicionaIngredienteDialog
 import br.com.appcasal.ui.dialog.ingredientes.AlteraIngredienteDialog
+import br.com.appcasal.util.Util
 
 class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
 
@@ -28,6 +26,7 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
     private lateinit var adapter: ListaIngredientesAdapter
     private lateinit var rv: RecyclerView
     private var receitaId: Long = 0L
+    private var util = Util()
     private lateinit var receitaNome: TextView
     private lateinit var receitaDescricao: TextView
 
@@ -100,32 +99,51 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
 
         activityFormReceitas.btnSalvarReceita.setOnClickListener() {
 
-            //salva ou altera receita
-            if (isUpdated(receitaId)) {
-                receitaDAO.altera(
-                    Receita(
-                        receitaId,
-                        receitaNome.text.toString(),
-                        receitaDescricao.text.toString()
+            if(isValidForm()) {
+                //salva ou altera receita
+                if (isUpdated(receitaId)) {
+                    receitaDAO.altera(
+                        Receita(
+                            receitaId,
+                            receitaNome.text.toString(),
+                            receitaDescricao.text.toString()
+                        )
                     )
-                )
+                } else {
+                    receitaDAO.adiciona(
+                        Receita(
+                            receitaId,
+                            receitaNome.text.toString(),
+                            receitaDescricao.text.toString()
+                        )
+                    )
+                }
+
+                val ultimaReceitaInserida = receitaDAO.buscaUltimaReceitaInserida()
+                insereIngredientes(ultimaReceitaInserida.id)
+
+                val intent = Intent()
+                setResult(ListaReceitasActivity.retornoSucesso, intent)
+                finish()
             } else {
-                receitaDAO.adiciona(
-                    Receita(
-                        receitaId,
-                        receitaNome.text.toString(),
-                        receitaDescricao.text.toString()
-                    )
+                createSnackBar(
+                    TipoSnackbar.ERRO,
+                    resources.getString(R.string.campos_receita_obrigatorios),
                 )
             }
-
-            val ultimaReceitaInserida = receitaDAO.buscaUltimaReceitaInserida()
-            insereIngredientes(ultimaReceitaInserida.id)
-
-            val intent = Intent()
-            setResult(ListaReceitasActivity.retornoSucesso, intent)
-            finish()
         }
+    }
+
+    private fun createSnackBar(tipoSnackbar: TipoSnackbar, msg: String) {
+            util.createSnackBar(receitaNome, msg, resources, tipoSnackbar)
+    }
+
+    private fun isValidForm(): Boolean {
+        if(receitaNome.text.toString().isNullOrBlank() || ingredientes.size == 0){
+            return false
+        }
+
+        return true
     }
 
     private fun insereIngredientes(receitaId: Long) {

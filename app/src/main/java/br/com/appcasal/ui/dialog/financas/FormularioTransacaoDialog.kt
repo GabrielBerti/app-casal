@@ -33,16 +33,25 @@ abstract class FormularioTransacaoDialog(
     private fun configuraFormulario(tipo: Tipo, id: Long?, delegate: (transacao: Transacao) -> Unit) {
         val titulo = tituloPor(tipo)
 
-        AlertDialog.Builder(context)
+        val dialog = AlertDialog.Builder(context)
             .setTitle(titulo)
             .setView(viewCriada)
             .setPositiveButton(tituloBotaoPositivo
             ) { _, _ ->
 
-                val valorEmTexto = campoValor.text.toString()
-                val dataEmTexto = campoData.text.toString()
-                val descricaoEmTexto = campoDescricao.text.toString()
 
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
+
+        val button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+        button.setOnClickListener() {
+
+            val valorEmTexto = campoValor.text.toString()
+            val dataEmTexto = campoData.text.toString()
+            val descricaoEmTexto = campoDescricao.text.toString()
+
+            if (isValidForm(descricaoEmTexto, valorEmTexto)) {
                 val valor = converteCampoValor(valorEmTexto)
                 val data = dataEmTexto//.converteParaCalendar()
 
@@ -66,9 +75,29 @@ abstract class FormularioTransacaoDialog(
                 }
 
                 delegate(transacaoCriada)
+                dialog.dismiss()
+            } else {
+                setError(descricaoEmTexto, valorEmTexto)
             }
-            .setNegativeButton("Cancelar", null)
-            .show()
+        }
+    }
+
+    private fun setError(descricao: String, valor: String) {
+        if (descricao.isNullOrBlank()) {
+            campoDescricao.error = context.getString(R.string.descricao_financas_obrigatorio)
+        }
+
+        if(valor.isNullOrBlank()) {
+            campoValor.error = context.getString(R.string.descricao_financas_obrigatorio)
+        }
+    }
+
+    private fun isValidForm(descricao: String, valor: String): Boolean {
+        if(descricao.isNullOrBlank() || valor.isNullOrBlank()) {
+            return false
+        }
+
+        return true
     }
 
     abstract protected fun tituloPor(tipo: Tipo): Int

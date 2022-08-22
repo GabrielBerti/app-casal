@@ -27,23 +27,30 @@ abstract class FormularioMetaDialog(
     private fun configuraFormulario(id: Long?, concluido: Boolean, delegate: (meta: Meta) -> Unit) {
         val titulo = tituloPor()
 
-        AlertDialog.Builder(context)
+        val dialog = AlertDialog.Builder(context)
             .setTitle(titulo)
             .setView(viewCriada)
             .setPositiveButton(tituloBotaoPositivo
             ) { _, _ ->
 
-                val descricaoEmTexto = campoDescricao.text.toString()
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
 
+        val button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+        button.setOnClickListener() {
+            val descricaoEmTexto = campoDescricao.text.toString()
+
+            if (!descricaoEmTexto.isNullOrBlank()) {
                 var metaCriada: Meta
 
-                if(id == null) {
-                    metaCriada = Meta(
+                metaCriada = if (id == null) {
+                    Meta(
                         descricao = descricaoEmTexto,
                         concluido = false
                     )
                 } else {
-                    metaCriada = Meta(
+                    Meta(
                         id = id,
                         descricao = descricaoEmTexto,
                         concluido = concluido
@@ -53,11 +60,12 @@ abstract class FormularioMetaDialog(
                 util.hideKeyboard(campoDescricao, context)
 
                 delegate(metaCriada)
+                dialog.dismiss()
+            } else {
+                campoDescricao.error = context.getString(R.string.descricao_obrigatorio)
             }
-            .setNegativeButton("Cancelar", null)
-            .show()
+        }
     }
-
 
     abstract protected fun tituloPor(): Int
 

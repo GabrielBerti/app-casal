@@ -21,6 +21,8 @@
     <string name="transacao_alterada_sucesso">Transação alterada com sucesso !</string>
     <string name="transacao_removida_sucesso">Transação removida com sucesso !</string>
     <string name="transacoes_removidas_sucesso">Transações removidas com sucesso !</string>
+    <string name="descricao_financas_obrigatorio">"Campo descrição obrigatório"</string>
+    <string name="valor_obrigatorio">"Campo valor obrigatório"</string>
 
     <!--modulo metas-->
     <string name="metas">Metas</string>
@@ -34,6 +36,7 @@
     <string name="meta_removida_sucesso">Meta removida com sucesso !</string>
     <string name="metas_removidas_sucesso">Metas removidas com sucesso !</string>
     <string name="meta_concluida_sucesso">Meta concluída com sucesso !</string>
+    <string name="descricao_obrigatorio">"Campo descrição obrigatório"</string>
 
     <!--modulo receitas-->
     <string name="receitas">Receitas</string>
@@ -56,6 +59,7 @@
     <string name="adiciona_ingrediente">Adiciona ingrediente</string>
     <string name="desmarcar_tudo">Desmarcar tudo</string>
     <string name="fechar">Fechar</string>
+    <string name="campos_receita_obrigatorios">Nome da receita e ao menos um ingrediente são obrigatórios</string>
 
     <!--modulo viagens-->
     <string name="viagens">Viagens</string>

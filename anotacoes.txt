@@ -1,4 +1,3 @@
--- validacao de campos(com snack bar de erro) em todos modulos
 -- trocar botao inserir ingrediente por FAB ?? (video no celular)
 -- alterar dashboard(video no celular)
 

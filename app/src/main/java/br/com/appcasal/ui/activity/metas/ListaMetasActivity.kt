@@ -95,12 +95,17 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
 
         spinnerStatus.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, posicao: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                posicao: Int,
+                id: Long
+            ) {
 
                 //val text = parent!!.getChildAt(0) as TextView
                 //text.setTextColor(getResources().getColor(R.color.white))
 
-                when(posicao) {
+                when (posicao) {
                     0 -> {
                         metas = metaDao.buscaTodos()
                     }
@@ -167,7 +172,10 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
         ) { _, _ ->
             metaDao.removeAll()
             atualizaMetas()
-            createSnackBar(TipoSnackbar.SUCESSO, resources.getString(R.string.metas_removidas_sucesso))
+            createSnackBar(
+                TipoSnackbar.SUCESSO,
+                resources.getString(R.string.metas_removidas_sucesso)
+            )
         }
 
         builder.setNegativeButton(
@@ -210,13 +218,19 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
             1 -> {
                 metas[posicao].concluido = true
                 altera(metas[posicao])
-                createSnackBar(TipoSnackbar.SUCESSO, resources.getString(R.string.meta_concluida_sucesso))
+                createSnackBar(
+                    TipoSnackbar.SUCESSO,
+                    resources.getString(R.string.meta_concluida_sucesso)
+                )
             }
 
             2 -> {
                 remove(posicao)
                 adapter.notifyItemRemoved(posicao)
-                createSnackBar(TipoSnackbar.SUCESSO, resources.getString(R.string.meta_removida_sucesso))
+                createSnackBar(
+                    TipoSnackbar.SUCESSO,
+                    resources.getString(R.string.meta_removida_sucesso)
+                )
             }
         }
 
@@ -233,7 +247,10 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
         AdicionaMetaDialog(viewGroupDaActivity, this)
             .chama(null, false) { metaCriada ->
                 adiciona(metaCriada)
-                createSnackBar(TipoSnackbar.SUCESSO, resources.getString(R.string.meta_inserida_sucesso))
+                createSnackBar(
+                    TipoSnackbar.SUCESSO,
+                    resources.getString(R.string.meta_inserida_sucesso)
+                )
             }
     }
 
@@ -241,7 +258,10 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
         AlteraMetaDialog(viewGroupDaActivity, this)
             .chama(meta, meta.id, meta.concluido) { metaAlterada ->
                 altera(metaAlterada)
-                createSnackBar(TipoSnackbar.SUCESSO, resources.getString(R.string.meta_alterada_sucesso))
+                createSnackBar(
+                    TipoSnackbar.SUCESSO,
+                    resources.getString(R.string.meta_alterada_sucesso)
+                )
             }
     }
 
