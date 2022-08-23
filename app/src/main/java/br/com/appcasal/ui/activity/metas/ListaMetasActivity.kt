@@ -244,7 +244,7 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
     }
 
     private fun chamaDialogDeAdicao() {
-        AdicionaMetaDialog(viewGroupDaActivity, this)
+        AdicionaMetaDialog(viewGroupDaActivity, this, metas)
             .chama(null, false) { metaCriada ->
                 adiciona(metaCriada)
                 createSnackBar(
@@ -255,7 +255,7 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
     }
 
     private fun chamaDialogDeAlteracao(meta: Meta) {
-        AlteraMetaDialog(viewGroupDaActivity, this)
+        AlteraMetaDialog(viewGroupDaActivity, this, metas)
             .chama(meta, meta.id, meta.concluido) { metaAlterada ->
                 altera(metaAlterada)
                 createSnackBar(

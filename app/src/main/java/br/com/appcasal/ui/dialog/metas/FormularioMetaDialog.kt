@@ -12,7 +12,8 @@ import br.com.appcasal.util.Util
 
 abstract class FormularioMetaDialog(
         private val context: Context,
-        private val viewGroup: ViewGroup) {
+        private val viewGroup: ViewGroup,
+        private val metas: List<Meta>) {
 
     private var util = Util()
     private val viewCriada = criaLayout()
@@ -41,10 +42,12 @@ abstract class FormularioMetaDialog(
         button.setOnClickListener() {
             val descricaoEmTexto = campoDescricao.text.toString()
 
-            if (!descricaoEmTexto.isNullOrBlank()) {
-                var metaCriada: Meta
-
-                metaCriada = if (id == null) {
+            if(descricaoEmTexto.isNullOrBlank()) {
+                campoDescricao.error = context.getString(R.string.descricao_obrigatorio)
+            } else if (verificaMetaComMesmaDescricao(descricaoEmTexto)) {
+                campoDescricao.error = context.getString(R.string.descricao_meta_ja_existe)
+            } else {
+                var metaCriada: Meta = if (id == null) {
                     Meta(
                         descricao = descricaoEmTexto,
                         concluido = false
@@ -61,10 +64,17 @@ abstract class FormularioMetaDialog(
 
                 delegate(metaCriada)
                 dialog.dismiss()
-            } else {
-                campoDescricao.error = context.getString(R.string.descricao_obrigatorio)
             }
         }
+    }
+
+    private fun verificaMetaComMesmaDescricao(descricaoMeta: String): Boolean {
+        metas.forEach() {
+            if(it.descricao == descricaoMeta) {
+                return true
+            }
+        }
+        return false
     }
 
     abstract protected fun tituloPor(): Int

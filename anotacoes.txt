@@ -1,5 +1,7 @@
 -- trocar botao inserir ingrediente por FAB ?? (video no celular)
 -- alterar dashboard(video no celular)
+-- deixar descricao do ingrediente obrigatoria
+-- opcao de desconcluir a meta
 
 
 

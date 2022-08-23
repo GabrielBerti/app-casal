@@ -3,11 +3,13 @@ package br.com.appcasal.ui.dialog.metas
 import android.content.Context
 import android.view.ViewGroup
 import br.com.appcasal.R
+import br.com.appcasal.model.Meta
 
 class AdicionaMetaDialog(
-        viewGroup: ViewGroup,
-        context: Context
-) : FormularioMetaDialog(context,  viewGroup) {
+    viewGroup: ViewGroup,
+    context: Context,
+    metas: List<Meta>
+) : FormularioMetaDialog(context,  viewGroup, metas) {
 
     override val tituloBotaoPositivo: String
         get() = "Adicionar"

@@ -37,6 +37,7 @@
     <string name="metas_removidas_sucesso">Metas removidas com sucesso !</string>
     <string name="meta_concluida_sucesso">Meta concluída com sucesso !</string>
     <string name="descricao_obrigatorio">"Campo descrição obrigatório"</string>
+    <string name="descricao_meta_ja_existe">"Esta meta já existe!"</string>
 
     <!--modulo receitas-->
     <string name="receitas">Receitas</string>
@@ -60,6 +61,7 @@
     <string name="desmarcar_tudo">Desmarcar tudo</string>
     <string name="fechar">Fechar</string>
     <string name="campos_receita_obrigatorios">Nome da receita e ao menos um ingrediente são obrigatórios</string>
+    <string name="receita_ja_existe">"Esta receita já existe!"</string>
 
     <!--modulo viagens-->
     <string name="viagens">Viagens</string>

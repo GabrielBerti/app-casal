@@ -7,8 +7,9 @@ import br.com.appcasal.model.Meta
 
 class AlteraMetaDialog(
         viewGroup: ViewGroup,
-        private val context: Context
-) : FormularioMetaDialog(context, viewGroup) {
+        private val context: Context,
+        metas: List<Meta>
+) : FormularioMetaDialog(context, viewGroup, metas) {
 
     override val tituloBotaoPositivo: String
         get() = "Alterar"

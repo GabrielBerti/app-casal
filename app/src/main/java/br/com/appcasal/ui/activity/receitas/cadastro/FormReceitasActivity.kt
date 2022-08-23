@@ -99,39 +99,48 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
 
         activityFormReceitas.btnSalvarReceita.setOnClickListener() {
 
-            if(isValidForm()) {
-                //salva ou altera receita
-                if (isUpdated(receitaId)) {
-                    receitaDAO.altera(
-                        Receita(
-                            receitaId,
-                            receitaNome.text.toString(),
-                            receitaDescricao.text.toString()
-                        )
-                    )
-                } else {
-                    receitaDAO.adiciona(
-                        Receita(
-                            receitaId,
-                            receitaNome.text.toString(),
-                            receitaDescricao.text.toString()
-                        )
-                    )
-                }
-
-                val ultimaReceitaInserida = receitaDAO.buscaUltimaReceitaInserida()
-                insereIngredientes(ultimaReceitaInserida.id)
-
-                val intent = Intent()
-                setResult(ListaReceitasActivity.retornoSucesso, intent)
-                finish()
-            } else {
+            if(!isValidForm()){
                 createSnackBar(
                     TipoSnackbar.ERRO,
                     resources.getString(R.string.campos_receita_obrigatorios),
                 )
+            } else if (verificaReceitaComMesmoNome(receitaId, receitaNome.text.toString())) {
+                createSnackBar(
+                    TipoSnackbar.ERRO,
+                    resources.getString(R.string.receita_ja_existe),
+                )
+            } else {
+                //salva ou altera receita
+                salvaReceita()
             }
         }
+    }
+
+    private fun salvaReceita() {
+        if (isUpdated(receitaId)) {
+            receitaDAO.altera(
+                Receita(
+                    receitaId,
+                    receitaNome.text.toString(),
+                    receitaDescricao.text.toString()
+                )
+            )
+        } else {
+            receitaDAO.adiciona(
+                Receita(
+                    receitaId,
+                    receitaNome.text.toString(),
+                    receitaDescricao.text.toString()
+                )
+            )
+        }
+
+        val ultimaReceitaInserida = receitaDAO.buscaUltimaReceitaInserida()
+        insereIngredientes(ultimaReceitaInserida.id)
+
+        val intent = Intent()
+        setResult(ListaReceitasActivity.retornoSucesso, intent)
+        finish()
     }
 
     private fun createSnackBar(tipoSnackbar: TipoSnackbar, msg: String) {
@@ -144,6 +153,28 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
         }
 
         return true
+    }
+
+    private fun verificaReceitaComMesmoNome(receitaId: Long, receitaNome: String): Boolean {
+
+        val todasReceitas = receitaDAO.buscaTodos()
+        var count: Int = 0
+        val isUpdated = isUpdated(receitaId)
+
+        todasReceitas.forEach() {
+            if(it.nome == receitaNome) {
+                count += 1
+            }
+        }
+
+        // se nao encotrou nenhuma receita com o mesmo nome retorna false
+        if (count == 0) return false
+        // se for inserção e encotrou receita com o mesmo nome retorna true
+        if (!isUpdated && count > 0) return true
+        // se for alteracão e encotrou receita com o mesmo nome e esse nome nao é o mesmo da receita carregada retorna true
+        if(isUpdated && count > 0) return receitaNome != receitaSelected[0].nome
+
+        return false
     }
 
     private fun insereIngredientes(receitaId: Long) {
