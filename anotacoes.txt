@@ -1,8 +1,6 @@
 -- trocar botao inserir ingrediente por FAB ?? (video no celular)
 -- alterar dashboard(video no celular)
--- deixar descricao do ingrediente obrigatoria
--- opcao de desconcluir a meta
-
+-- colocar nome do obj na snackbar
 
 
 -- quando der erro de server(Invocation failed Unexpected end of file from server):
