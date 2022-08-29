@@ -34,10 +34,11 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
     companion object {
         private val receitas: MutableList<Receita> = mutableListOf()
         val retornoSucesso = 100
-        val INSERT = "INSERT"
-        val UPDATE = "UPDATE"
-        var insertOrUpdate = ""
-        var msgSnackBar: String = ""
+        private val INSERT = "INSERT"
+        var nomeReceitaInserida = ""
+        private val UPDATE = "UPDATE"
+        private var insertOrUpdate = ""
+        private var msgSnackBar: String = ""
     }
 
     private val db by lazy {
@@ -53,8 +54,8 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
         if (result.resultCode == retornoSucesso) {
             isOnResume = true
 
-            msgSnackBar = if(insertOrUpdate == INSERT) {
-                resources.getString(R.string.receita_inserida_sucesso)
+            msgSnackBar = if (insertOrUpdate == INSERT) {
+                resources.getString(R.string.receita_inserida_sucesso, nomeReceitaInserida)
             } else {
                 resources.getString(R.string.receita_alterada_sucesso)
             }
@@ -146,7 +147,10 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
             "Sim"
         ) { _, _ ->
             removeTodasReceitas()
-            createSnackBar(TipoSnackbar.SUCESSO, resources.getString(R.string.receitas_removidas_sucesso))
+            createSnackBar(
+                TipoSnackbar.SUCESSO,
+                resources.getString(R.string.receitas_removidas_sucesso)
+            )
         }
 
         builder.setNegativeButton(
@@ -182,9 +186,13 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
             }
 
             2 -> {
+                val nomeReceitaRemovida = receitas[posicao].nome
                 remove(posicao)
                 adapter.notifyItemRemoved(posicao)
-                createSnackBar(TipoSnackbar.SUCESSO, resources.getString(R.string.receita_removida_sucesso))
+                createSnackBar(
+                    TipoSnackbar.SUCESSO,
+                    resources.getString(R.string.receita_removida_sucesso, nomeReceitaRemovida)
+                )
             }
         }
 

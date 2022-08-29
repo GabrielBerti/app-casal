@@ -1,6 +1,6 @@
 -- trocar botao inserir ingrediente por FAB ?? (video no celular)
 -- alterar dashboard(video no celular)
--- colocar nome do obj na snackbar
+-- adicionar opacidade ao inserir transacao e um padding geral de 10dp nas transacoes
 
 
 -- quando der erro de server(Invocation failed Unexpected end of file from server):

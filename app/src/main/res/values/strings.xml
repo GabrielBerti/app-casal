@@ -17,9 +17,9 @@
     <string name="adiciona_lancamento_mari">Adiciona lançamento Mari</string>
     <string name="altera_lancamento_biel">Altera Lançamento</string>
     <string name="altera_lancamento_mari">Altera Lançamento</string>
-    <string name="transacao_inserida_sucesso">Transação inserida com sucesso !</string>
+    <string name="transacao_inserida_sucesso">Transação %s inserida com sucesso !</string>
     <string name="transacao_alterada_sucesso">Transação alterada com sucesso !</string>
-    <string name="transacao_removida_sucesso">Transação removida com sucesso !</string>
+    <string name="transacao_removida_sucesso">Transação %s removida com sucesso !</string>
     <string name="transacoes_removidas_sucesso">Transações removidas com sucesso !</string>
     <string name="descricao_financas_obrigatorio">"Campo descrição obrigatório"</string>
     <string name="valor_obrigatorio">"Campo valor obrigatório"</string>
@@ -31,9 +31,9 @@
     <string name="meta_nao_concluida">A fazer</string>
     <string name="todas">Todas</string>
     <string name="adiciona_meta">Adiciona meta</string>
-    <string name="meta_inserida_sucesso">Meta inserida com sucesso !</string>
+    <string name="meta_inserida_sucesso" formatted="false">Meta %s inserida com sucesso !</string>
     <string name="meta_alterada_sucesso">Meta alterada com sucesso !</string>
-    <string name="meta_removida_sucesso">Meta removida com sucesso !</string>
+    <string name="meta_removida_sucesso">Meta %s removida com sucesso !</string>
     <string name="metas_removidas_sucesso">Metas removidas com sucesso !</string>
     <string name="meta_concluida_sucesso">Meta concluída com sucesso !</string>
     <string name="meta_desconcluida_sucesso">Meta desconcluída com sucesso !</string>
@@ -46,9 +46,9 @@
     <string name="modo_preparo">Modo de preparo</string>
     <string name="inserir_ingrediente">Inserir ingrediente</string>
     <string name="salvar_receita">Salvar receita</string>
-    <string name="receita_inserida_sucesso">Receita inserida com sucesso !</string>
+    <string name="receita_inserida_sucesso">Receita %s inserida com sucesso !</string>
     <string name="receita_alterada_sucesso">Receita alterada com sucesso !</string>
-    <string name="receita_removida_sucesso">Receita removida com sucesso !</string>
+    <string name="receita_removida_sucesso">Receita %s removida com sucesso !</string>
     <string name="receitas_removidas_sucesso">Receitas removidas com sucesso !</string>
     <string name="altera_receita">Alterar receita</string>
     <string name="detalhe_receita">Detalhe receita</string>

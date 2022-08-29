@@ -234,11 +234,12 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
             }
 
             2 -> {
+                val descricaoMetaRemovida = metas[posicao].descricao
                 remove(posicao)
                 adapter.notifyItemRemoved(posicao)
                 createSnackBar(
                     TipoSnackbar.SUCESSO,
-                    resources.getString(R.string.meta_removida_sucesso)
+                    resources.getString(R.string.meta_removida_sucesso, descricaoMetaRemovida)
                 )
             }
         }
@@ -258,7 +259,7 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
                 adiciona(metaCriada)
                 createSnackBar(
                     TipoSnackbar.SUCESSO,
-                    resources.getString(R.string.meta_inserida_sucesso)
+                    resources.getString(R.string.meta_inserida_sucesso, metaCriada.descricao)
                 )
             }
     }

@@ -292,13 +292,14 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
 
         when(item.itemId) {
             1 -> {
+                val descricaoTransacaoRemovida = transacoes[posicao].descricao
                 remove(posicao)
                 adapter.notifyItemRemoved(posicao)
 
                 controlaCamposFab(View.INVISIBLE, true)
                 createSnackBar(
                     TipoSnackbar.SUCESSO,
-                    resources.getString(R.string.transacao_removida_sucesso),
+                    resources.getString(R.string.transacao_removida_sucesso, descricaoTransacaoRemovida),
                     View.VISIBLE
                 )
             }
@@ -319,7 +320,7 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
                 adiciona(transacaoCriada)
                 createSnackBar(
                     TipoSnackbar.SUCESSO,
-                    resources.getString(R.string.transacao_inserida_sucesso),
+                    resources.getString(R.string.transacao_inserida_sucesso, transacaoCriada.descricao),
                     View.VISIBLE
                 )
             }

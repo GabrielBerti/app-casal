@@ -126,6 +126,8 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
                 )
             )
         } else {
+            ListaReceitasActivity.nomeReceitaInserida = receitaNome.text.toString()
+
             receitaDAO.adiciona(
                 Receita(
                     receitaId,
