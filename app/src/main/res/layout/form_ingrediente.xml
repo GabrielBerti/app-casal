@@ -15,13 +15,12 @@
             android:id="@+id/descricao_ingrediente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/descricao_ingrediente_hint"
+            android:hint="@string/nome_ingrediente_hint"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="30dp"
             android:background="?attr/colorButtonNormal"
             android:imeOptions="actionDone"
             android:inputType="text" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
-
 </LinearLayout>

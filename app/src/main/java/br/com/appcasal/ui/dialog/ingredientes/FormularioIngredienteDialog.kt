@@ -13,7 +13,8 @@ import br.com.appcasal.util.Util
 
 abstract class FormularioIngredienteDialog(
     private val context: Context,
-    private val viewGroup: ViewGroup) {
+    private val viewGroup: ViewGroup
+) {
 
     private var util = Util()
     private val viewCriada = criaLayout()
@@ -24,27 +25,40 @@ abstract class FormularioIngredienteDialog(
         configuraFormulario(id, idReceita, delegate)
     }
 
-    private fun configuraFormulario(id: Long?, idReceita: Long, delegate: (ingrediente: Ingrediente) -> Unit) {
+    private fun configuraFormulario(
+        id: Long?,
+        idReceita: Long,
+        delegate: (ingrediente: Ingrediente) -> Unit
+    ) {
         val titulo = tituloPor()
 
-        AlertDialog.Builder(context)
+        val dialog = AlertDialog.Builder(context)
             .setTitle(titulo)
             .setView(viewCriada)
-            .setPositiveButton(tituloBotaoPositivo
+            .setPositiveButton(
+                tituloBotaoPositivo
             ) { _, _ ->
 
-                val campoDescricaoIngredienteEmTexto = campoDescricaoIngrediente.text.toString()
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
 
-                var ingredienteCriado: Ingrediente
+        val button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+        button.setOnClickListener() {
+            val campoDescricaoIngredienteEmTexto = campoDescricaoIngrediente.text.toString()
 
-                if(id == null) {
-                    ingredienteCriado = Ingrediente(
+            if (campoDescricaoIngredienteEmTexto.isNullOrBlank()) {
+                campoDescricaoIngrediente.error =
+                    context.getString(R.string.nome_ingrediente_obrigatorio)
+            } else {
+                val ingredienteCriado: Ingrediente = if (id == null) {
+                    Ingrediente(
                         receitaId = idReceita,
                         descricao = campoDescricaoIngredienteEmTexto,
                         marcado = false
                     )
                 } else {
-                    ingredienteCriado = Ingrediente(
+                    Ingrediente(
                         id = id,
                         receitaId = idReceita,
                         descricao = campoDescricaoIngredienteEmTexto,
@@ -55,18 +69,20 @@ abstract class FormularioIngredienteDialog(
                 util.hideKeyboard(campoDescricaoIngrediente, context)
 
                 delegate(ingredienteCriado)
+                dialog.dismiss()
             }
-            .setNegativeButton("Cancelar", null)
-            .show()
+        }
     }
 
     abstract protected fun tituloPor(): Int
 
     private fun criaLayout(): View {
         val view = LayoutInflater.from(context)
-            .inflate(R.layout.form_ingrediente,
+            .inflate(
+                R.layout.form_ingrediente,
                 viewGroup,
-                false)
+                false
+            )
 
         campoDescricaoIngrediente = view.findViewById<EditText>(R.id.descricao_ingrediente)
         util.showKeyboard(campoDescricaoIngrediente, context)

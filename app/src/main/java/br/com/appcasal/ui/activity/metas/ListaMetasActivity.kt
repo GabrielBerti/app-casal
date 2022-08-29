@@ -216,11 +216,20 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
 
         when (item.itemId) {
             1 -> {
-                metas[posicao].concluido = true
+                metas[posicao].concluido = !metas[posicao].concluido
+
+                var msgSnackbar = ""
+                msgSnackbar = if(metas[posicao].concluido) {
+                    resources.getString(R.string.meta_concluida_sucesso)
+                } else {
+                    resources.getString(R.string.meta_desconcluida_sucesso)
+                }
+
                 altera(metas[posicao])
+
                 createSnackBar(
                     TipoSnackbar.SUCESSO,
-                    resources.getString(R.string.meta_concluida_sucesso)
+                    msgSnackbar
                 )
             }
 

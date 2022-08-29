@@ -22,6 +22,7 @@ class MetasViewHolder(
     val metaDescricao = itemView.findViewById<TextView>(R.id.meta_descricao)
     val metaIcone = itemView.findViewById<ImageView>(R.id.meta_icone)
     val linearMetaItem = itemView.findViewById<LinearLayout>(R.id.linear_meta_item)
+    var metaConcluida = false
 
     init {
         itemView.setOnCreateContextMenuListener(this)
@@ -29,6 +30,7 @@ class MetasViewHolder(
 
     fun bind(metas: List<Meta>, posicao: Int) {
         val meta = metas[posicao]
+        metaConcluida = meta.concluido
 
         adicionaIcone()
         adicionaDescricao(meta)
@@ -61,7 +63,12 @@ class MetasViewHolder(
         p2: ContextMenu.ContextMenuInfo?
     ) {
         if (menu != null) {
-            menu.add(Menu.NONE, 1, Menu.NONE, "Concluir meta")
+            if (metaConcluida) {
+                menu.add(Menu.NONE, 1, Menu.NONE, "Desconcluir meta")
+            } else {
+                menu.add(Menu.NONE, 1, Menu.NONE, "Concluir meta")
+            }
+
             menu.add(Menu.NONE, 2, Menu.NONE, "Remover")
         }
     }
