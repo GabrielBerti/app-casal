@@ -88,7 +88,7 @@ abstract class FormularioTransacaoDialog(
         }
 
         if(valor.isNullOrBlank()) {
-            campoValor.error = context.getString(R.string.descricao_financas_obrigatorio)
+            campoValor.error = context.getString(R.string.valor_obrigatorio)
         }
     }
 

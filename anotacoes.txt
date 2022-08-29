@@ -1,6 +1,9 @@
 -- trocar botao inserir ingrediente por FAB ?? (video no celular)
 -- alterar dashboard(video no celular)
--- adicionar opacidade ao inserir transacao e um padding geral de 10dp nas transacoes
+-- adicionar opacidade ao inserir transacao
+-- adicionar tabela de viagens para nao precisar mais reinstalar o app
+
+
 
 
 -- quando der erro de server(Invocation failed Unexpected end of file from server):
