@@ -18,7 +18,8 @@
             android:hint="@string/descricao_ingrediente_hint"
             android:layout_marginTop="10dp"
             android:background="?attr/colorButtonNormal"
-            android:inputType="none" />
+            android:imeOptions="actionDone"
+            android:inputType="text" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

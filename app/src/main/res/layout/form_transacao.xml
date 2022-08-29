@@ -19,7 +19,8 @@
             android:layout_height="wrap_content"
             android:background="?attr/colorButtonNormal"
             android:hint="@string/valor"
-            android:inputType="numberDecimal" />
+            android:inputType="numberDecimal"
+            android:imeOptions="actionDone" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -52,7 +53,8 @@
             android:layout_marginTop="10dp"
             android:background="?attr/colorButtonNormal"
             android:layout_marginBottom="30dp"
-            android:inputType="none" />
+            android:imeOptions="actionDone"
+            android:inputType="text" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

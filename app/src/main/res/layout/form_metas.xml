@@ -19,9 +19,8 @@
             android:layout_marginTop="10dp"
             android:background="?attr/colorButtonNormal"
             android:layout_marginBottom="30dp"
-            android:inputType="none" />
+            android:imeOptions="actionDone"
+            android:inputType="text" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
-
 </LinearLayout>
