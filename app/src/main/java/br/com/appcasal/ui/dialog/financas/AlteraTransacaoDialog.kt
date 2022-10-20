@@ -2,6 +2,7 @@ package br.com.appcasal.ui.dialog.financas
 
 import android.content.Context
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import br.com.appcasal.R
 import br.com.appcasal.model.Tipo
 import br.com.appcasal.model.Transacao
@@ -18,9 +19,9 @@ class AlteraTransacaoDialog(
         return R.string.altera_lancamento_mari
     }
 
-    fun chama(transacao: Transacao, id: Long, delegate: (transacao: Transacao) -> Unit) {
+    fun chama(transacao: Transacao, id: Long, linearLayout: LinearLayout, delegate: (transacao: Transacao) -> Unit) {
         val tipo = transacao.tipo
-        super.chama(tipo, id, delegate)
+        super.chama(tipo, id, linearLayout, delegate)
         inicializaCampos(transacao)
     }
 

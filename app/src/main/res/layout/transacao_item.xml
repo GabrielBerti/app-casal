@@ -36,10 +36,10 @@
                     android:id="@+id/transacao_descricao"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="-8dp"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     tools:text="Shopping" />
 
@@ -57,9 +57,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="10dp"
-                android:layout_marginRight="10dp"
-                android:gravity="right|bottom"
-                android:textSize="20dp"
+                android:layout_marginEnd="10dp"
+                android:gravity="end|bottom"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 tools:text="R$ 100,00" />
 

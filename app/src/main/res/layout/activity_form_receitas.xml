@@ -19,7 +19,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/linearContent"
+            android:id="@+id/ll_form_receita"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -61,21 +61,18 @@
                     android:id="@+id/lista_ingredientes_listview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_alignParentBottom="true"
                     android:divider="@null"
                     android:dividerHeight="0dp" />
 
-                <Button
-                    android:id="@+id/btn_insere_ingrediente"
-                    style="@style/ButtonFilledGreen"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:background="@color/white"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="32dp"
-                    android:enabled="true"
-                    android:text="@string/inserir_ingrediente"
-                    app:layout_constraintTop_toBottomOf="@+id/lista_ingredientes_listview" />
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_adiciona_ingredientes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="16dp"
+                    app:backgroundTint="@color/colorPrimaryVariant"
+                    android:src="@drawable/ic_plus" />
 
             </LinearLayout>
 

@@ -9,10 +9,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
+        android:baselineAligned="false"
         android:padding="10dp">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="109dp"
             android:layout_weight="2"
             android:orientation="vertical">
@@ -22,21 +23,21 @@
                 android:layout_height="wrap_content"
                 android:text="@string/biel"
                 android:textColor="@color/biel"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/mari"
                 android:textColor="@color/mari"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/resumo_card_total"
                 android:layout_width="match_parent"
                 android:layout_height="61dp"
                 android:text="@string/total"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:visibility="visible" />
 
         </LinearLayout>
@@ -50,8 +51,8 @@
                 android:id="@+id/resumo_card_saldo_biel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:textSize="20dp"
+                android:layout_gravity="end"
+                android:textSize="20sp"
                 android:textColor="@color/biel"
                 tools:text="R$ 1000000,00" />
 
@@ -59,15 +60,15 @@
                 android:id="@+id/resumo_card_mari"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:textSize="20dp"
+                android:layout_gravity="end"
+                android:textSize="20sp"
                 android:textColor="@color/mari"
                 tools:text="R$ 10000,00" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
                 android:background="#848484"
                 android:visibility="invisible"/>
 
@@ -75,8 +76,8 @@
                 android:id="@+id/resumo_card_total_valor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:textSize="20dp"
+                android:layout_gravity="end"
+                android:textSize="20sp"
                 tools:text="R$ 1000,00"
                 android:visibility="invisible"/>
 

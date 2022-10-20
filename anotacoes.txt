@@ -1,7 +1,6 @@
--- trocar botao inserir ingrediente por FAB ?? (video no celular)
 -- alterar dashboard(video no celular)
--- adicionar opacidade ao inserir transacao
--- adicionar tabela de viagens para nao precisar mais reinstalar o app
+-- deixar inputs mais bonitos
+-- fazer modulo de viagens
 
 
 

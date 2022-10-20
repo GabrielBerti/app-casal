@@ -2,10 +2,13 @@ package br.com.appcasal.ui.dialog.ingredientes
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.LinearLayout
 import br.com.appcasal.R
 import br.com.appcasal.model.Ingrediente
 import br.com.appcasal.util.Util
@@ -21,13 +24,14 @@ abstract class FormularioIngredienteDialog(
     protected lateinit var campoDescricaoIngrediente: EditText
     abstract protected val tituloBotaoPositivo: String
 
-    fun chama(id: Long?, idReceita: Long, delegate: (ingrediente: Ingrediente) -> Unit) {
-        configuraFormulario(id, idReceita, delegate)
+    fun chama(id: Long?, idReceita: Long, linearLayout: LinearLayout, delegate: (ingrediente: Ingrediente) -> Unit) {
+        configuraFormulario(id, idReceita, linearLayout, delegate)
     }
 
     private fun configuraFormulario(
         id: Long?,
         idReceita: Long,
+        linearLayout: LinearLayout,
         delegate: (ingrediente: Ingrediente) -> Unit
     ) {
         val titulo = tituloPor()
@@ -35,16 +39,22 @@ abstract class FormularioIngredienteDialog(
         val dialog = AlertDialog.Builder(context)
             .setTitle(titulo)
             .setView(viewCriada)
+            .setOnKeyListener { dialog, keyCode, event ->
+                if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
+                    closeDialog(linearLayout, dialog)
+                }
+                true
+            }
             .setPositiveButton(
                 tituloBotaoPositivo
             ) { _, _ ->
-
             }
             .setNegativeButton("Cancelar", null)
             .show()
 
+        val buttonNegative = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
         val button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
-        button.setOnClickListener() {
+        button.setOnClickListener {
             val campoDescricaoIngredienteEmTexto = campoDescricaoIngrediente.text.toString()
 
             if (campoDescricaoIngredienteEmTexto.isNullOrBlank()) {
@@ -72,6 +82,19 @@ abstract class FormularioIngredienteDialog(
                 dialog.dismiss()
             }
         }
+
+        buttonNegative.setOnClickListener {
+            closeDialog(linearLayout, dialog)
+        }
+    }
+
+    private fun closeDialog(
+        linearLayout: LinearLayout,
+        dialog: DialogInterface
+    ) {
+        util.retiraOpacidadeFundo(linearLayout)
+        util.hideKeyboard(campoDescricaoIngrediente, context)
+        dialog.dismiss()
     }
 
     abstract protected fun tituloPor(): Int

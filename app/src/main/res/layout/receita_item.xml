@@ -37,9 +37,9 @@
                     android:id="@+id/receita_nome"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     tools:text="Strogronoff" />
 
@@ -47,8 +47,7 @@
                     android:id="@+id/lbl_detalhes_receita"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-
+                    android:layout_marginStart="10dp"
                     android:text="Clique aqui para detalhes" />
 
             </LinearLayout>

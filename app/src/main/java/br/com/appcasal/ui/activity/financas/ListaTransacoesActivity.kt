@@ -223,6 +223,7 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
                 activityListaTransacoes.fabAdicionaTransacaoClose.visibility = View.VISIBLE
                 it.visibility = View.GONE
                 controlaCamposFab(View.VISIBLE, false)
+                util.aplicaOpacidadeFundo(activityListaTransacoes.llHeaderAndBodyTransacoes)
             }
 
         activityListaTransacoes.fabAdicionaTransacaoClose
@@ -230,6 +231,8 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
                 activityListaTransacoes.fabAdicionaTransacao.visibility = View.VISIBLE
                 it.visibility = View.GONE
                 controlaCamposFab(View.GONE, false)
+                util.retiraOpacidadeFundo(activityListaTransacoes.llHeaderAndBodyTransacoes)
+
             }
 
         activityListaTransacoes.listaTransacoesAdicionaSaldoBiel
@@ -316,8 +319,9 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
 
     private fun chamaDialogDeAdicao(tipo: Tipo) {
         AdicionaTransacaoDialog(viewGroupDaActivity, this)
-            .chama(tipo, null) { transacaoCriada ->
+            .chama(tipo, null, activityListaTransacoes.llHeaderAndBodyTransacoes) { transacaoCriada ->
                 adiciona(transacaoCriada)
+                util.retiraOpacidadeFundo(activityListaTransacoes.llHeaderAndBodyTransacoes)
                 createSnackBar(
                     TipoSnackbar.SUCESSO,
                     resources.getString(R.string.transacao_inserida_sucesso, transacaoCriada.descricao),
@@ -327,10 +331,12 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
     }
 
     private fun chamaDialogDeAlteracao(transacao: Transacao) {
+        util.aplicaOpacidadeFundo(activityListaTransacoes.llHeaderAndBodyTransacoes)
         AlteraTransacaoDialog(viewGroupDaActivity, this)
-            .chama(transacao, transacao.id) { transacaoAlterada ->
+            .chama(transacao, transacao.id, activityListaTransacoes.llHeaderAndBodyTransacoes) { transacaoAlterada ->
                 altera(transacaoAlterada)
                 controlaCamposFab(View.INVISIBLE, true)
+                util.retiraOpacidadeFundo(activityListaTransacoes.llHeaderAndBodyTransacoes)
                 createSnackBar(
                     TipoSnackbar.SUCESSO,
                     resources.getString(R.string.transacao_alterada_sucesso),

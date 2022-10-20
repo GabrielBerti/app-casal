@@ -2,13 +2,17 @@ package br.com.appcasal.ui.dialog.metas
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.LinearLayout
 import br.com.appcasal.R
 import br.com.appcasal.model.Meta
 import br.com.appcasal.util.Util
+
 
 abstract class FormularioMetaDialog(
         private val context: Context,
@@ -20,26 +24,32 @@ abstract class FormularioMetaDialog(
     protected lateinit var campoDescricao: EditText
     abstract protected val tituloBotaoPositivo: String
 
-    fun chama(id: Long?, concluido: Boolean, delegate: (meta: Meta) -> Unit) {
+    fun chama(id: Long?, concluido: Boolean, linearLayout: LinearLayout, delegate: (meta: Meta) -> Unit) {
         //configuraCampoData()
-        configuraFormulario(id, concluido, delegate)
+        configuraFormulario(id, concluido, linearLayout, delegate)
     }
 
-    private fun configuraFormulario(id: Long?, concluido: Boolean, delegate: (meta: Meta) -> Unit) {
+    private fun configuraFormulario(id: Long?, concluido: Boolean, linearLayout: LinearLayout, delegate: (meta: Meta) -> Unit) {
         val titulo = tituloPor()
 
         val dialog = AlertDialog.Builder(context)
             .setTitle(titulo)
             .setView(viewCriada)
+            .setOnKeyListener { dialog, keyCode, event ->
+                if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
+                    closeDialog(linearLayout, dialog)
+                }
+                true
+            }
             .setPositiveButton(tituloBotaoPositivo
             ) { _, _ ->
-
             }
             .setNegativeButton("Cancelar", null)
             .show()
 
-        val button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
-        button.setOnClickListener() {
+        val buttonPositive = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+        val buttonNegative = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+        buttonPositive.setOnClickListener {
             val descricaoEmTexto = campoDescricao.text.toString()
 
             if(descricaoEmTexto.isNullOrBlank()) {
@@ -66,6 +76,19 @@ abstract class FormularioMetaDialog(
                 dialog.dismiss()
             }
         }
+
+        buttonNegative.setOnClickListener {
+            closeDialog(linearLayout, dialog)
+        }
+    }
+
+    private fun closeDialog(
+        linearLayout: LinearLayout,
+        dialog: DialogInterface
+    ) {
+        util.retiraOpacidadeFundo(linearLayout)
+        util.hideKeyboard(campoDescricao, context)
+        dialog.dismiss()
     }
 
     private fun verificaMetaComMesmaDescricao(descricaoMeta: String): Boolean {

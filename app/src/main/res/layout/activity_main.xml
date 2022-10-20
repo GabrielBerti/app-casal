@@ -12,15 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="@drawable/shape_main"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/app_bar"
+        android:layout_alignStart="@+id/app_bar"
         android:layout_alignTop="@+id/app_bar"
-        android:layout_alignRight="@+id/app_bar"
+        android:layout_alignEnd="@+id/app_bar"
         android:layout_alignBottom="@+id/app_bar"
         android:gravity="center"
         android:text="@string/app_name"
@@ -34,16 +34,16 @@
         android:layout_height="150dp"
         android:layout_below="@+id/app_bar"
         android:layout_marginTop="40dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="24dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="24dp"
         android:background="@drawable/shape_content" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/viewFinancas"
+        android:layout_alignStart="@+id/viewFinancas"
         android:layout_alignTop="@+id/viewFinancas"
-        android:layout_alignRight="@+id/viewFinancas"
+        android:layout_alignEnd="@+id/viewFinancas"
         android:layout_alignBottom="@+id/viewFinancas"
         android:gravity="center"
         android:orientation="vertical">
@@ -64,8 +64,8 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_alignTop="@+id/viewFinancas"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="24dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="24dp"
         android:background="@drawable/shape_content" />
 
     <LinearLayout
@@ -73,8 +73,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:layout_alignLeft="@+id/viewViagens"
-        android:layout_alignRight="@+id/viewViagens"
+        android:layout_alignStart="@+id/viewViagens"
+        android:layout_alignEnd="@+id/viewViagens"
         android:layout_alignBottom="@+id/viewViagens"
         android:layout_alignTop="@+id/viewViagens">
 
@@ -94,8 +94,8 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_below="@+id/viewFinancas"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="24dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/shape_content" />
 
@@ -104,8 +104,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:layout_alignLeft="@+id/viewMetas"
-        android:layout_alignRight="@+id/viewMetas"
+        android:layout_alignStart="@+id/viewMetas"
+        android:layout_alignEnd="@+id/viewMetas"
         android:layout_alignBottom="@+id/viewMetas"
         android:layout_alignTop="@+id/viewMetas">
 
@@ -124,19 +124,19 @@
         android:id="@+id/viewReceitas"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginRight="24dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/shape_content"
         android:layout_below="@+id/viewViagens"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentEnd="true" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:layout_alignLeft="@+id/viewReceitas"
-        android:layout_alignRight="@+id/viewReceitas"
+        android:layout_alignStart="@+id/viewReceitas"
+        android:layout_alignEnd="@+id/viewReceitas"
         android:layout_alignBottom="@+id/viewReceitas"
         android:layout_alignTop="@+id/viewReceitas">
 

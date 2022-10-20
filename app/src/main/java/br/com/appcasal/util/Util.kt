@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.LinearLayout
 import androidx.core.view.updatePadding
 import br.com.appcasal.R
 import br.com.appcasal.model.TipoSnackbar
@@ -72,5 +73,14 @@ class Util {
 
         return snackbar
     }
+
+    fun aplicaOpacidadeFundo(linearLayout: LinearLayout) {
+        linearLayout.alpha = 0.3f
+    }
+
+    fun retiraOpacidadeFundo(linearLayout: LinearLayout) {
+        linearLayout.alpha = 1.0f
+    }
+
 
 }

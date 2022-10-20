@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cl_lista_metas"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/ll_metas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -20,7 +22,6 @@
             android:id="@+id/lista_metas_listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
             android:divider="@null"
             android:dividerHeight="0dp" />
 
@@ -30,12 +31,10 @@
         android:id="@+id/fab_adiciona_meta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
+        android:layout_gravity="bottom|end"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         fab:backgroundTint="@color/colorPrimaryVariant"
-        android:src="@drawable/ic_plus"
-        android:clickable="true" />
+        android:src="@drawable/ic_plus" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

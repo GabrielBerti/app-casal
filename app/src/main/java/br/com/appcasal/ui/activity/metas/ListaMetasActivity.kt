@@ -192,6 +192,7 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
         activityListaMetas.fabAdicionaMeta
             .setOnClickListener {
                 chamaDialogDeAdicao()
+                util.aplicaOpacidadeFundo(activityListaMetas.llMetas)
             }
     }
 
@@ -210,7 +211,6 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
-
         var posicao = -1
         posicao = (rv.adapter as ListaMetasAdapter).posicao
 
@@ -255,8 +255,9 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
 
     private fun chamaDialogDeAdicao() {
         AdicionaMetaDialog(viewGroupDaActivity, this, metas)
-            .chama(null, false) { metaCriada ->
+            .chama(null, false, activityListaMetas.llMetas) { metaCriada ->
                 adiciona(metaCriada)
+                util.retiraOpacidadeFundo(activityListaMetas.llMetas)
                 createSnackBar(
                     TipoSnackbar.SUCESSO,
                     resources.getString(R.string.meta_inserida_sucesso, metaCriada.descricao)
@@ -265,8 +266,10 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
     }
 
     private fun chamaDialogDeAlteracao(meta: Meta) {
+        util.aplicaOpacidadeFundo(activityListaMetas.llMetas)
         AlteraMetaDialog(viewGroupDaActivity, this, metas)
-            .chama(meta, meta.id, meta.concluido) { metaAlterada ->
+            .chama(meta, meta.id, meta.concluido, activityListaMetas.llMetas) { metaAlterada ->
+                util.retiraOpacidadeFundo(activityListaMetas.llMetas)
                 altera(metaAlterada)
                 createSnackBar(
                     TipoSnackbar.SUCESSO,

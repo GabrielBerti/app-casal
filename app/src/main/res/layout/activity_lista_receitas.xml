@@ -17,7 +17,6 @@
             android:id="@+id/lista_metas_listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
             android:divider="@null"
             android:dividerHeight="0dp" />
 
@@ -29,10 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         fab:backgroundTint="@color/colorPrimaryVariant"
-        android:src="@drawable/ic_plus"
-        android:clickable="true" />
+        android:src="@drawable/ic_plus" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

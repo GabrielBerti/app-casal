@@ -91,7 +91,7 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
     }
 
     private fun setListeners() {
-        activityFormReceitas.btnInsereIngrediente.setOnClickListener() {
+        activityFormReceitas.fabAdicionaIngredientes.setOnClickListener() {
             chamaDialogDeAdicaoIngrediente()
             receitaNome.clearFocus()
             receitaDescricao.clearFocus()
@@ -206,9 +206,11 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
     }
 
     private fun chamaDialogDeAdicaoIngrediente() {
+        util.aplicaOpacidadeFundo(activityFormReceitas.llFormReceita)
         AdicionaIngredienteDialog(viewGroupDaActivity, this)
-            .chama(null, receitaId) { ingredienteCriado ->
+            .chama(null, receitaId, activityFormReceitas.llFormReceita) { ingredienteCriado ->
                 adiciona(ingredienteCriado)
+                util.retiraOpacidadeFundo(activityFormReceitas.llFormReceita)
             }
     }
 
@@ -262,7 +264,7 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
 
     private fun chamaDialogDeAlteracaoIngrediente(ingrediente: Ingrediente, posicao: Int) {
         AlteraIngredienteDialog(viewGroupDaActivity, this)
-            .chama(ingrediente.id, receitaId, ingrediente) { receitaAlterada ->
+            .chama(ingrediente.id, receitaId, ingrediente, activityFormReceitas.llFormReceita) { receitaAlterada ->
                 altera(receitaAlterada, posicao)
             }
     }

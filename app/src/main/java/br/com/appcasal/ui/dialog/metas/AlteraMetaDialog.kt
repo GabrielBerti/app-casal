@@ -2,6 +2,7 @@ package br.com.appcasal.ui.dialog.metas
 
 import android.content.Context
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import br.com.appcasal.R
 import br.com.appcasal.model.Meta
 
@@ -18,8 +19,8 @@ class AlteraMetaDialog(
         return R.string.altera_meta
     }
 
-    fun chama(meta: Meta, id: Long, concluido: Boolean, delegate: (meta: Meta) -> Unit) {
-        super.chama(id,concluido, delegate)
+    fun chama(meta: Meta, id: Long, concluido: Boolean, linearLayout: LinearLayout, delegate: (meta: Meta) -> Unit) {
+        super.chama(id,concluido, linearLayout, delegate)
         inicializaCampos(meta)
     }
 
