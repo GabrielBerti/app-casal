@@ -1,5 +1,4 @@
 -- alterar dashboard(video no celular)
--- deixar inputs mais bonitos
 -- fazer modulo de viagens
 
 

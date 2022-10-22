@@ -1,5 +1,6 @@
 package br.com.appcasal.ui.activity.receitas.cadastro
 
+import android.graphics.Paint
 import android.view.ContextMenu
 import android.view.Menu
 import android.view.View
@@ -25,6 +26,7 @@ class IngredientesViewHolder(
     }
 
     private fun adicionaDescricaoIngrediente(ingrediente: Ingrediente) {
+        ingredienteDescricao.paintFlags = ingredienteDescricao.paintFlags or Paint.UNDERLINE_TEXT_FLAG
         ingredienteDescricao.text = ingrediente.descricao
     }
 

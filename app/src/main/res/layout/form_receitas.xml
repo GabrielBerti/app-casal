@@ -26,15 +26,18 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edittext"
+                android:textColorHint="@drawable/text_input_layout">
 
                 <EditText
                     android:id="@+id/receita_nome"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:textAlignment="textStart"
-                    android:background="?attr/colorButtonNormal"
+                    android:background="@drawable/rounded_edittext"
+                    android:textColor="@android:color/black"
                     android:imeOptions="actionDone"
                     android:inputType="text"
                     android:hint="@string/nome_receita" />

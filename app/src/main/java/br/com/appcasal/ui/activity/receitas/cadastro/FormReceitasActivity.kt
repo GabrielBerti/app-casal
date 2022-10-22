@@ -11,7 +11,7 @@ import br.com.appcasal.R
 import br.com.appcasal.dao.AppDatabase
 import br.com.appcasal.dao.IngredienteDAO
 import br.com.appcasal.dao.ReceitaDAO
-import br.com.appcasal.databinding.ActivityFormReceitasBinding
+import br.com.appcasal.databinding.FormReceitasBinding
 import br.com.appcasal.model.Ingrediente
 import br.com.appcasal.model.Receita
 import br.com.appcasal.model.TipoSnackbar
@@ -22,7 +22,7 @@ import br.com.appcasal.util.Util
 
 class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
 
-    private lateinit var activityFormReceitas: ActivityFormReceitasBinding
+    private lateinit var activityFormReceitas: FormReceitasBinding
     private lateinit var adapter: ListaIngredientesAdapter
     private lateinit var rv: RecyclerView
     private var receitaId: Long = 0L
@@ -54,7 +54,7 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityFormReceitas = ActivityFormReceitasBinding.inflate(layoutInflater)
+        activityFormReceitas = FormReceitasBinding.inflate(layoutInflater)
         val view = activityFormReceitas.root
         setContentView(view)
 
