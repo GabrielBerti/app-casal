@@ -45,7 +45,7 @@ abstract class FormularioTransacaoDialog(
                 if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
                     closeDialog(linearLayout, dialog)
                 }
-                true
+                false
             }
             .setPositiveButton(tituloBotaoPositivo
             ) { _, _ ->
