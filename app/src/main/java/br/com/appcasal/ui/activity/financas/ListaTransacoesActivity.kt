@@ -138,7 +138,7 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
             } else if (total.toDouble() < 0) {
                 text = "Biel deve " + normalizaRetornaValorPositivo(total) + " para Mari"
             } else {
-                text = "Tudo zerado !"
+                text = resources.getString(R.string.tudo_zerado)
                 setTextColor(resources.getColor(corZerada))
             }
 
