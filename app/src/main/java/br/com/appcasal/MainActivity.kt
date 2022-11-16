@@ -24,23 +24,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setListeners() {
-        binding.viewFinancas.setOnClickListener {
+        binding.cardFinancas.setOnClickListener {
             val intent = Intent(this, ListaTransacoesActivity::class.java)
             startActivity(intent)
         }
 
-        binding.viewViagens.setOnClickListener {
-
-        }
-
-        binding.viewMetas.setOnClickListener {
+        binding.cardMetas.setOnClickListener {
             val intent = Intent(this, ListaMetasActivity::class.java)
             startActivity(intent)
         }
 
-        binding.viewReceitas.setOnClickListener {
+        binding.cardReceitas.setOnClickListener {
             val intent = Intent(this, ListaReceitasActivity::class.java)
             startActivity(intent)
+        }
+
+        binding.cardViagens.setOnClickListener {
+
         }
     }
 }

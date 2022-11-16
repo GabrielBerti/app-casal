@@ -15,4 +15,8 @@
     <color name="concluido">#8BC34A</color>
     <color name="white_80">#CCFFFFFF</color>
     <color name="transparent">#00000000</color>
+    <color name="cor_financas">#FF9800</color>
+    <color name="cor_metas">#521AB5</color>
+    <color name="cor_receitas">#3E55F1</color>
+    <color name="cor_viagens">#F451E4</color>
 </resources>

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context=".MainActivity">
 
     <View
@@ -12,144 +11,156 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="@drawable/shape_main"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/app_bar"
-        android:layout_alignTop="@+id/app_bar"
-        android:layout_alignEnd="@+id/app_bar"
-        android:layout_alignBottom="@+id/app_bar"
-        android:gravity="center"
         android:text="@string/app_name"
         android:textColor="@color/white"
+        android:gravity="center"
         android:textSize="28sp"
-        android:textStyle="bold" />
-
-    <View
-        android:id="@+id/viewFinancas"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_below="@+id/app_bar"
-        android:layout_marginTop="40dp"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="24dp"
-        android:background="@drawable/shape_content" />
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/app_bar"/>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/viewFinancas"
-        android:layout_alignTop="@+id/viewFinancas"
-        android:layout_alignEnd="@+id/viewFinancas"
-        android:layout_alignBottom="@+id/viewFinancas"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/financas"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-    <View
-        android:id="@+id/viewViagens"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_alignTop="@+id/viewFinancas"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/shape_content" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/container_categorias"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:orientation="vertical"
-        android:gravity="center"
-        android:layout_alignStart="@+id/viewViagens"
-        android:layout_alignEnd="@+id/viewViagens"
-        android:layout_alignBottom="@+id/viewViagens"
-        android:layout_alignTop="@+id/viewViagens">
+        android:paddingHorizontal="15dp"
+        android:paddingTop="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/viagens"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textSize="24sp" />
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_financas"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    app:cardBackgroundColor="@color/cor_financas"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="4dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="22dp"
+                        android:textStyle="bold"
+                        android:paddingHorizontal="20dp"
+                        android:text="@string/financas" />
+
+                    <ImageView
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="end"
+                        android:src="@drawable/ic_financas" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_metas"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="@color/cor_metas"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="4dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="22dp"
+                        android:textStyle="bold"
+                        android:paddingHorizontal="20dp"
+                        android:text="@string/metas" />
+
+                    <ImageView
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="end"
+                        android:src="@drawable/ic_meta" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_receitas"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="@color/cor_receitas"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="4dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="22dp"
+                        android:textStyle="bold"
+                        android:paddingHorizontal="20dp"
+                        android:text="@string/receitas" />
+
+                    <ImageView
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="end"
+                        android:src="@drawable/ic_receita" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_viagens"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="@color/cor_viagens"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="4dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="22dp"
+                        android:textStyle="bold"
+                        android:paddingHorizontal="20dp"
+                        android:text="@string/viagens" />
+
+                    <ImageView
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="end"
+                        android:src="@drawable/ic_viagem" />
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>
 
-    <View
-        android:id="@+id/viewMetas"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_below="@+id/viewFinancas"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/shape_content" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_alignStart="@+id/viewMetas"
-        android:layout_alignEnd="@+id/viewMetas"
-        android:layout_alignBottom="@+id/viewMetas"
-        android:layout_alignTop="@+id/viewMetas">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/metas"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textSize="24sp" />
-
-    </LinearLayout>
-
-    <View
-        android:id="@+id/viewReceitas"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/shape_content"
-        android:layout_below="@+id/viewViagens"
-        android:layout_alignParentEnd="true" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_alignStart="@+id/viewReceitas"
-        android:layout_alignEnd="@+id/viewReceitas"
-        android:layout_alignBottom="@+id/viewReceitas"
-        android:layout_alignTop="@+id/viewReceitas">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/receitas"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textSize="24sp" />
-
-    </LinearLayout>
 
 
 
@@ -157,4 +168,7 @@
 
 
 
-</RelativeLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
