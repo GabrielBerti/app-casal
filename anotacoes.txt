@@ -1,5 +1,3 @@
--- alterar dashboard(video no celular)
--- quando entra para inserir e clica fora do dialog a opacidade nao esta saindo
 -- fazer modulo de viagens com gastos e lugares visitados
 
 

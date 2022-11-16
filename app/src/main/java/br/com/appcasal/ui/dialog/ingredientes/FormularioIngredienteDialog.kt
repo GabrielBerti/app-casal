@@ -39,6 +39,7 @@ abstract class FormularioIngredienteDialog(
         val dialog = AlertDialog.Builder(context)
             .setTitle(titulo)
             .setView(viewCriada)
+            .setCancelable(false)
             .setOnKeyListener { dialog, keyCode, event ->
                 if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
                     closeDialog(linearLayout, dialog)
@@ -50,6 +51,7 @@ abstract class FormularioIngredienteDialog(
             ) { _, _ ->
             }
             .setNegativeButton("Cancelar", null)
+            .setCancelable(false)
             .show()
 
         val buttonNegative = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
@@ -86,6 +88,8 @@ abstract class FormularioIngredienteDialog(
         buttonNegative.setOnClickListener {
             closeDialog(linearLayout, dialog)
         }
+
+
     }
 
     private fun closeDialog(

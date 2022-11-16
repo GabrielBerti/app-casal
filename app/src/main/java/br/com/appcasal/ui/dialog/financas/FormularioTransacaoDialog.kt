@@ -41,6 +41,7 @@ abstract class FormularioTransacaoDialog(
         val dialog = AlertDialog.Builder(context)
             .setTitle(titulo)
             .setView(viewCriada)
+            .setCancelable(false)
             .setOnKeyListener { dialog, keyCode, event ->
                 if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
                     closeDialog(linearLayout, dialog)

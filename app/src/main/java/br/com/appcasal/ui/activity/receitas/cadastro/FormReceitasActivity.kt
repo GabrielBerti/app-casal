@@ -3,6 +3,7 @@ package br.com.appcasal.ui.activity.receitas.cadastro
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,7 +28,7 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
     private lateinit var rv: RecyclerView
     private var receitaId: Long = 0L
     private var util = Util()
-    private lateinit var receitaNome: TextView
+    private lateinit var receitaNome: EditText
     private lateinit var receitaDescricao: TextView
 
     private var ingredientes: MutableList<Ingrediente> = Companion.ingredientes
@@ -58,7 +59,7 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
         val view = activityFormReceitas.root
         setContentView(view)
 
-        receitaNome = findViewById<TextView>(R.id.receita_nome)
+        receitaNome = findViewById<EditText>(R.id.receita_nome)
         receitaDescricao = findViewById<TextView>(R.id.receita_descricao)
 
         ingredienteDAO = db.ingredienteDao()
@@ -78,7 +79,7 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
             receitaId = extras.getString("receitaId")!!.toLong()
             if (isUpdated(receitaId)) {
                 receitaSelected = receitaDAO.buscaReceitaById(receitaId)
-                receitaNome.text = receitaSelected[0].nome
+                receitaNome.setText(receitaSelected[0].nome)// = receitaSelected[0].nome
                 receitaDescricao.text = receitaSelected[0].descricao
 
                 ingredientes = ingredienteDAO.buscaIngredientesByReceita(receitaId)
