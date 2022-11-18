@@ -8,6 +8,7 @@ import br.com.appcasal.databinding.ActivityMainBinding
 import br.com.appcasal.ui.activity.financas.ListaTransacoesActivity
 import br.com.appcasal.ui.activity.metas.ListaMetasActivity
 import br.com.appcasal.ui.activity.receitas.ListaReceitasActivity
+import br.com.appcasal.ui.activity.viagens.ListaViagensActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,7 +41,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.cardViagens.setOnClickListener {
-
+            val intent = Intent(this, ListaViagensActivity::class.java)
+            startActivity(intent)
         }
     }
 }

@@ -68,6 +68,16 @@
 
     <!--modulo viagens-->
     <string name="viagens">Viagens</string>
+    <string name="local">Local</string>
+    <string name="data_inicio">Data início</string>
+    <string name="data_fim">Data final</string>
+    <string name="local_obrigatorio">"Campo local obrigatório"</string>
+    <string name="altera_viagem">Altera viagem</string>
+    <string name="adiciona_viagem">Adiciona viagem</string>
+    <string name="viagem_inserida_sucesso">Viagem %s inserida com sucesso !</string>
+    <string name="viagem_alterada_sucesso">Viagem alterada com sucesso !</string>
+    <string name="viagem_removida_sucesso">Viagem %s removida com sucesso !</string>
+    <string name="viagens_removidas_sucesso">Viagens removidas com sucesso !</string>
 
     <!--exemplo de array-->
     <string-array name="lista_status">

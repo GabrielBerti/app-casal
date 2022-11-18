@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="@drawable/text_input_layout"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
+        android:layout_marginTop="10dp">
+
+        <EditText
+            android:id="@+id/form_local"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edittext"
+            android:textColor="@android:color/black"
+            android:hint="@string/local"
+            android:inputType="text"
+            android:imeOptions="actionDone" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
+        android:textColorHint="@drawable/text_input_layout">
+
+        <EditText
+            android:id="@+id/form_data_inicio_viagem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edittext"
+            android:textColor="@android:color/black"
+            android:textColorHint="@drawable/text_input_layout"
+            android:focusable="false"
+            android:hint="@string/data_inicio"
+            android:inputType="none"
+            android:layout_marginTop="10dp"
+            tools:text="11/20/2014" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
+        android:textColorHint="@drawable/text_input_layout">
+
+        <EditText
+            android:id="@+id/form_data_final_viagem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edittext"
+            android:textColor="@android:color/black"
+            android:textColorHint="@drawable/text_input_layout"
+            android:focusable="false"
+            android:hint="@string/data_fim"
+            android:inputType="none"
+            android:layout_marginTop="10dp"
+            tools:text="11/20/2014" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>
