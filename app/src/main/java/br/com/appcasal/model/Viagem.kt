@@ -6,8 +6,7 @@ import androidx.room.PrimaryKey
 @Entity
 class Viagem(
     @PrimaryKey(autoGenerate = true) val id: Long = 0L,
-    val pais: String,
-    val cidade: String,
+    val local: String,
     val dataInicio: String,
     val dataFim: String
 )
