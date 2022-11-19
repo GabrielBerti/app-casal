@@ -1,5 +1,4 @@
--- fazer modulo de viagens com gastos e lugares visitados
-    -- tela nao rola
+-- fazer modulo de lugares visitados
 
 
 
