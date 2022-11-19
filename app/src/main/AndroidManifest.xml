@@ -60,6 +60,12 @@
             android:exported="true"
             android:label="@string/viagens"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activity.viagens.detalhes.DetalheViagemActivity"
+            android:exported="true"
+            android:label="@string/detalhe_viagem"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

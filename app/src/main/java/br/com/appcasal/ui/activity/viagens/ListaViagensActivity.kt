@@ -15,6 +15,7 @@ import br.com.appcasal.databinding.ActivityListaViagensBinding
 import br.com.appcasal.model.TipoSnackbar
 import br.com.appcasal.model.Viagem
 import br.com.appcasal.ui.activity.receitas.detalhe.DetalheReceitaActivity
+import br.com.appcasal.ui.activity.viagens.detalhes.DetalheViagemActivity
 import br.com.appcasal.ui.dialog.viagens.AdicionaViagemDialog
 import br.com.appcasal.ui.dialog.viagens.AlteraViagemDialog
 import br.com.appcasal.util.Util
@@ -96,7 +97,7 @@ class ListaViagensActivity : AppCompatActivity(), ClickViagem {
     }
 
     override fun clickViagem(viagem: Viagem) {
-        chamaDialogDeAlteracao(viagem)
+        chamaDetalheViagem(viagem)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -148,6 +149,9 @@ class ListaViagensActivity : AppCompatActivity(), ClickViagem {
 
         when (item.itemId) {
             1 -> {
+                chamaDialogDeAlteracao(viagens[posicao])
+            }
+            2 -> {
                 val nomeViagemRemovida = viagens[posicao].local
                 remove(posicao)
                 adapter.notifyItemRemoved(posicao)
@@ -241,8 +245,8 @@ class ListaViagensActivity : AppCompatActivity(), ClickViagem {
         alertDialog.show()
     }
 
-    private fun chamaDetalheViagem(viagem: Viagem) { // pause trocar pra detalhe da viagem
-        val it = Intent(this, DetalheReceitaActivity::class.java)
+    private fun chamaDetalheViagem(viagem: Viagem) {
+        val it = Intent(this, DetalheViagemActivity::class.java)
         it.putExtra("viagemId", viagem.id.toString())
         startActivity(it)
     }

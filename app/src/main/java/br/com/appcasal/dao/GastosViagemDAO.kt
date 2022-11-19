@@ -1,23 +1,23 @@
 package br.com.appcasal.dao
 
 import androidx.room.*
-import br.com.appcasal.model.GastosViagem
+import br.com.appcasal.model.GastoViagem
 
 @Dao
 interface GastosViagemDAO {
 
-    @Query("SELECT * FROM GastosViagem WHERE viagemId == :viagemId")
-    fun buscaGastosViagemByViagem(viagemId: Long) : MutableList<GastosViagem>
+    @Query("SELECT * FROM GastoViagem WHERE viagemId == :viagemId")
+    fun buscaGastosViagemByViagem(viagemId: Long) : MutableList<GastoViagem>
 
-    @Query("DELETE FROM GastosViagem WHERE viagemId == :viagemId")
+    @Query("DELETE FROM GastoViagem WHERE viagemId == :viagemId")
     fun deleteGastosViagemByViagem(viagemId: Long)
 
     @Insert
-    fun adiciona(gastoViagem: GastosViagem)
+    fun adiciona(gastoViagem: GastoViagem)
 
     @Delete
-    fun remove(gastoViagem: GastosViagem)
+    fun remove(gastoViagem: GastoViagem)
 
     @Update
-    fun altera(gastoViagem: GastosViagem)
+    fun altera(gastoViagem: GastoViagem)
 }

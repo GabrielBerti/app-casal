@@ -17,7 +17,7 @@ class ListaViagensAdapter(
         val viewCriada: View = LayoutInflater.from(context)
             .inflate(R.layout.viagem_item, parent, false)
 
-        return ViagemViewHolder(context, viewCriada)
+        return ViagemViewHolder(viewCriada)
     }
 
     override fun onBindViewHolder(holder: ViagemViewHolder, position: Int) {
@@ -40,7 +40,6 @@ class ListaViagensAdapter(
     var posicao = 0
 
     inner class ViagemViewHolder(
-        private val context: Context,
         itemView: View
     ) :
         RecyclerView.ViewHolder(itemView), View.OnCreateContextMenuListener {
@@ -64,7 +63,8 @@ class ListaViagensAdapter(
             p1: View?,
             p2: ContextMenu.ContextMenuInfo?
         ) {
-            menu?.add(Menu.NONE, 1, Menu.NONE, "Remover")
+            menu?.add(Menu.NONE, 1, Menu.NONE, "Alterar")
+            menu?.add(Menu.NONE, 2, Menu.NONE, "Remover")
         }
     }
 }

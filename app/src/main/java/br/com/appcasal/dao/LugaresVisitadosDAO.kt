@@ -1,27 +1,26 @@
 package br.com.appcasal.dao
 
 import androidx.room.*
-import br.com.appcasal.model.Ingrediente
-import br.com.appcasal.model.LugaresVisitados
+import br.com.appcasal.model.LugarVisitado
 
 @Dao
 interface LugaresVisitadosDAO {
 
-    @Query("SELECT * FROM LugaresVisitados WHERE viagemId == :viagemId")
-    fun buscaLugaresVisitadosByViagem(viagemId: Long) : MutableList<LugaresVisitados>
+    @Query("SELECT * FROM LugarVisitado WHERE viagemId == :viagemId")
+    fun buscaLugaresVisitadosByViagem(viagemId: Long) : MutableList<LugarVisitado>
 
-    @Query("DELETE FROM LugaresVisitados WHERE viagemId == :viagemId")
+    @Query("DELETE FROM LugarVisitado WHERE viagemId == :viagemId")
     fun deleteLugaresVisitadosByViagem(viagemId: Long)
 
-    @Query("UPDATE LugaresVisitados SET legal = :isLegal")
+    @Query("UPDATE LugarVisitado SET legal = :isLegal")
     fun alteraLugarVisitadoLegal(isLegal: Boolean)
 
     @Insert
-    fun adiciona(lugarVisitado: LugaresVisitados)
+    fun adiciona(lugarVisitado: LugarVisitado)
 
     @Delete
-    fun remove(lugarVisitado: LugaresVisitados)
+    fun remove(lugarVisitado: LugarVisitado)
 
     @Update
-    fun altera(lugarVisitado: LugaresVisitados)
+    fun altera(lugarVisitado: LugarVisitado)
 }

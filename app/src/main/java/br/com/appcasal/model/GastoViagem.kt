@@ -15,7 +15,7 @@ import java.math.BigDecimal
         )
     ]
 )
-class GastosViagem(
+class GastoViagem(
     @PrimaryKey(autoGenerate = true) val id: Long = 0L,
     val valor: BigDecimal,
     val descricao: String,

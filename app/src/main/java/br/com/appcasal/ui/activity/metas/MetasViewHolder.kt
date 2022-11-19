@@ -43,7 +43,7 @@ class MetasViewHolder(
     }
 
     private fun adicionaIcone() {
-        metaIcone.setBackgroundResource(R.drawable.ic_meta)
+        metaIcone.setBackgroundResource(R.drawable.ic_alvo)
     }
 
     private fun adicionaCheckBox(meta: Meta) {

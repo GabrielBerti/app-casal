@@ -62,7 +62,7 @@ abstract class FormularioTransacaoDialog(
             val descricaoEmTexto = campoDescricao.text.toString()
 
             if (isValidForm(descricaoEmTexto, valorEmTexto)) {
-                val valor = converteCampoValor(valorEmTexto)
+                val valor = util.converteCampoValor(valorEmTexto, context)
                 val data = dataEmTexto//.converteParaCalendar()
 
                 var transacaoCriada: Transacao
@@ -124,19 +124,6 @@ abstract class FormularioTransacaoDialog(
     }
 
     abstract protected fun tituloPor(tipo: Tipo): Int
-
-    private fun converteCampoValor(valorEmTexto: String): BigDecimal {
-        return try {
-            BigDecimal(valorEmTexto)
-        } catch (exception: NumberFormatException) {
-            Toast.makeText(
-                context,
-                "Falha na conversão de valor",
-                    Toast.LENGTH_LONG)
-                    .show()
-            BigDecimal.ZERO
-        }
-    }
 
     private fun configuraCampoData() {
         val hoje = Calendar.getInstance()

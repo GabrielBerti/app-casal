@@ -8,8 +8,8 @@ import br.com.appcasal.dao.converter.Converters
 import br.com.appcasal.model.*
 
 @Database(
-    entities = [Transacao::class, Meta::class, Receita::class, Ingrediente::class, Viagem::class, GastosViagem::class, LugaresVisitados::class],
-    version = 6
+    entities = [Transacao::class, Meta::class, Receita::class, Ingrediente::class, Viagem::class, GastoViagem::class, LugarVisitado::class],
+    version = 7
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -24,7 +24,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
         fun instancia(context: Context): AppDatabase {
-            val MIGRATION_5_6: Migration = object : Migration(5, 6) {
+            val MIGRATION_6_7: Migration = object : Migration(6, 7) {
                 override fun migrate(database: SupportSQLiteDatabase) {
                     // Remove a tabela antiga
                     // database.execSQL("ALTER TABLE transacao DROP COLUMN categoria")
@@ -51,19 +51,19 @@ abstract class AppDatabase : RoomDatabase() {
                     database.execSQL("CREATE INDEX IF NOT EXISTS 'index_Ingrediente_receitaId' ON 'Ingrediente' ('receitaId')")
 
                     database.execSQL(
-                        "CREATE TABLE GastosViagem (id INTEGER NOT NULL, valor REAL NOT NULL, descricao TEXT NOT NULL, viagemId INTEGER NOT NULL, " +
+                        "CREATE TABLE GastoViagem (id INTEGER NOT NULL, valor REAL NOT NULL, descricao TEXT NOT NULL, viagemId INTEGER NOT NULL, " +
                                 "PRIMARY KEY(id), FOREIGN KEY(viagemId) REFERENCES Viagem(id))"
                     )
 
-                    database.execSQL("CREATE INDEX IF NOT EXISTS 'index_GastosViagem_viagemId' ON 'GastosViagem' ('viagemId')")
+                    database.execSQL("CREATE INDEX IF NOT EXISTS 'index_GastoViagem_viagemId' ON 'GastoViagem' ('viagemId')")
 
 
                     database.execSQL(
-                        "CREATE TABLE LugaresVisitados (id INTEGER NOT NULL, nome TEXT NOT NULL, legal INTEGER NOT NULL, viagemId INTEGER NOT NULL, " +
+                        "CREATE TABLE LugarVisitado (id INTEGER NOT NULL, nome TEXT NOT NULL, legal INTEGER NOT NULL, viagemId INTEGER NOT NULL, " +
                                 "PRIMARY KEY(id), FOREIGN KEY(viagemId) REFERENCES Viagem(id))"
                     )
 
-                    database.execSQL("CREATE INDEX IF NOT EXISTS 'index_LugaresVisitados_viagemId' ON 'LugaresVisitados' ('viagemId')")
+                    database.execSQL("CREATE INDEX IF NOT EXISTS 'index_LugarVisitado_viagemId' ON 'LugarVisitado' ('viagemId')")
 
                 }
             }
@@ -73,7 +73,7 @@ abstract class AppDatabase : RoomDatabase() {
                 AppDatabase::class.java,
                 "app_casal.db"
             ).allowMainThreadQueries()
-                .addMigrations(MIGRATION_5_6)
+                .addMigrations(MIGRATION_6_7)
                 .build()
         }
     }
