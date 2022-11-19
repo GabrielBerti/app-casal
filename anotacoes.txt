@@ -1,3 +1,5 @@
+-- bug snackbar aparecendo em lugar errado nos gastos
+-- vl total nao atualiza apos remover gasto
 -- fazer modulo de lugares visitados
 
 

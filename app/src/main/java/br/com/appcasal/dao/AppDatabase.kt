@@ -24,7 +24,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
         fun instancia(context: Context): AppDatabase {
-            val MIGRATION_6_7: Migration = object : Migration(6, 7) {
+            val MIGRATION_6_7: Migration = object : Migration(5, 7) {
                 override fun migrate(database: SupportSQLiteDatabase) {
                     // Remove a tabela antiga
                     // database.execSQL("ALTER TABLE transacao DROP COLUMN categoria")
@@ -35,23 +35,25 @@ abstract class AppDatabase : RoomDatabase() {
                                 "PRIMARY KEY(id))"
                     )*/
 
-                    database.execSQL("DROP TABLE Receita")
-
                     database.execSQL(
-                        "CREATE TABLE Receita (id INTEGER NOT NULL, nome TEXT NOT NULL, descricao TEXT NOT NULL, " +
+                        "CREATE TABLE IF NOT EXISTS Receita (id INTEGER NOT NULL, nome TEXT NOT NULL, descricao TEXT NOT NULL, " +
                                 "PRIMARY KEY(id))"
                     )
 
-                   database.execSQL("DROP TABLE Ingrediente")
                    database.execSQL(
-                       "CREATE TABLE Ingrediente (id INTEGER NOT NULL, descricao TEXT NOT NULL, marcado INTEGER NOT NULL, receitaId INTEGER NOT NULL, " +
+                       "CREATE TABLE IF NOT EXISTS Ingrediente (id INTEGER NOT NULL, descricao TEXT NOT NULL, marcado INTEGER NOT NULL, receitaId INTEGER NOT NULL, " +
                                "PRIMARY KEY(id), FOREIGN KEY(receitaId) REFERENCES Receita(id))"
                    )
 
                     database.execSQL("CREATE INDEX IF NOT EXISTS 'index_Ingrediente_receitaId' ON 'Ingrediente' ('receitaId')")
 
                     database.execSQL(
-                        "CREATE TABLE GastoViagem (id INTEGER NOT NULL, valor REAL NOT NULL, descricao TEXT NOT NULL, viagemId INTEGER NOT NULL, " +
+                        "CREATE TABLE IF NOT EXISTS Viagem (id INTEGER NOT NULL, local TEXT NOT NULL, dataInicio TEXT NOT NULL, dataFim TEXT NOT NULL, " +
+                                "PRIMARY KEY(id))"
+                    )
+
+                    database.execSQL(
+                        "CREATE TABLE IF NOT EXISTS GastoViagem (id INTEGER NOT NULL, valor REAL NOT NULL, descricao TEXT NOT NULL, viagemId INTEGER NOT NULL, " +
                                 "PRIMARY KEY(id), FOREIGN KEY(viagemId) REFERENCES Viagem(id))"
                     )
 
@@ -59,7 +61,7 @@ abstract class AppDatabase : RoomDatabase() {
 
 
                     database.execSQL(
-                        "CREATE TABLE LugarVisitado (id INTEGER NOT NULL, nome TEXT NOT NULL, legal INTEGER NOT NULL, viagemId INTEGER NOT NULL, " +
+                        "CREATE TABLE IF NOT EXISTS LugarVisitado (id INTEGER NOT NULL, nome TEXT NOT NULL, legal INTEGER NOT NULL, viagemId INTEGER NOT NULL, " +
                                 "PRIMARY KEY(id), FOREIGN KEY(viagemId) REFERENCES Viagem(id))"
                     )
 
