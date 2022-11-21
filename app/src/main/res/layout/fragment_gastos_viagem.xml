@@ -8,9 +8,9 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/ll_header_and_body_transacoes"
+        android:id="@+id/ll_gastos_viagem"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <TextView
@@ -40,7 +40,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_lista_gastos_viagem"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:divider="@null"
             android:layout_marginTop="10dp"
             android:dividerHeight="0dp" />

@@ -129,6 +129,7 @@ class GastosViagemFragment(private val viagemId: Long) : Fragment(), ClickGastoV
         gastosViagemDAO.remove(gastosViagem[posicaoDaTransacao])
         adapter.notifyItemRemoved(posicaoDaTransacao)
         atualizaGastosViagem()
+        exibeValorTotalGasto()
     }
 
     private fun atualizaGastosViagem() {
@@ -177,7 +178,7 @@ class GastosViagemFragment(private val viagemId: Long) : Fragment(), ClickGastoV
 
     private fun createSnackBar(tipoSnackbar: TipoSnackbar, msg: String, visibility: Int) {
         snackbar = util.createSnackBarWithReturn(
-            binding.clListaGastosViagem,
+            binding.llGastosViagem,
             msg,
             resources,
             tipoSnackbar,
