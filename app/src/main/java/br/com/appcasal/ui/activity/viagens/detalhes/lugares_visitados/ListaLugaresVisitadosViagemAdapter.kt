@@ -5,11 +5,9 @@ import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import br.com.alura.financask.extension.formataParaBrasileiro
 import br.com.appcasal.R
-import br.com.appcasal.model.GastoViagem
 import br.com.appcasal.model.LugarVisitado
-import br.com.appcasal.ui.activity.viagens.ClickViagem
+import br.com.appcasal.util.Util
 
 class ListaLugaresVisitadosViagemAdapter(
     private var lugarVisitado: List<LugarVisitado>,
@@ -54,6 +52,7 @@ class ListaLugaresVisitadosViagemAdapter(
         private val estrela3 = itemView.findViewById<ImageView>(R.id.estrela3)
         private val estrela4 = itemView.findViewById<ImageView>(R.id.estrela4)
         private val estrela5 = itemView.findViewById<ImageView>(R.id.estrela5)
+        private var util = Util()
 
         init {
             itemView.setOnCreateContextMenuListener(this)
@@ -63,7 +62,7 @@ class ListaLugaresVisitadosViagemAdapter(
             val lugarVisitado = lugarVisitado[posicao]
 
             nomeLugarVisitado.text = lugarVisitado.nome
-            exibeEstrelas(lugarVisitado.legal)
+            util.exibeEstrelas(lugarVisitado.legal, estrela1, estrela2, estrela3, estrela4, estrela5)
         }
 
         override fun onCreateContextMenu(
@@ -72,36 +71,6 @@ class ListaLugaresVisitadosViagemAdapter(
             p2: ContextMenu.ContextMenuInfo?
         ) {
             menu?.add(Menu.NONE, 1, Menu.NONE, "Remover")
-        }
-
-        private fun exibeEstrelas(nota: Int) {
-            when (nota) {
-                1 -> {
-                    estrela1.alpha = 1f
-                }
-                2 -> {
-                    estrela1.alpha = 1f
-                    estrela2.alpha = 1f
-                }
-                3 -> {
-                    estrela1.alpha = 1f
-                    estrela2.alpha = 1f
-                    estrela3.alpha = 1f
-                }
-                4 -> {
-                    estrela1.alpha = 1f
-                    estrela2.alpha = 1f
-                    estrela3.alpha = 1f
-                    estrela4.alpha = 1f
-                }
-                5 -> {
-                    estrela1.alpha = 1f
-                    estrela2.alpha = 1f
-                    estrela3.alpha = 1f
-                    estrela4.alpha = 1f
-                    estrela5.alpha = 1f
-                }
-            }
         }
     }
 }

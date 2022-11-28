@@ -155,7 +155,7 @@ class LugaresVisitadosFragment(private val viagemId: Long) : Fragment(), ClickLu
 
     private fun createSnackBar(tipoSnackbar: TipoSnackbar, msg: String, visibility: Int) {
         snackbar = util.createSnackBarWithReturn(
-            binding.clLugaresVisitados,
+            requireActivity().findViewById(R.id.cl_detalhe_viagem),
             msg,
             resources,
             tipoSnackbar,

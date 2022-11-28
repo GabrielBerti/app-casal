@@ -178,7 +178,7 @@ class GastosViagemFragment(private val viagemId: Long) : Fragment(), ClickGastoV
 
     private fun createSnackBar(tipoSnackbar: TipoSnackbar, msg: String, visibility: Int) {
         snackbar = util.createSnackBarWithReturn(
-            binding.llGastosViagem,
+            requireActivity().findViewById(R.id.cl_detalhe_viagem),
             msg,
             resources,
             tipoSnackbar,

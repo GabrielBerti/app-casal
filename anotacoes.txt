@@ -1,5 +1,6 @@
--- snackbar abrindo no local errado
 -- vincular nota em uma viagem
+-- deixar as informacoes da viagem alinhada a esquerda
+-- travar valor do gasto vazio ou 0
 
 
 
