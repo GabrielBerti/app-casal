@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import br.com.appcasal.R
 import br.com.appcasal.model.GastoViagem
 
-class AlteraGastosViagemDialog(
+class AlteraGastoViagemDialog(
         viewGroup: ViewGroup,
         private val context: Context
-) : FormularioGastosViagemDialog(context, viewGroup) {
+) : FormularioGastoViagemDialog(context, viewGroup) {
 
     override val tituloBotaoPositivo: String
         get() = "Alterar"

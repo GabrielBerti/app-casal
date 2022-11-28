@@ -12,7 +12,7 @@ import br.com.appcasal.R
 import br.com.appcasal.model.GastoViagem
 import br.com.appcasal.util.Util
 
-abstract class FormularioGastosViagemDialog(
+abstract class FormularioGastoViagemDialog(
         private val context: Context,
         private val viewGroup: ViewGroup) {
 

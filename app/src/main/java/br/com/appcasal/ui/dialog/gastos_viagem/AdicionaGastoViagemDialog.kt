@@ -4,10 +4,10 @@ import android.content.Context
 import android.view.ViewGroup
 import br.com.appcasal.R
 
-class AdicionaGastosViagemDialog(
+class AdicionaGastoViagemDialog(
     viewGroup: ViewGroup,
     context: Context
-) : FormularioGastosViagemDialog(context,  viewGroup) {
+) : FormularioGastoViagemDialog(context,  viewGroup) {
 
     override val tituloBotaoPositivo: String
         get() = "Adicionar"

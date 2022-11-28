@@ -89,7 +89,20 @@
     <string name="altera_gasto_viagem">Altera gasto viagem</string>
     <string name="adiciona_gasto_viagem">Adiciona gasto viagem</string>
     <string name="gasto_viagem_inserido_sucesso">Gasto %s inserido com sucesso !</string>
+    <string name="gasto_viagem_alterado_sucesso">Gasto %s alterado com sucesso !</string>
     <string name="gasto_viagem_removido_sucesso">Gasto %s removido com sucesso !</string>
+
+    <string name="lugar_visitado_hint">Lugar visitado</string>
+    <string name="tv_legal">Foi legal?</string>
+    <string name="sim">Sim</string>
+    <string name="nao">Não</string>
+    <string name="lugar_visitado_inserido_sucesso">Lugar %s inserido com sucesso !</string>
+    <string name="lugar_visitado_alterado_sucesso">Lugar %s alterado com sucesso !</string>
+    <string name="lugar_visitado_removido_sucesso">Lugar %s removido com sucesso !</string>
+    <string name="altera_lugar_visitado">Altera lugar visitado</string>
+    <string name="adiciona_lugar_visitado">Adiciona lugar visitado</string>
+    <string name="nome_lugar_visitado_obrigatorio">"Campo lugar visitado obrigatório"</string>
+    <string name="add_lugar">"Adicionar lugar visitado"</string>
 
     <!--exemplo de array-->
     <string-array name="lista_status">

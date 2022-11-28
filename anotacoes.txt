@@ -1,5 +1,5 @@
--- fazer modulo de lugares visitados
-
+-- snackbar abrindo no local errado
+-- vincular nota em uma viagem
 
 
 

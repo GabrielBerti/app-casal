@@ -17,7 +17,7 @@ import androidx.room.PrimaryKey
 class LugarVisitado(
     @PrimaryKey(autoGenerate = true) val id: Long = 0L,
     val nome: String,
-    val legal: Boolean,
+    val legal: Int,
     @ColumnInfo(index = true)
     val viagemId: Long
 )

@@ -25,7 +25,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_margin="10dp"
-                tools:src="@drawable/ic_meta" />
+                tools:src="@drawable/ic_alvo" />
 
             <LinearLayout
                 android:layout_width="0dp"

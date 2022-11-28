@@ -15,8 +15,8 @@ import br.com.appcasal.dao.GastosViagemDAO
 import br.com.appcasal.databinding.FragmentGastosViagemBinding
 import br.com.appcasal.model.GastoViagem
 import br.com.appcasal.model.TipoSnackbar
-import br.com.appcasal.ui.dialog.gastos_viagem.AdicionaGastosViagemDialog
-import br.com.appcasal.ui.dialog.gastos_viagem.AlteraGastosViagemDialog
+import br.com.appcasal.ui.dialog.gastos_viagem.AdicionaGastoViagemDialog
+import br.com.appcasal.ui.dialog.gastos_viagem.AlteraGastoViagemDialog
 import br.com.appcasal.util.Util
 import com.google.android.material.snackbar.Snackbar
 import java.math.BigDecimal
@@ -24,8 +24,8 @@ import java.math.BigDecimal
 class GastosViagemFragment(private val viagemId: Long) : Fragment(), ClickGastoViagem {
 
     private lateinit var binding: FragmentGastosViagemBinding
-    private lateinit var adapter: ListaGastosViagemAdapter
     private lateinit var rv: RecyclerView
+    private lateinit var adapter: ListaGastosViagemAdapter
     private lateinit var snackbar: Snackbar
     private var util = Util()
     private var gastosViagem: List<GastoViagem> = Companion.gastoViagem
@@ -138,7 +138,7 @@ class GastosViagemFragment(private val viagemId: Long) : Fragment(), ClickGastoV
     }
 
     private fun chamaDialogDeAdicao() {
-        AdicionaGastosViagemDialog(viewGroupDaActivity, requireContext())
+        AdicionaGastoViagemDialog(viewGroupDaActivity, requireContext())
             .chama(null, viagemId) { viagemCriada ->
                 adiciona(viagemCriada)
                 createSnackBar(
@@ -153,12 +153,12 @@ class GastosViagemFragment(private val viagemId: Long) : Fragment(), ClickGastoV
     }
 
     private fun chamaDialogDeAlteracao(gastoViagem: GastoViagem) {
-        AlteraGastosViagemDialog(viewGroupDaActivity, requireContext())
+        AlteraGastoViagemDialog(viewGroupDaActivity, requireContext())
             .chamaAlteracao(gastoViagem, gastoViagem.id, gastoViagem.viagemId) { transacaoAlterada ->
                 altera(transacaoAlterada)
                 createSnackBar(
                     TipoSnackbar.SUCESSO,
-                    resources.getString(R.string.transacao_alterada_sucesso),
+                    resources.getString(R.string.gasto_viagem_alterado_sucesso),
                     View.VISIBLE
                 )
             }
