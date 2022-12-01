@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout
 import br.com.alura.financask.extension.formataParaBrasileiro
 import br.com.appcasal.R
@@ -27,6 +28,13 @@ abstract class FormularioViagemDialog(
     protected lateinit var campoDataInicio: EditText
     protected lateinit var campoDataFim: EditText
     abstract protected val tituloBotaoPositivo: String
+
+    private var estrelaMarcarda = 1
+    protected lateinit var estrela1: ImageView
+    protected lateinit var estrela2: ImageView
+    protected lateinit var estrela3: ImageView
+    protected lateinit var estrela4: ImageView
+    protected lateinit var estrela5: ImageView
 
     fun chama(id: Long?, linearLayout: LinearLayout, delegate: (viagem: Viagem) -> Unit) {
         configuraCamposDatas()
@@ -66,14 +74,16 @@ abstract class FormularioViagemDialog(
                     Viagem(
                         local = localEmTexto,
                         dataInicio = dataInicioEmTexto,
-                        dataFim = dataFimEmTexto
+                        dataFim = dataFimEmTexto,
+                        nota = estrelaMarcarda
                     )
                 } else {
                     Viagem(
                         id = id,
                         local = localEmTexto,
                         dataInicio = dataInicioEmTexto,
-                        dataFim = dataFimEmTexto
+                        dataFim = dataFimEmTexto,
+                        nota = estrelaMarcarda
                     )
                 }
 
@@ -141,8 +151,66 @@ abstract class FormularioViagemDialog(
         campoLocal = view.findViewById<EditText>(R.id.form_local)
         campoDataInicio = view.findViewById<EditText>(R.id.form_data_inicio_viagem)
         campoDataFim = view.findViewById<EditText>(R.id.form_data_final_viagem)
+        estrela1 = view.findViewById<ImageView>(R.id.form_viagem_estrela1)
+        estrela2 = view.findViewById<ImageView>(R.id.form_viagem_estrela2)
+        estrela3 = view.findViewById<ImageView>(R.id.form_viagem_estrela3)
+        estrela4 = view.findViewById<ImageView>(R.id.form_viagem_estrela4)
+        estrela5 = view.findViewById<ImageView>(R.id.form_viagem_estrela5)
+
+        setListeners()
+
         util.showKeyboard(campoLocal, context)
 
         return view
+    }
+
+    private fun setListeners() {
+        estrela1.setOnClickListener {
+            desmarcaEstrelas()
+            it.alpha = 1f
+            estrelaMarcarda = 1
+        }
+
+        estrela2.setOnClickListener {
+            desmarcaEstrelas()
+            estrela1.alpha = 1f
+            it.alpha = 1f
+            estrelaMarcarda = 2
+        }
+
+        estrela3.setOnClickListener {
+            desmarcaEstrelas()
+            estrela1.alpha = 1f
+            estrela2.alpha = 1f
+            it.alpha = 1f
+            estrelaMarcarda = 3
+        }
+
+        estrela4.setOnClickListener {
+            desmarcaEstrelas()
+            estrela1.alpha = 1f
+            estrela2.alpha = 1f
+            estrela3.alpha = 1f
+            it.alpha = 1f
+            estrelaMarcarda = 4
+        }
+
+        estrela5.setOnClickListener {
+            desmarcaEstrelas()
+            estrela1.alpha = 1f
+            estrela2.alpha = 1f
+            estrela3.alpha = 1f
+            estrela4.alpha = 1f
+            it.alpha = 1f
+            estrelaMarcarda = 5
+        }
+    }
+
+    private fun desmarcaEstrelas() {
+        estrela1.alpha = 0.3f
+        estrela2.alpha = 0.3f
+        estrela3.alpha = 0.3f
+        estrela4.alpha = 0.3f
+        estrela5.alpha = 0.3f
     }
 }

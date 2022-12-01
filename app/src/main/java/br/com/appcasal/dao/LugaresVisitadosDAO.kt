@@ -12,9 +12,6 @@ interface LugaresVisitadosDAO {
     @Query("DELETE FROM LugarVisitado WHERE viagemId == :viagemId")
     fun deleteLugaresVisitadosByViagem(viagemId: Long)
 
-    @Query("UPDATE LugarVisitado SET legal = :isLegal")
-    fun alteraLugarVisitadoLegal(isLegal: Boolean)
-
     @Insert
     fun adiciona(lugarVisitado: LugarVisitado)
 

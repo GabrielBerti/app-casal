@@ -9,7 +9,7 @@ import br.com.appcasal.model.*
 
 @Database(
     entities = [Transacao::class, Meta::class, Receita::class, Ingrediente::class, Viagem::class, GastoViagem::class, LugarVisitado::class],
-    version = 7
+    version = 9
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -24,7 +24,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
         fun instancia(context: Context): AppDatabase {
-            val MIGRATION_6_7: Migration = object : Migration(5, 7) {
+            val MIGRATION_8_9: Migration = object : Migration(8, 9) {
                 override fun migrate(database: SupportSQLiteDatabase) {
                     // Remove a tabela antiga
                     // database.execSQL("ALTER TABLE transacao DROP COLUMN categoria")
@@ -47,8 +47,9 @@ abstract class AppDatabase : RoomDatabase() {
 
                     database.execSQL("CREATE INDEX IF NOT EXISTS 'index_Ingrediente_receitaId' ON 'Ingrediente' ('receitaId')")
 
+                    database.execSQL("DROP TABLE IF EXISTS Viagem")
                     database.execSQL(
-                        "CREATE TABLE IF NOT EXISTS Viagem (id INTEGER NOT NULL, local TEXT NOT NULL, dataInicio TEXT NOT NULL, dataFim TEXT NOT NULL, " +
+                        "CREATE TABLE IF NOT EXISTS Viagem (id INTEGER NOT NULL, local TEXT NOT NULL, dataInicio TEXT NOT NULL, dataFim TEXT NOT NULL, nota INTEGER NOT NULL, " +
                                 "PRIMARY KEY(id))"
                     )
 
@@ -75,7 +76,7 @@ abstract class AppDatabase : RoomDatabase() {
                 AppDatabase::class.java,
                 "app_casal.db"
             ).allowMainThreadQueries()
-                .addMigrations(MIGRATION_6_7)
+                .addMigrations(MIGRATION_8_9)
                 .build()
         }
     }

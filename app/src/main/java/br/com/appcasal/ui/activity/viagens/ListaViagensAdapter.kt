@@ -2,10 +2,12 @@ package br.com.appcasal.ui.activity.viagens
 
 import android.content.Context
 import android.view.*
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.appcasal.R
 import br.com.appcasal.model.Viagem
+import br.com.appcasal.util.Util
 
 class ListaViagensAdapter(
     private var viagens: List<Viagem>,
@@ -46,6 +48,12 @@ class ListaViagensAdapter(
 
         var localViagem = itemView.findViewById<TextView>(R.id.local_viagem)
         var dataInicioFim = itemView.findViewById<TextView>(R.id.data_inicio_e_fim)
+        var estrela1 = itemView.findViewById<ImageView>(R.id.estrelaViagem1)
+        var estrela2 = itemView.findViewById<ImageView>(R.id.estrelaViagem2)
+        var estrela3 = itemView.findViewById<ImageView>(R.id.estrelaViagem3)
+        var estrela4 = itemView.findViewById<ImageView>(R.id.estrelaViagem4)
+        var estrela5 = itemView.findViewById<ImageView>(R.id.estrelaViagem5)
+        private var util = Util()
 
         init {
             itemView.setOnCreateContextMenuListener(this)
@@ -56,6 +64,7 @@ class ListaViagensAdapter(
 
             localViagem.text = viagem.local
             dataInicioFim.text = viagem.dataInicio + " até " + viagem.dataFim
+            util.exibeEstrelas(viagem.nota, estrela1, estrela2, estrela3, estrela4, estrela5)
         }
 
         override fun onCreateContextMenu(

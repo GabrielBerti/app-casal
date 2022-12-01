@@ -54,8 +54,10 @@ abstract class FormularioGastoViagemDialog(
 
             if(descricaoGastoEmTexto.isNullOrBlank()) {
                 campoDescricaoGasto.error = context.getString(R.string.descricao_gasto_obrigatorio)
-            } else if(descricaoGastoEmTexto.isNullOrBlank()) {
+            } else if(valorGastoEmTexto.isNullOrBlank()) {
                 campoValorGasto.error = context.getString(R.string.valor_gasto_obrigatorio)
+            } else if(valorGastoEmTexto == "0") {
+                campoValorGasto.error = context.getString(R.string.valor_gasto_maior_que_zero)
             } else {
                 var gastoViagemCriada: GastoViagem = if (id == null) {
                     GastoViagem(

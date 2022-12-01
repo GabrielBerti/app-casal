@@ -72,6 +72,7 @@
     <string name="local">Local</string>
     <string name="data_inicio">Data início</string>
     <string name="data_fim">Data final</string>
+    <string name="nota_viagem">Nota:</string>
     <string name="local_obrigatorio">"Campo local obrigatório"</string>
     <string name="altera_viagem">Altera viagem</string>
     <string name="adiciona_viagem">Adiciona viagem</string>
@@ -86,6 +87,7 @@
     <string name="descricao_gasto_hint">Descrição do gasto</string>
     <string name="descricao_gasto_obrigatorio">"Campo descrição do gasto obrigatório"</string>
     <string name="valor_gasto_obrigatorio">"Campo valor do gasto obrigatório"</string>
+    <string name="valor_gasto_maior_que_zero">"Valor deve ser maior que zero"</string>
     <string name="altera_gasto_viagem">Altera gasto viagem</string>
     <string name="adiciona_gasto_viagem">Adiciona gasto viagem</string>
     <string name="gasto_viagem_inserido_sucesso">Gasto %s inserido com sucesso !</string>

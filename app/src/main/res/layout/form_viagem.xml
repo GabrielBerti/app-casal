@@ -72,4 +72,58 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_nota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:layout_marginEnd="5dp"
+            android:text="@string/nota_viagem" />
+
+        <ImageView android:id="@+id/form_viagem_estrela1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="7dp"
+            android:alpha="1"
+            android:src="@drawable/ic_estrela" />
+
+        <ImageView android:id="@+id/form_viagem_estrela2"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="7dp"
+            android:alpha="0.3"
+            android:src="@drawable/ic_estrela" />
+
+        <ImageView android:id="@+id/form_viagem_estrela3"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="7dp"
+            android:alpha="0.3"
+            android:src="@drawable/ic_estrela" />
+
+        <ImageView android:id="@+id/form_viagem_estrela4"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="7dp"
+            android:alpha="0.3"
+            android:src="@drawable/ic_estrela" />
+
+        <ImageView android:id="@+id/form_viagem_estrela5"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="7dp"
+            android:alpha="0.3"
+            android:src="@drawable/ic_estrela" />
+
+    </LinearLayout>
+
 </LinearLayout>

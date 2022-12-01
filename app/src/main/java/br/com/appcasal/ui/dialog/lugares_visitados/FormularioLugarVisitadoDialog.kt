@@ -109,6 +109,12 @@ abstract class FormularioLugarVisitadoDialog(
         estrela4 = view.findViewById<ImageView>(R.id.form_estrela4)
         estrela5 = view.findViewById<ImageView>(R.id.form_estrela5)
 
+        setListeners()
+
+        return view
+    }
+
+    private fun setListeners() {
         estrela1.setOnClickListener {
             desmarcaEstrelas()
             it.alpha = 1f
@@ -148,8 +154,6 @@ abstract class FormularioLugarVisitadoDialog(
             it.alpha = 1f
             estrelaMarcarda = 5
         }
-
-        return view
     }
 
     private fun desmarcaEstrelas() {

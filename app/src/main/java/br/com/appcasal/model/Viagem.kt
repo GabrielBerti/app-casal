@@ -8,5 +8,6 @@ class Viagem(
     @PrimaryKey(autoGenerate = true) val id: Long = 0L,
     val local: String,
     val dataInicio: String,
-    val dataFim: String
+    val dataFim: String,
+    val nota: Int
 )
