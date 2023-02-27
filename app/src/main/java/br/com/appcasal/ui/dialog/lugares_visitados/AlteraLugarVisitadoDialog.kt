@@ -24,5 +24,6 @@ class AlteraLugarVisitadoDialog(
         super.chama(id, idViagem, delegate)
         nomeLugarVisitado.setText(lugarVisitado.nome)
         util.exibeEstrelas(lugarVisitado.legal, estrela1, estrela2, estrela3, estrela4, estrela5)
+        estrelaMarcarda = lugarVisitado.legal
     }
 }

@@ -19,7 +19,7 @@ abstract class FormularioLugarVisitadoDialog(
 
     private var util = Util()
     private val viewCriada = criaLayout()
-    private var estrelaMarcarda = 1
+    protected var estrelaMarcarda = 1
 
     protected lateinit var nomeLugarVisitado: EditText
     abstract protected val tituloBotaoPositivo: String

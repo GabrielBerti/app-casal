@@ -1,4 +1,5 @@
-
+-- Opcao de nao dar nota ou dar nota 0
+-- Nota quebrada(depende da Mari quebrar a img da estrela em duas partes)
 
 
 
