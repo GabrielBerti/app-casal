@@ -37,11 +37,7 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
     private val corMari = R.color.mari
     private val corZerada = R.color.white
 
-    private var transacoes: List<Transacao> = Companion.transacoes
-
-    companion object {
-        private val transacoes: MutableList<Transacao> = mutableListOf()
-    }
+    private var transacoes: List<Transacao> = emptyList()
 
     private val viewDaActivity by lazy {
         window.decorView

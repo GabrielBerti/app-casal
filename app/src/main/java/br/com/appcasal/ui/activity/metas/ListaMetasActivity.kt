@@ -29,11 +29,7 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
     private var util = Util()
     val viewModel: MetaViewModel by viewModel()
 
-    private var metas: List<Meta> = Companion.metas
-
-    companion object {
-        private val metas: MutableList<Meta> = mutableListOf()
-    }
+    private var metas: List<Meta> = emptyList()
 
     private val viewDaActivity by lazy {
         window.decorView
