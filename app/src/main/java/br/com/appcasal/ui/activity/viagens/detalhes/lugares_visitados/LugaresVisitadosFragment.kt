@@ -9,8 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.appcasal.R
-import br.com.appcasal.dao.AppDatabase
-import br.com.appcasal.dao.LugaresVisitadosDAO
 import br.com.appcasal.databinding.FragmentLugaresVisitadosViagemBinding
 import br.com.appcasal.domain.model.LugarVisitado
 import br.com.appcasal.domain.model.TipoSnackbar
@@ -27,7 +25,7 @@ class LugaresVisitadosFragment(private val viagemId: Long) : Fragment(), ClickLu
     private lateinit var snackbar: Snackbar
     private var util = Util()
     private var lugaresVisitados: List<LugarVisitado> = Companion.lugaresVisitados
-    private lateinit var lugaresVisitadosDAO: LugaresVisitadosDAO
+    //private lateinit var lugaresVisitadosDAO: LugaresVisitadosDAO
 
     companion object {
         private val lugaresVisitados: MutableList<LugarVisitado> = mutableListOf()
@@ -39,10 +37,6 @@ class LugaresVisitadosFragment(private val viagemId: Long) : Fragment(), ClickLu
 
     private val viewGroupDaActivity by lazy {
         viewDaActivity as ViewGroup
-    }
-
-    private val db by lazy {
-        AppDatabase.instancia(requireContext())
     }
 
     override fun onCreateView(
@@ -57,9 +51,9 @@ class LugaresVisitadosFragment(private val viagemId: Long) : Fragment(), ClickLu
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        lugaresVisitadosDAO = db.lugaresVisitadosDao()
+    //    lugaresVisitadosDAO = db.lugaresVisitadosDao()
 
-        lugaresVisitados = lugaresVisitadosDAO.buscaLugaresVisitadosByViagem(viagemId = viagemId)
+     //   lugaresVisitados = lugaresVisitadosDAO.buscaLugaresVisitadosByViagem(viagemId = viagemId)
 
         configuraAdapter()
         setListeners()
@@ -106,12 +100,12 @@ class LugaresVisitadosFragment(private val viagemId: Long) : Fragment(), ClickLu
     }
 
     private fun atualizaLugaresVisitados() {
-        lugaresVisitados = lugaresVisitadosDAO.buscaLugaresVisitadosByViagem(viagemId)
+        //lugaresVisitados = lugaresVisitadosDAO.buscaLugaresVisitadosByViagem(viagemId)
         rv.adapter = ListaLugaresVisitadosViagemAdapter(lugaresVisitados, requireContext(), this)
     }
 
     private fun remove(posicaoDaTransacao: Int) {
-        lugaresVisitadosDAO.remove(lugaresVisitados[posicaoDaTransacao])
+      //  lugaresVisitadosDAO.remove(lugaresVisitados[posicaoDaTransacao])
         adapter.notifyItemRemoved(posicaoDaTransacao)
         atualizaLugaresVisitados()
     }
@@ -144,12 +138,12 @@ class LugaresVisitadosFragment(private val viagemId: Long) : Fragment(), ClickLu
     }
 
     private fun adiciona(lugarVisitado: LugarVisitado) {
-        lugaresVisitadosDAO.adiciona(lugarVisitado)
+     //   lugaresVisitadosDAO.adiciona(lugarVisitado)
         atualizaLugaresVisitados()
     }
 
     private fun altera(lugarVisitado: LugarVisitado) {
-        lugaresVisitadosDAO.altera(lugarVisitado)
+      //  lugaresVisitadosDAO.altera(lugarVisitado)
         atualizaLugaresVisitados()
     }
 

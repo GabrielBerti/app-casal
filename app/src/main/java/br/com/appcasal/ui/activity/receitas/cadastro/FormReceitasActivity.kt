@@ -9,9 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.appcasal.R
-import br.com.appcasal.dao.AppDatabase
-import br.com.appcasal.dao.IngredienteDAO
-import br.com.appcasal.dao.ReceitaDAO
 import br.com.appcasal.databinding.FormReceitasBinding
 import br.com.appcasal.domain.model.Ingrediente
 import br.com.appcasal.domain.model.Receita
@@ -46,12 +43,8 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
         viewDaActivity as ViewGroup
     }
 
-    private val db by lazy {
-        AppDatabase.instancia(this)
-    }
-
-    private lateinit var ingredienteDAO: IngredienteDAO
-    private lateinit var receitaDAO: ReceitaDAO
+    //private lateinit var ingredienteDAO: IngredienteDAO
+    //private lateinit var receitaDAO: ReceitaDAO
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,8 +55,8 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
         receitaNome = findViewById<EditText>(R.id.receita_nome)
         receitaDescricao = findViewById<TextView>(R.id.receita_descricao)
 
-        ingredienteDAO = db.ingredienteDao()
-        receitaDAO = db.receitaDao()
+        //ingredienteDAO = db.ingredienteDao()
+        //receitaDAO = db.receitaDao()
 
         setLayout()
         setListeners()
@@ -78,11 +71,11 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
         if (extras != null) {
             receitaId = extras.getString("receitaId")!!.toLong()
             if (isUpdated(receitaId)) {
-                receitaSelected = receitaDAO.buscaReceitaById(receitaId)
+                //receitaSelected = receitaDAO.buscaReceitaById(receitaId)
                 receitaNome.setText(receitaSelected[0].nome)// = receitaSelected[0].nome
                 receitaDescricao.text = receitaSelected[0].descricao
 
-                ingredientes = ingredienteDAO.buscaIngredientesByReceita(receitaId)
+               // ingredientes = ingredienteDAO.buscaIngredientesByReceita(receitaId)
                 supportActionBar!!.title = resources.getString(R.string.altera_receita)
             } else {
                 ingredientes = mutableListOf()
@@ -119,27 +112,27 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
 
     private fun salvaReceita() {
         if (isUpdated(receitaId)) {
-            receitaDAO.altera(
-                Receita(
-                    receitaId,
-                    receitaNome.text.toString(),
-                    receitaDescricao.text.toString()
-                )
-            )
+//            receitaDAO.altera(
+//                Receita(
+//                    receitaId,
+//                    receitaNome.text.toString(),
+//                    receitaDescricao.text.toString()
+//                )
+//            )
         } else {
             ListaReceitasActivity.nomeReceitaInserida = receitaNome.text.toString()
-
-            receitaDAO.adiciona(
-                Receita(
-                    receitaId,
-                    receitaNome.text.toString(),
-                    receitaDescricao.text.toString()
-                )
-            )
+//
+//            receitaDAO.adiciona(
+//                Receita(
+//                    receitaId,
+//                    receitaNome.text.toString(),
+//                    receitaDescricao.text.toString()
+//                )
+//            )
         }
 
-        val ultimaReceitaInserida = receitaDAO.buscaUltimaReceitaInserida()
-        insereIngredientes(ultimaReceitaInserida.id)
+       // val ultimaReceitaInserida = receitaDAO.buscaUltimaReceitaInserida()
+      //  insereIngredientes(ultimaReceitaInserida.id)
 
         val intent = Intent()
         setResult(ListaReceitasActivity.retornoSucesso, intent)
@@ -160,15 +153,15 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
 
     private fun verificaReceitaComMesmoNome(receitaId: Long, receitaNome: String): Boolean {
 
-        val todasReceitas = receitaDAO.buscaTodos()
+       // val todasReceitas = receitaDAO.buscaTodos()
         var count: Int = 0
         val isUpdated = isUpdated(receitaId)
 
-        todasReceitas.forEach() {
-            if(it.nome == receitaNome) {
-                count += 1
-            }
-        }
+//        todasReceitas.forEach() {
+//            if(it.nome == receitaNome) {
+//                count += 1
+//            }
+//        }
 
         // se nao encotrou nenhuma receita com o mesmo nome retorna false
         if (count == 0) return false
@@ -183,7 +176,7 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
     private fun insereIngredientes(receitaId: Long) {
         ingredientes.forEach {
             if (!isUpdated(it.id)) {
-                ingredienteDAO.adiciona(Ingrediente(it.id, it.descricao, false, receitaId))
+             ///   ingredienteDAO.adiciona(Ingrediente(it.id, it.descricao, false, receitaId))
             }
         }
     }
@@ -217,7 +210,7 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
 
     private fun adiciona(ingrediente: Ingrediente) {
         if (isUpdated(ingrediente.id)) {
-            ingredienteDAO.adiciona(ingrediente)
+         //   ingredienteDAO.adiciona(ingrediente)
             atualizaIngredientes()
         } else {
             ingredientes.add(ingrediente)
@@ -230,7 +223,7 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
     }
 
     private fun atualizaIngredientes() {
-        ingredientes = ingredienteDAO.buscaIngredientesByReceita(receitaId)
+    //    ingredientes = ingredienteDAO.buscaIngredientesByReceita(receitaId)
         rv.adapter = ListaIngredientesAdapter(ingredientes, this, this)
     }
 
@@ -253,7 +246,7 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
         if (isUpdated(ingredientes[posicao].id)) {
             //insere os ingredientes q ainda nao foram inseridos para nao perde-los quando atualizar adapter
             insereIngredientes(receitaId)
-            ingredienteDAO.remove(ingredientes[posicao])
+        //    ingredienteDAO.remove(ingredientes[posicao])
             adapter.notifyItemRemoved(posicao)
             atualizaIngredientes()
         } else {
@@ -276,7 +269,7 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
 
         ingredientes.forEach {
             if (it.id == ingrediente.id && isUpdated(ingrediente.id)) {
-                ingredienteDAO.altera(ingrediente)
+            //    ingredienteDAO.altera(ingrediente)
                 atualizaIngredientes()
                 encontrou = true
                 return

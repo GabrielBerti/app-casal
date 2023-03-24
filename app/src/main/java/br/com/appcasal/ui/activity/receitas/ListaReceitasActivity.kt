@@ -10,9 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.appcasal.MainActivity
 import br.com.appcasal.R
-import br.com.appcasal.dao.AppDatabase
-import br.com.appcasal.dao.IngredienteDAO
-import br.com.appcasal.dao.ReceitaDAO
 import br.com.appcasal.databinding.ActivityListaReceitasBinding
 import br.com.appcasal.domain.model.Receita
 import br.com.appcasal.domain.model.TipoSnackbar
@@ -41,12 +38,8 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
         private var msgSnackBar: String = ""
     }
 
-    private val db by lazy {
-        AppDatabase.instancia(this)
-    }
-
-    private lateinit var receitaDao: ReceitaDAO
-    private lateinit var ingredienteDAO: IngredienteDAO
+    //private lateinit var receitaDao: ReceitaDAO
+    //private lateinit var ingredienteDAO: IngredienteDAO
 
     var abrirActivityCadastro = registerForActivityResult(
         StartActivityForResult()
@@ -73,9 +66,9 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
 
         clReceita = findViewById<CoordinatorLayout>(R.id.cl_lista_receitas)
 
-        ingredienteDAO = db.ingredienteDao()
-        receitaDao = db.receitaDao()
-        receitas = receitaDao.buscaTodos()
+        //ingredienteDAO = db.ingredienteDao()
+        //receitaDao = db.receitaDao()
+       // receitas = receitaDao.buscaTodos()
 
         setToolbar()
         configuraAdapter()
@@ -171,7 +164,7 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
     }
 
     private fun atualizaReceitas() {
-        receitas = receitaDao.buscaTodos()
+        //receitas = receitaDao.buscaTodos()
         rv.adapter = ListaReceitasAdapter(receitas, this, this)
     }
 
@@ -200,16 +193,16 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
     }
 
     private fun remove(posicao: Int) {
-        ingredienteDAO.deleteIngredientesByReceita(receitas[posicao].id)
-        receitaDao.remove(receitas[posicao])
+        //ingredienteDAO.deleteIngredientesByReceita(receitas[posicao].id)
+       // receitaDao.remove(receitas[posicao])
         adapter.notifyItemRemoved(posicao)
         atualizaReceitas()
     }
 
     private fun removeTodasReceitas() {
         receitas.forEach { receita ->
-            ingredienteDAO.deleteIngredientesByReceita(receita.id)
-            receitaDao.remove(receita)
+         //   ingredienteDAO.deleteIngredientesByReceita(receita.id)
+          //  receitaDao.remove(receita)
         }
         atualizaReceitas()
     }

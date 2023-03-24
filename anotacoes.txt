@@ -25,13 +25,11 @@
     -- lugares conhecidos viagem (até 07/05)
         -- fazer crud
 
-    -- trocar datas que estao com tipo string para Date (até 14/05)
-    -- trocar notas das viagens e dos lugares conhecidos que estao com tipo int para double (até 14/05)
-    -- colocar filtro debounced na telas de metas, viagens e receitas (até 21/05)
-    -- fazer tratamentos de erros e loading nas telas(até 28/05)
-    -- limpar tudo que tenha a ver com o banco de dados off do projeto(até 28/05)
-    -- criar uma branch do app off para nao perder(até 28/05)
 
+    -- trocar notas das viagens e dos lugares conhecidos que estao com tipo int para double (até 14/05)
+    -- fazer tratamentos de erros e loading nas telas(até 21/05)
+    -- colocar filtro debounced na telas de metas, viagens e receitas (até 28/05)
+    -- trocar datas que estao com tipo string para Date (até 28/05)
 
 
 

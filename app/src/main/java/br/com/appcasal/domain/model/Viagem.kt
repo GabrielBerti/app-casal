@@ -1,11 +1,7 @@
 package br.com.appcasal.domain.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
-@Entity
 class Viagem(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0L,
+    val id: Long = 0L,
     val local: String,
     val dataInicio: String,
     val dataFim: String,

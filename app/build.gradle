@@ -48,14 +48,8 @@ android {
 }
 
 dependencies {
-    def room_version = "2.3.0" // check latest version from docs
     def koinVersion = "2.2.3"
-    //def lifecycleVersion = '2.5.0'
     def lifecycleVersion = "2.5.0-alpha02"
-
-
-    implementation "androidx.room:room-ktx:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'

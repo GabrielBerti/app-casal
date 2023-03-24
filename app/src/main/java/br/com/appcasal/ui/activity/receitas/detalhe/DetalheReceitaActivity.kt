@@ -11,9 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.appcasal.R
-import br.com.appcasal.dao.AppDatabase
-import br.com.appcasal.dao.IngredienteDAO
-import br.com.appcasal.dao.ReceitaDAO
 import br.com.appcasal.databinding.ActivityReceitaDetalheBinding
 import br.com.appcasal.domain.model.Ingrediente
 import br.com.appcasal.domain.model.Receita
@@ -38,12 +35,8 @@ class DetalheReceitaActivity : AppCompatActivity(), CheckouIngrediente {
         private val ingredientes: MutableList<Ingrediente> = mutableListOf()
     }
 
-    private val db by lazy {
-        AppDatabase.instancia(this)
-    }
-
-    private lateinit var receitaDao: ReceitaDAO
-    private lateinit var ingredienteDAO: IngredienteDAO
+  //  private lateinit var receitaDao: ReceitaDAO
+   // private lateinit var ingredienteDAO: IngredienteDAO
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,8 +49,8 @@ class DetalheReceitaActivity : AppCompatActivity(), CheckouIngrediente {
         receitaDescricao = findViewById<TextView>(R.id.receita_descricao_detalhe)
         buttonDesmarcaTodosIngredientes = findViewById<Button>(R.id.desmarcar_tudo)
 
-        ingredienteDAO = db.ingredienteDao()
-        receitaDao = db.receitaDao()
+      //  ingredienteDAO = db.ingredienteDao()
+     //   receitaDao = db.receitaDao()
 
         setListeners()
         setLayout()
@@ -78,11 +71,11 @@ class DetalheReceitaActivity : AppCompatActivity(), CheckouIngrediente {
         val extras = intent.extras
         if (extras != null) {
             receitaId = extras.getString("receitaId")!!.toLong()
-            receitaSelected = receitaDao.buscaReceitaById(receitaId)
+       //     receitaSelected = receitaDao.buscaReceitaById(receitaId)
             receitaNome.text = receitaSelected[0].nome
             receitaDescricao.text = receitaSelected[0].descricao
 
-            ingredientes = ingredienteDAO.buscaIngredientesByReceita(receitaId)
+          //  ingredientes = ingredienteDAO.buscaIngredientesByReceita(receitaId)
         }
     }
 
@@ -108,8 +101,8 @@ class DetalheReceitaActivity : AppCompatActivity(), CheckouIngrediente {
         builder.setPositiveButton(
             "Sim"
         ) { _, _ ->
-            ingredienteDAO.desmarcaTodosIngredientes()
-            ingredientes = ingredienteDAO.buscaIngredientesByReceita(receitaId)
+       //     ingredienteDAO.desmarcaTodosIngredientes()
+        //    ingredientes = ingredienteDAO.buscaIngredientesByReceita(receitaId)
             atualizaAdapter()
             rv.adapter = adapter
         }
@@ -142,7 +135,7 @@ class DetalheReceitaActivity : AppCompatActivity(), CheckouIngrediente {
 
     override fun atualizaIngrediente(position: Int, isChecked: Boolean) {
         ingredientes[position].marcado = isChecked
-        ingredienteDAO.altera(ingredientes[position])
+     //   ingredienteDAO.altera(ingredientes[position])
         atualizaAdapter()
     }
 }

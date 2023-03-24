@@ -43,13 +43,9 @@ class ListaViagensActivity : AppCompatActivity(), ClickViagem {
         viewDaActivity as ViewGroup
     }
 
-    private val db by lazy {
-        AppDatabase.instancia(this)
-    }
-
-    private lateinit var viagemDao: ViagemDAO
-    private lateinit var gastosViagemDAO: GastosViagemDAO
-    private lateinit var lugaresVisitadosDAO: LugaresVisitadosDAO
+   // private lateinit var viagemDao: ViagemDAO
+  //  private lateinit var gastosViagemDAO: GastosViagemDAO
+  //  private lateinit var lugaresVisitadosDAO: LugaresVisitadosDAO
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,11 +56,11 @@ class ListaViagensActivity : AppCompatActivity(), ClickViagem {
 
         clViagem = findViewById<CoordinatorLayout>(R.id.cl_lista_viagens)
 
-        viagemDao = db.viagemDao()
-        gastosViagemDAO = db.gastosViagemDao()
-        lugaresVisitadosDAO = db.lugaresVisitadosDao()
+       // viagemDao = db.viagemDao()
+      //  gastosViagemDAO = db.gastosViagemDao()
+       // lugaresVisitadosDAO = db.lugaresVisitadosDao()
 
-        viagens = viagemDao.buscaTodos()
+       // viagens = viagemDao.buscaTodos()
 
         setToolbar()
         configuraAdapter()
@@ -137,7 +133,7 @@ class ListaViagensActivity : AppCompatActivity(), ClickViagem {
     }
 
     private fun atualizaViagens() {
-        viagens = viagemDao.buscaTodos()
+        //viagens = viagemDao.buscaTodos()
         rv.adapter = ListaViagensAdapter(viagens, this, this)
     }
 
@@ -165,29 +161,29 @@ class ListaViagensActivity : AppCompatActivity(), ClickViagem {
     }
 
     private fun remove(posicao: Int) {
-        lugaresVisitadosDAO.deleteLugaresVisitadosByViagem(viagens[posicao].id)
-        gastosViagemDAO.deleteGastosViagemByViagem(viagens[posicao].id)
-        viagemDao.remove(viagens[posicao])
+       // lugaresVisitadosDAO.deleteLugaresVisitadosByViagem(viagens[posicao].id)
+       // gastosViagemDAO.deleteGastosViagemByViagem(viagens[posicao].id)
+      //  viagemDao.remove(viagens[posicao])
         adapter.notifyItemRemoved(posicao)
         atualizaViagens()
     }
 
     private fun removeTodasViagens() {
         viagens.forEach { viagem ->
-            lugaresVisitadosDAO.deleteLugaresVisitadosByViagem(viagem.id)
-            gastosViagemDAO.deleteGastosViagemByViagem(viagem.id)
-            viagemDao.remove(viagem)
+        //    lugaresVisitadosDAO.deleteLugaresVisitadosByViagem(viagem.id)
+         //   gastosViagemDAO.deleteGastosViagemByViagem(viagem.id)
+       //     viagemDao.remove(viagem)
         }
         atualizaViagens()
     }
 
     private fun adiciona(viagem: Viagem) {
-        viagemDao.adiciona(viagem)
+    //    viagemDao.adiciona(viagem)
         atualizaViagens()
     }
 
     private fun altera(viagem: Viagem) {
-        viagemDao.altera(viagem)
+    //    viagemDao.altera(viagem)
         atualizaViagens()
     }
 

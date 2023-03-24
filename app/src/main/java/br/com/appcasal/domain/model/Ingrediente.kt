@@ -1,22 +1,8 @@
 package br.com.appcasal.domain.model
 
-import androidx.annotation.NonNull
-import androidx.room.*
-
-@Entity(
-    foreignKeys = [
-        ForeignKey(
-            entity = Receita::class,
-            parentColumns = ["id"],
-            childColumns = ["receitaId"]
-        )
-    ]
-)class Ingrediente(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0L,
+class Ingrediente(
+    val id: Long = 0L,
     val descricao: String,
-    @NonNull
     var marcado: Boolean,
-    @NonNull
-    @ColumnInfo(index = true)
     val receitaId: Long
 )

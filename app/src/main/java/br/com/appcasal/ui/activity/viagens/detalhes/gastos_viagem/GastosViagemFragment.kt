@@ -10,8 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.alura.financask.extension.formataParaBrasileiro
 import br.com.appcasal.R
-import br.com.appcasal.dao.AppDatabase
-import br.com.appcasal.dao.GastosViagemDAO
 import br.com.appcasal.databinding.FragmentGastosViagemBinding
 import br.com.appcasal.domain.model.GastoViagem
 import br.com.appcasal.domain.model.TipoSnackbar
@@ -29,7 +27,7 @@ class GastosViagemFragment(private val viagemId: Long) : Fragment(), ClickGastoV
     private lateinit var snackbar: Snackbar
     private var util = Util()
     private var gastosViagem: List<GastoViagem> = Companion.gastoViagem
-    private lateinit var gastosViagemDAO: GastosViagemDAO
+    //private lateinit var gastosViagemDAO: GastosViagemDAO
 
     companion object {
         private val gastoViagem: MutableList<GastoViagem> = mutableListOf()
@@ -41,10 +39,6 @@ class GastosViagemFragment(private val viagemId: Long) : Fragment(), ClickGastoV
 
     private val viewGroupDaActivity by lazy {
         viewDaActivity as ViewGroup
-    }
-
-    private val db by lazy {
-        AppDatabase.instancia(requireContext())
     }
 
     override fun onCreateView(
@@ -59,9 +53,9 @@ class GastosViagemFragment(private val viagemId: Long) : Fragment(), ClickGastoV
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        gastosViagemDAO = db.gastosViagemDao()
+        //gastosViagemDAO = db.gastosViagemDao()
 
-        gastosViagem = gastosViagemDAO.buscaGastosViagemByViagem(viagemId = viagemId)
+        //gastosViagem = gastosViagemDAO.buscaGastosViagemByViagem(viagemId = viagemId)
 
         exibeValorTotalGasto()
         configuraAdapter()
@@ -126,14 +120,14 @@ class GastosViagemFragment(private val viagemId: Long) : Fragment(), ClickGastoV
     }
 
     private fun remove(posicaoDaTransacao: Int) {
-        gastosViagemDAO.remove(gastosViagem[posicaoDaTransacao])
+      //  gastosViagemDAO.remove(gastosViagem[posicaoDaTransacao])
         adapter.notifyItemRemoved(posicaoDaTransacao)
         atualizaGastosViagem()
         exibeValorTotalGasto()
     }
 
     private fun atualizaGastosViagem() {
-        gastosViagem = gastosViagemDAO.buscaGastosViagemByViagem(viagemId)
+     //   gastosViagem = gastosViagemDAO.buscaGastosViagemByViagem(viagemId)
         rv.adapter = ListaGastosViagemAdapter(gastosViagem, requireContext(), this)
     }
 
@@ -165,13 +159,13 @@ class GastosViagemFragment(private val viagemId: Long) : Fragment(), ClickGastoV
     }
 
     private fun adiciona(gastoViagem: GastoViagem) {
-        gastosViagemDAO.adiciona(gastoViagem)
+    //    gastosViagemDAO.adiciona(gastoViagem)
         atualizaGastosViagem()
         exibeValorTotalGasto()
     }
 
     private fun altera(gastoViagem: GastoViagem) {
-        gastosViagemDAO.altera(gastoViagem)
+  //      gastosViagemDAO.altera(gastoViagem)
         atualizaGastosViagem()
         exibeValorTotalGasto()
     }
