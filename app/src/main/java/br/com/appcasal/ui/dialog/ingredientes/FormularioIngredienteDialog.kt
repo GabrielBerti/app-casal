@@ -65,14 +65,14 @@ abstract class FormularioIngredienteDialog(
             } else {
                 val ingredienteCriado: Ingrediente = if (id == null) {
                     Ingrediente(
-                        receitaId = idReceita,
+                        //receitaId = idReceita,
                         descricao = campoDescricaoIngredienteEmTexto,
                         marcado = false
                     )
                 } else {
                     Ingrediente(
                         id = id,
-                        receitaId = idReceita,
+                       // receitaId = idReceita,
                         descricao = campoDescricaoIngredienteEmTexto,
                         marcado = false
                     )

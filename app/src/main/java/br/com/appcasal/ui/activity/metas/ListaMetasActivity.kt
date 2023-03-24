@@ -21,7 +21,6 @@ import br.com.appcasal.viewmodel.MetaViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
 class ListaMetasActivity : AppCompatActivity(), ClickMeta {
 
     private lateinit var binding: ActivityListaMetasBinding

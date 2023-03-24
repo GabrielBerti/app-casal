@@ -35,7 +35,6 @@
     <string name="meta_inserida_sucesso" formatted="false">Meta %s inserida com sucesso !</string>
     <string name="meta_alterada_sucesso">Meta alterada com sucesso !</string>
     <string name="meta_removida_sucesso">Meta removida com sucesso !</string>
-    <string name="metas_removidas_sucesso">Metas removidas com sucesso !</string>
     <string name="meta_concluida_sucesso">Meta concluída com sucesso !</string>
     <string name="meta_desconcluida_sucesso">Meta desconcluída com sucesso !</string>
     <string name="descricao_obrigatorio">"Campo descrição obrigatório"</string>
@@ -49,8 +48,7 @@
     <string name="salvar_receita">Salvar receita</string>
     <string name="receita_inserida_sucesso">Receita %s inserida com sucesso !</string>
     <string name="receita_alterada_sucesso">Receita alterada com sucesso !</string>
-    <string name="receita_removida_sucesso">Receita %s removida com sucesso !</string>
-    <string name="receitas_removidas_sucesso">Receitas removidas com sucesso !</string>
+    <string name="receita_removida_sucesso">Receita removida com sucesso !</string>
     <string name="altera_receita">Alterar receita</string>
     <string name="detalhe_receita">Detalhe receita</string>
     <string name="altera_ingrediente">Altera ingrediente</string>

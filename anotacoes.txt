@@ -4,33 +4,34 @@
 
 
 -- Integrar com o back end
-    -- receitas (até 09/04)
-        -- fazer crud
+    -- receitas (até 26/03)
         -- tirar opcao de remover tudo
         -- swipe refresh
         -- refatorar para usar databinding
+        -- detalhes da receita
 
-    -- viagem (até 16/04)
+    -- viagem (até 02/04)
             -- fazer crud
             -- tirar opcao de remover tudo
             -- swipe refresh
             -- refatorar para usar databinding
 
-    -- ingredientes (até 23/04)
+    -- ingredientes (até 09/04)
         -- fazer crud
 
-    -- gastos viagem (até 30/04)
+    -- gastos viagem (até 16/04)
         -- fazer crud
 
-    -- lugares conhecidos viagem (até 07/05)
+    -- lugares conhecidos viagem (até 23/04)
         -- fazer crud
 
 
-    -- trocar notas das viagens e dos lugares conhecidos que estao com tipo int para double (até 14/05)
-    -- fazer tratamentos de erros e loading nas telas(até 21/05)
-    -- colocar filtro debounced na telas de metas, viagens e receitas (até 28/05)
-    -- trocar datas que estao com tipo string para Date (até 28/05)
-
+    -- trocar notas das viagens e dos lugares conhecidos que estao com tipo int para double (até 30/05)
+    -- fazer tratamentos de erros e loading nas telas(até 07/05)
+    -- colocar filtro debounced na telas de metas, viagens e receitas (até 14/05)
+    -- trocar datas que estao com tipo string para Date (até 14/05)
+    -- resolver TODOs e assert nulls (até 14/05)
+    -- colocar nome dos itens inseridos e alterados (até 14/05)
 
 
 
