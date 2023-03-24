@@ -1,32 +1,23 @@
 -- ajustes gerais:
     -- Opcao de nao dar nota ou dar nota 0
     -- Nota quebrada(depende da Mari quebrar a img da estrela em duas partes)
-    -- criar uma branch do app off para nao perder
 
 
 -- Integrar com o back end
-    -- metas (até 26/03)
-        -- swipe refresh
-
-    -- transacao (até 02/04)
-        -- fazer crud
-        -- swipe refresh
-        -- refatorar para usar databinding
-
     -- receitas (até 09/04)
         -- fazer crud
         -- tirar opcao de remover tudo
         -- swipe refresh
         -- refatorar para usar databinding
 
-    -- ingredientes (até 16/04)
-        -- fazer crud
+    -- viagem (até 16/04)
+            -- fazer crud
+            -- tirar opcao de remover tudo
+            -- swipe refresh
+            -- refatorar para usar databinding
 
-    -- viagem (até 23/04)
+    -- ingredientes (até 23/04)
         -- fazer crud
-        -- tirar opcao de remover tudo
-        -- swipe refresh
-        -- refatorar para usar databinding
 
     -- gastos viagem (até 30/04)
         -- fazer crud
@@ -35,9 +26,11 @@
         -- fazer crud
 
     -- trocar datas que estao com tipo string para Date (até 14/05)
+    -- trocar notas das viagens e dos lugares conhecidos que estao com tipo int para double (até 14/05)
     -- colocar filtro debounced na telas de metas, viagens e receitas (até 21/05)
-    -- fazer tratamentos de erros e loading nas telas
-    -- limpar tudo que tenha a ver com o banco de dados off do projeto
+    -- fazer tratamentos de erros e loading nas telas(até 28/05)
+    -- limpar tudo que tenha a ver com o banco de dados off do projeto(até 28/05)
+    -- criar uma branch do app off para nao perder(até 28/05)
 
 
 

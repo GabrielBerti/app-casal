@@ -4,5 +4,5 @@
         <item android:id="@+id/clear_all"
             android:icon="@drawable/ic_clear_all"
             android:title="@string/descricao"
-            app:showAsAction="collapseActionView" />
+            app:showAsAction="ifRoom" />
 </menu>

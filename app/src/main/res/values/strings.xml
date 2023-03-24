@@ -20,7 +20,7 @@
     <string name="altera_lancamento_mari">Altera Lançamento</string>
     <string name="transacao_inserida_sucesso">Transação %s inserida com sucesso !</string>
     <string name="transacao_alterada_sucesso">Transação alterada com sucesso !</string>
-    <string name="transacao_removida_sucesso">Transação %s removida com sucesso !</string>
+    <string name="transacao_removida_sucesso">Transação removida com sucesso !</string>
     <string name="transacoes_removidas_sucesso">Transações removidas com sucesso !</string>
     <string name="descricao_financas_obrigatorio">"Campo descrição obrigatório"</string>
     <string name="valor_obrigatorio">"Campo valor obrigatório"</string>

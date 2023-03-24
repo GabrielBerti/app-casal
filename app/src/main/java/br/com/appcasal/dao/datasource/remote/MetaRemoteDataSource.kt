@@ -35,9 +35,7 @@ class MetaRemoteDataSource(
     }
 
     suspend fun deletaMeta(meta: Meta): Boolean {
-        val x = metaService.deletaMeta(meta.id)
-
-
+        metaService.deletaMeta(meta.id)
         return true
     }
 }

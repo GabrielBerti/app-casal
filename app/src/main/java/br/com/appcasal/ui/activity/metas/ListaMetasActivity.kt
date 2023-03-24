@@ -184,15 +184,13 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
         if(binding.rvMetas.adapter != null) {
-            var posicao = -1
-            posicao = (binding.rvMetas.adapter as ListaMetasAdapter).posicao
+            val posicao: Int = (binding.rvMetas.adapter as ListaMetasAdapter).posicao
 
             when (item.itemId) {
                 1 -> {
                     metas[posicao].concluido = !metas[posicao].concluido
 
-                    var msgSnackbar = ""
-                    msgSnackbar = if(metas[posicao].concluido) {
+                    val msgSnackbar: String = if(metas[posicao].concluido) {
                         resources.getString(R.string.meta_concluida_sucesso)
                     } else {
                         resources.getString(R.string.meta_desconcluida_sucesso)
