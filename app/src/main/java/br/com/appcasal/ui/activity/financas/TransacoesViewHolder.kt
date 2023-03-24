@@ -10,8 +10,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import br.com.alura.financask.extension.formataParaBrasileiro
 import br.com.appcasal.R
-import br.com.appcasal.model.Tipo
-import br.com.appcasal.model.Transacao
+import br.com.appcasal.domain.model.Tipo
+import br.com.appcasal.domain.model.Transacao
 
 class TransacoesViewHolder(private val context: Context,
                            itemView: View

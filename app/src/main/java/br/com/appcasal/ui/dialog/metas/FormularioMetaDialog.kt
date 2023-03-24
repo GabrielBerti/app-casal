@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
 import br.com.appcasal.R
-import br.com.appcasal.model.Meta
+import br.com.appcasal.domain.model.Meta
 import br.com.appcasal.util.Util
 
 

@@ -13,8 +13,8 @@ import br.com.appcasal.R
 import br.com.appcasal.dao.AppDatabase
 import br.com.appcasal.dao.GastosViagemDAO
 import br.com.appcasal.databinding.FragmentGastosViagemBinding
-import br.com.appcasal.model.GastoViagem
-import br.com.appcasal.model.TipoSnackbar
+import br.com.appcasal.domain.model.GastoViagem
+import br.com.appcasal.domain.model.TipoSnackbar
 import br.com.appcasal.ui.dialog.gastos_viagem.AdicionaGastoViagemDialog
 import br.com.appcasal.ui.dialog.gastos_viagem.AlteraGastoViagemDialog
 import br.com.appcasal.util.Util

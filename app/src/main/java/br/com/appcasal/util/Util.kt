@@ -11,7 +11,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.view.updatePadding
 import br.com.appcasal.R
-import br.com.appcasal.model.TipoSnackbar
+import br.com.appcasal.domain.model.TipoSnackbar
 import com.google.android.material.snackbar.Snackbar
 import java.math.BigDecimal
 

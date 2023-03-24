@@ -1,7 +1,7 @@
 package br.com.appcasal.dao
 
 import androidx.room.*
-import br.com.appcasal.model.Meta
+import br.com.appcasal.domain.model.Meta
 
 @Dao
 interface MetaDAO {

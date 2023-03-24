@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import br.com.appcasal.R
-import br.com.appcasal.model.GastoViagem
+import br.com.appcasal.domain.model.GastoViagem
 import br.com.appcasal.util.Util
 
 abstract class FormularioGastoViagemDialog(

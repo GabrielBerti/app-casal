@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.appcasal.R
-import br.com.appcasal.model.Meta
+import br.com.appcasal.domain.model.Meta
 
 class ListaMetasAdapter(
     private var metas: List<Meta>,

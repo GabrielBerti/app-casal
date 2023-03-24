@@ -4,8 +4,7 @@ import android.content.Context
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import br.com.appcasal.R
-import br.com.appcasal.model.Ingrediente
-import br.com.appcasal.model.Receita
+import br.com.appcasal.domain.model.Ingrediente
 
 class AlteraIngredienteDialog(
         viewGroup: ViewGroup,

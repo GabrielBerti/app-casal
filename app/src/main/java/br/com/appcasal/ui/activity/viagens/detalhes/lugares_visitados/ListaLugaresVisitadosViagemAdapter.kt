@@ -6,7 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.appcasal.R
-import br.com.appcasal.model.LugarVisitado
+import br.com.appcasal.domain.model.LugarVisitado
 import br.com.appcasal.util.Util
 
 class ListaLugaresVisitadosViagemAdapter(

@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.appcasal.R
-import br.com.appcasal.model.Ingrediente
+import br.com.appcasal.domain.model.Ingrediente
 
 class ListaIngredientesAdapter(
     private var ingredientes: List<Ingrediente>,

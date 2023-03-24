@@ -3,7 +3,7 @@ package br.com.appcasal.ui.dialog.lugares_visitados
 import android.content.Context
 import android.view.ViewGroup
 import br.com.appcasal.R
-import br.com.appcasal.model.LugarVisitado
+import br.com.appcasal.domain.model.LugarVisitado
 import br.com.appcasal.util.Util
 
 class AlteraLugarVisitadoDialog(

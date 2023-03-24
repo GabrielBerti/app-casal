@@ -3,7 +3,7 @@ package br.com.appcasal.ui.dialog.gastos_viagem
 import android.content.Context
 import android.view.ViewGroup
 import br.com.appcasal.R
-import br.com.appcasal.model.GastoViagem
+import br.com.appcasal.domain.model.GastoViagem
 
 class AlteraGastoViagemDialog(
         viewGroup: ViewGroup,

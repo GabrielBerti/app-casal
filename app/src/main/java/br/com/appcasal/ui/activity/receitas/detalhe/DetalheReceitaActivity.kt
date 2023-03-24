@@ -15,8 +15,8 @@ import br.com.appcasal.dao.AppDatabase
 import br.com.appcasal.dao.IngredienteDAO
 import br.com.appcasal.dao.ReceitaDAO
 import br.com.appcasal.databinding.ActivityReceitaDetalheBinding
-import br.com.appcasal.model.Ingrediente
-import br.com.appcasal.model.Receita
+import br.com.appcasal.domain.model.Ingrediente
+import br.com.appcasal.domain.model.Receita
 import br.com.appcasal.ui.activity.receitas.ListaReceitasActivity
 import br.com.appcasal.ui.activity.receitas.detalhe.ListaIngredientesDetalheAdapter.CheckouIngrediente
 

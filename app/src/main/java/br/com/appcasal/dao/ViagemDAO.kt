@@ -5,8 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import br.com.appcasal.model.Transacao
-import br.com.appcasal.model.Viagem
+import br.com.appcasal.domain.model.Viagem
 
 @Dao
 interface ViagemDAO {

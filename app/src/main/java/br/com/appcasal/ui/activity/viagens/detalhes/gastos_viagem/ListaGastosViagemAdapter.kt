@@ -6,7 +6,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.alura.financask.extension.formataParaBrasileiro
 import br.com.appcasal.R
-import br.com.appcasal.model.GastoViagem
+import br.com.appcasal.domain.model.GastoViagem
 
 class ListaGastosViagemAdapter(
     private var gastoViagem: List<GastoViagem>,

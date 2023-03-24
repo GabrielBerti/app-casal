@@ -13,7 +13,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import br.com.alura.financask.extension.formataParaBrasileiro
 import br.com.appcasal.R
-import br.com.appcasal.model.Viagem
+import br.com.appcasal.domain.model.Viagem
 import br.com.appcasal.util.Util
 import java.util.*
 

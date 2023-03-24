@@ -12,9 +12,8 @@ import br.com.appcasal.MainActivity
 import br.com.appcasal.R
 import br.com.appcasal.dao.*
 import br.com.appcasal.databinding.ActivityListaViagensBinding
-import br.com.appcasal.model.TipoSnackbar
-import br.com.appcasal.model.Viagem
-import br.com.appcasal.ui.activity.receitas.detalhe.DetalheReceitaActivity
+import br.com.appcasal.domain.model.TipoSnackbar
+import br.com.appcasal.domain.model.Viagem
 import br.com.appcasal.ui.activity.viagens.detalhes.DetalheViagemActivity
 import br.com.appcasal.ui.dialog.viagens.AdicionaViagemDialog
 import br.com.appcasal.ui.dialog.viagens.AlteraViagemDialog

@@ -10,13 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
-import android.widget.Toast
 import br.com.alura.financask.extension.formataParaBrasileiro
 import br.com.appcasal.R
-import br.com.appcasal.model.Tipo
-import br.com.appcasal.model.Transacao
+import br.com.appcasal.domain.model.Tipo
+import br.com.appcasal.domain.model.Transacao
 import br.com.appcasal.util.Util
-import java.math.BigDecimal
 import java.util.Calendar
 
 abstract class FormularioTransacaoDialog(

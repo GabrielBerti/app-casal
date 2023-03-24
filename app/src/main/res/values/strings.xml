@@ -34,7 +34,7 @@
     <string name="adiciona_meta">Adiciona meta</string>
     <string name="meta_inserida_sucesso" formatted="false">Meta %s inserida com sucesso !</string>
     <string name="meta_alterada_sucesso">Meta alterada com sucesso !</string>
-    <string name="meta_removida_sucesso">Meta %s removida com sucesso !</string>
+    <string name="meta_removida_sucesso">Meta removida com sucesso !</string>
     <string name="metas_removidas_sucesso">Metas removidas com sucesso !</string>
     <string name="meta_concluida_sucesso">Meta concluída com sucesso !</string>
     <string name="meta_desconcluida_sucesso">Meta desconcluída com sucesso !</string>

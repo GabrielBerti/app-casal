@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.appcasal.R
-import br.com.appcasal.model.Ingrediente
+import br.com.appcasal.domain.model.Ingrediente
 
 class IngredientesViewHolder(
     itemView: View

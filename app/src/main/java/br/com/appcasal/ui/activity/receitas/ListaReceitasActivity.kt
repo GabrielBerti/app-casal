@@ -14,8 +14,8 @@ import br.com.appcasal.dao.AppDatabase
 import br.com.appcasal.dao.IngredienteDAO
 import br.com.appcasal.dao.ReceitaDAO
 import br.com.appcasal.databinding.ActivityListaReceitasBinding
-import br.com.appcasal.model.Receita
-import br.com.appcasal.model.TipoSnackbar
+import br.com.appcasal.domain.model.Receita
+import br.com.appcasal.domain.model.TipoSnackbar
 import br.com.appcasal.ui.activity.receitas.cadastro.FormReceitasActivity
 import br.com.appcasal.ui.activity.receitas.detalhe.DetalheReceitaActivity
 import br.com.appcasal.util.Util

@@ -1,34 +1,33 @@
 package br.com.appcasal.ui.activity.metas
 
-import android.app.AlertDialog
-import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
-import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import br.com.appcasal.MainActivity
 import br.com.appcasal.R
-import br.com.appcasal.dao.AppDatabase
-import br.com.appcasal.dao.MetaDAO
 import br.com.appcasal.databinding.ActivityListaMetasBinding
-import br.com.appcasal.model.Meta
-import br.com.appcasal.model.TipoSnackbar
+import br.com.appcasal.domain.model.Meta
+import br.com.appcasal.domain.model.TipoSnackbar
+import br.com.appcasal.ui.collectResult
+import br.com.appcasal.ui.collectViewState
 import br.com.appcasal.ui.dialog.metas.AdicionaMetaDialog
 import br.com.appcasal.ui.dialog.metas.AlteraMetaDialog
 import br.com.appcasal.util.Util
+import br.com.appcasal.viewmodel.MetaViewModel
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class ListaMetasActivity : AppCompatActivity(), ClickMeta {
 
-    private lateinit var activityListaMetas: ActivityListaMetasBinding
-    private lateinit var clMetas: CoordinatorLayout
-    private lateinit var adapter: ListaMetasAdapter
-    private lateinit var rv: RecyclerView
-    private var util = Util()
+    private lateinit var binding: ActivityListaMetasBinding
 
-    private lateinit var spinnerStatus: Spinner
+    private var util = Util()
+    val viewModel: MetaViewModel by viewModel()
 
     private var metas: List<Meta> = Companion.metas
 
@@ -44,42 +43,80 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
         viewDaActivity as ViewGroup
     }
 
-    private val db by lazy {
-        AppDatabase.instancia(this)
-    }
-
-    private lateinit var metaDao: MetaDAO
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityListaMetas = ActivityListaMetasBinding.inflate(layoutInflater)
-        val view = activityListaMetas.root
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_lista_metas)
 
-        setContentView(view)
+        setupListeners()
+        viewModel.recuperaMetas()
 
-        metaDao = db.metaDao()
-        metas = metaDao.buscaTodos()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        clMetas = findViewById<CoordinatorLayout>(R.id.cl_lista_metas)
-
-        setToolbar()
-        configuraAdapter()
         configuraSpinner()
         configuraFab()
+        setupSwipeRefresh()
         //spinnerStatus.background.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP)
     }
 
-    private fun setToolbar() {
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setHomeButtonEnabled(true)
+    private fun setupListeners() {
+        lifecycleScope.launch {
+            viewModel.metaGetResult.collectViewState(this) {
+                onLoading { }
+                onError { configuraAdapter(listOf(Meta(1, "fegf", true))) } //TODO tratar erro
+                onSuccess {
+                    metas = it
+                    configuraAdapter(it)
+                }
+            }
+
+            viewModel.metaInsertResult.collectResult(this) {
+                onError { }
+                onSuccess {
+                    util.retiraOpacidadeFundo(binding.llMetas)
+                    createSnackBar(
+                        TipoSnackbar.SUCESSO,
+                        resources.getString(R.string.meta_inserida_sucesso, it.descricao)
+                    )
+                    viewModel.recuperaMetas()
+                }
+            }
+
+            viewModel.metaUpdateResult.collectResult(this) {
+                onError { }
+                onSuccess {
+                    util.retiraOpacidadeFundo(binding.llMetas)
+                    createSnackBar(
+                        TipoSnackbar.SUCESSO,
+                        resources.getString(R.string.meta_alterada_sucesso)
+                    )
+                    viewModel.recuperaMetas()
+                }
+            }
+
+            viewModel.metaDeleteResult.collectResult(this) {
+                onError { }
+                onSuccess {
+                    createSnackBar(
+                        TipoSnackbar.SUCESSO,
+                        resources.getString(R.string.meta_removida_sucesso)
+                    )
+                    viewModel.recuperaMetas()
+                    binding.rvMetas.adapter?.notifyDataSetChanged()
+                }
+            }
+        }
     }
 
-    private fun configuraAdapter() {
-        rv = findViewById(R.id.lista_metas_listview)
-        rv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+    private fun setupSwipeRefresh() {
+        binding.swipeRefreshHome.setOnRefreshListener {
+            viewModel.recuperaMetas()
+            binding.swipeRefreshHome.isRefreshing = false
+        }
+    }
 
-        adapter = ListaMetasAdapter(metas, this, this)
-        rv.adapter = adapter
+    private fun configuraAdapter(metas: List<Meta>) {
+        binding.rvMetas.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.rvMetas.adapter = ListaMetasAdapter(metas, this, this)
     }
 
     private fun configuraSpinner() {
@@ -89,11 +126,10 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
             resources.getString(R.string.meta_concluida)
         )
 
-        spinnerStatus = findViewById(R.id.spinner_status)
-        spinnerStatus.adapter =
+        binding.spinnerStatus.adapter =
             ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, options)
 
-        spinnerStatus.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.spinnerStatus.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -101,24 +137,19 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
                 posicao: Int,
                 id: Long
             ) {
-
-                //val text = parent!!.getChildAt(0) as TextView
-                //text.setTextColor(getResources().getColor(R.color.white))
-
                 when (posicao) {
                     0 -> {
-                        metas = metaDao.buscaTodos()
+                        viewModel.recuperaMetas()
                     }
 
                     1 -> {
-                        metas = metaDao.buscaNaoConcluidas()
+                        viewModel.recuperaMetasByFilter(false)
                     }
 
                     2 -> {
-                        metas = metaDao.buscaConcluidas()
+                        viewModel.recuperaMetasByFilter(true)
                     }
                 }
-                atualizaAdapter()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -132,158 +163,74 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
         chamaDialogDeAlteracao(meta)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.menu, menu)
-        return true
-    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.clear_all -> {
-                if (metas.isNotEmpty()) {
-                    dialogRemoveMetas()
-                }
-
-                true
-            }
             android.R.id.home -> {
-                startActivity(
-                    Intent(
-                        this,
-                        MainActivity::class.java
-                    )
-                )
-                finishAffinity()
-                true
+                finish()
+                return super.onOptionsItemSelected(item)
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private fun dialogRemoveMetas() {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-
-        builder.setTitle("Limpar")
-        builder.setMessage("Zerar metas ?")
-
-        builder.setPositiveButton(
-            "Sim"
-        ) { _, _ ->
-            metaDao.removeAll()
-            atualizaMetas()
-            createSnackBar(
-                TipoSnackbar.SUCESSO,
-                resources.getString(R.string.metas_removidas_sucesso)
-            )
-        }
-
-        builder.setNegativeButton(
-            "Não"
-        ) { _, _ ->
-            null
-        }
-
-        val alertDialog: AlertDialog = builder.create()
-        alertDialog.show()
-    }
-
     private fun configuraFab() {
-        activityListaMetas.fabAdicionaMeta
+        binding.fabAdicionaMeta
             .setOnClickListener {
                 chamaDialogDeAdicao()
-                util.aplicaOpacidadeFundo(activityListaMetas.llMetas)
+                util.aplicaOpacidadeFundo(binding.llMetas)
             }
-    }
-
-    private fun adiciona(meta: Meta) {
-        metaDao.adiciona(meta)
-        atualizaMetas()
-    }
-
-    private fun atualizaMetas() {
-        metas = metaDao.buscaTodos()
-        rv.adapter = ListaMetasAdapter(metas, this, this)
-    }
-
-    private fun atualizaAdapter() {
-        rv.adapter = ListaMetasAdapter(metas, this, this)
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
-        var posicao = -1
-        posicao = (rv.adapter as ListaMetasAdapter).posicao
+        if(binding.rvMetas.adapter != null) {
+            var posicao = -1
+            posicao = (binding.rvMetas.adapter as ListaMetasAdapter).posicao
 
-        when (item.itemId) {
-            1 -> {
-                metas[posicao].concluido = !metas[posicao].concluido
+            when (item.itemId) {
+                1 -> {
+                    metas[posicao].concluido = !metas[posicao].concluido
 
-                var msgSnackbar = ""
-                msgSnackbar = if(metas[posicao].concluido) {
-                    resources.getString(R.string.meta_concluida_sucesso)
-                } else {
-                    resources.getString(R.string.meta_desconcluida_sucesso)
+                    var msgSnackbar = ""
+                    msgSnackbar = if(metas[posicao].concluido) {
+                        resources.getString(R.string.meta_concluida_sucesso)
+                    } else {
+                        resources.getString(R.string.meta_desconcluida_sucesso)
+                    }
+
+                    viewModel.alteraMeta(metas[posicao])
+
+                    createSnackBar(
+                        TipoSnackbar.SUCESSO,
+                        msgSnackbar
+                    )
                 }
 
-                altera(metas[posicao])
-
-                createSnackBar(
-                    TipoSnackbar.SUCESSO,
-                    msgSnackbar
-                )
-            }
-
-            2 -> {
-                val descricaoMetaRemovida = metas[posicao].descricao
-                remove(posicao)
-                adapter.notifyItemRemoved(posicao)
-                createSnackBar(
-                    TipoSnackbar.SUCESSO,
-                    resources.getString(R.string.meta_removida_sucesso, descricaoMetaRemovida)
-                )
+                2 -> {
+                    viewModel.deletaMeta(metas[posicao])
+                }
             }
         }
 
         return super.onContextItemSelected(item)
     }
 
-    private fun remove(posicao: Int) {
-        metaDao.remove(metas[posicao])
-        adapter.notifyItemRemoved(posicao)
-        atualizaMetas()
-    }
-
     private fun chamaDialogDeAdicao() {
         AdicionaMetaDialog(viewGroupDaActivity, this, metas)
-            .chama(null, false, activityListaMetas.llMetas) { metaCriada ->
-                adiciona(metaCriada)
-                util.retiraOpacidadeFundo(activityListaMetas.llMetas)
-                createSnackBar(
-                    TipoSnackbar.SUCESSO,
-                    resources.getString(R.string.meta_inserida_sucesso, metaCriada.descricao)
-                )
+            .chama(null, false, binding.llMetas) { metaCriada ->
+                viewModel.insereMeta(metaCriada)
             }
     }
 
     private fun chamaDialogDeAlteracao(meta: Meta) {
-        util.aplicaOpacidadeFundo(activityListaMetas.llMetas)
+        util.aplicaOpacidadeFundo(binding.llMetas)
         AlteraMetaDialog(viewGroupDaActivity, this, metas)
-            .chama(meta, meta.id, meta.concluido, activityListaMetas.llMetas) { metaAlterada ->
-                util.retiraOpacidadeFundo(activityListaMetas.llMetas)
-                altera(metaAlterada)
-                createSnackBar(
-                    TipoSnackbar.SUCESSO,
-                    resources.getString(R.string.meta_alterada_sucesso)
-                )
+            .chama(meta, meta.id, meta.concluido, binding.llMetas) { metaAlterada ->
+                viewModel.alteraMeta(metaAlterada)
             }
     }
 
-    private fun altera(meta: Meta) {
-        metaDao.altera(meta)
-        atualizaMetas()
-    }
-
     private fun createSnackBar(tipoSnackbar: TipoSnackbar, msg: String) {
-        util.createSnackBar(clMetas, msg, resources, tipoSnackbar)
+        util.createSnackBar(binding.clListaMetas, msg, resources, tipoSnackbar)
     }
 }

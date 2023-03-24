@@ -12,8 +12,8 @@ import br.com.appcasal.R
 import br.com.appcasal.dao.AppDatabase
 import br.com.appcasal.dao.LugaresVisitadosDAO
 import br.com.appcasal.databinding.FragmentLugaresVisitadosViagemBinding
-import br.com.appcasal.model.LugarVisitado
-import br.com.appcasal.model.TipoSnackbar
+import br.com.appcasal.domain.model.LugarVisitado
+import br.com.appcasal.domain.model.TipoSnackbar
 import br.com.appcasal.ui.dialog.lugares_visitados.AdicionaLugarVisitadoDialog
 import br.com.appcasal.ui.dialog.lugares_visitados.AlteraLugarVisitadoDialog
 import br.com.appcasal.util.Util

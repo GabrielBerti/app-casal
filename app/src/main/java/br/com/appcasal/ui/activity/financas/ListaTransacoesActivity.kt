@@ -15,10 +15,10 @@ import br.com.appcasal.R
 import br.com.appcasal.dao.AppDatabase
 import br.com.appcasal.dao.TransacaoDAO
 import br.com.appcasal.databinding.ActivityListaTransacoesBinding
-import br.com.appcasal.model.Resumo
-import br.com.appcasal.model.Tipo
-import br.com.appcasal.model.TipoSnackbar
-import br.com.appcasal.model.Transacao
+import br.com.appcasal.domain.model.Resumo
+import br.com.appcasal.domain.model.Tipo
+import br.com.appcasal.domain.model.TipoSnackbar
+import br.com.appcasal.domain.model.Transacao
 import br.com.appcasal.ui.dialog.financas.AdicionaTransacaoDialog
 import br.com.appcasal.ui.dialog.financas.AlteraTransacaoDialog
 import br.com.appcasal.util.Util

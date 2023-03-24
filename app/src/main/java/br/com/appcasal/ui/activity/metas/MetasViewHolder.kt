@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import br.com.appcasal.R
-import br.com.appcasal.model.Meta
+import br.com.appcasal.domain.model.Meta
 
 class MetasViewHolder(
     private val context: Context,

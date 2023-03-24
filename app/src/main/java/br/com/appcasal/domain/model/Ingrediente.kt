@@ -1,7 +1,6 @@
-package br.com.appcasal.model
+package br.com.appcasal.domain.model
 
 import androidx.annotation.NonNull
-import androidx.annotation.Nullable
 import androidx.room.*
 
 @Entity(

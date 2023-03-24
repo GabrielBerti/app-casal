@@ -1,7 +1,7 @@
 package br.com.appcasal.dao.converter
 
 import androidx.room.TypeConverter
-import br.com.appcasal.model.Tipo
+import br.com.appcasal.domain.model.Tipo
 import java.math.BigDecimal
 
 class Converters {

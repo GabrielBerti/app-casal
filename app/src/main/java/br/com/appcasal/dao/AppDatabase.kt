@@ -5,7 +5,7 @@ import androidx.room.*
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import br.com.appcasal.dao.converter.Converters
-import br.com.appcasal.model.*
+import br.com.appcasal.domain.model.*
 
 @Database(
     entities = [Transacao::class, Meta::class, Receita::class, Ingrediente::class, Viagem::class, GastoViagem::class, LugarVisitado::class],

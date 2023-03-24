@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import br.com.appcasal.R
-import br.com.appcasal.model.LugarVisitado
+import br.com.appcasal.domain.model.LugarVisitado
 import br.com.appcasal.util.Util
 
 abstract class FormularioLugarVisitadoDialog(
