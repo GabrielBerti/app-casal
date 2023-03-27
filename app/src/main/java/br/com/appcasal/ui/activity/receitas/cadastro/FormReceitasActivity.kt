@@ -193,7 +193,7 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
     }
 
     private fun isValidForm(): Boolean {
-        if (binding.receitaNome.text.toString().isNullOrBlank() || ingredientes == null) {
+        if (binding.receitaNome.text.toString().isBlank() || ingredientes?.size == 0) {
             return false
         }
 

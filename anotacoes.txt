@@ -10,10 +10,6 @@
     -- transacao(02/04)
         -- recuperar valores
 
-    -- receitas (até 02/04)
-        -- detalhes da receita(09/04)
-            -- refatorar para usar databinding
-
     -- viagem (até 09/04)
             -- fazer crud
             -- tirar opcao de remover tudo

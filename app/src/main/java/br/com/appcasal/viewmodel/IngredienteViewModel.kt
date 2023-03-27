@@ -12,7 +12,9 @@ class IngredienteViewModel(
     private val insereIngredienteUseCase: InsereIngredienteUseCase,
     private val alteraIngredienteUseCase: AlteraIngredienteUseCase,
     private val deletaIngredienteUseCase: DeletaIngredienteUseCase,
-    private val recuperaIngredienteByReceitaUseCase: RecuperaIngredienteByReceitaUseCase
+    private val recuperaIngredienteByReceitaUseCase: RecuperaIngredienteByReceitaUseCase,
+    private val marcarDesmarcarIngredienteUseCase: MarcarDesmarcarIngredienteUseCase,
+    private val desmarcarTodosIngredientesUseCase: DesmarcarTodosIngredientesUseCase
 ) : ViewModel() {
 
     private lateinit var ingredientes: List<Ingrediente>
@@ -30,6 +32,12 @@ class IngredienteViewModel(
 
     private val _ingredienteGetResult: MutableSharedFlow<ViewState<List<Ingrediente>>> = MutableSharedFlow()
     val ingredienteGetResult: SharedFlow<ViewState<List<Ingrediente>>> get() = _ingredienteGetResult
+
+    private val _ingredienteMarcouResult: MutableSharedFlow<ViewState<Boolean>> = MutableSharedFlow()
+    val ingredienteMarcouResult: SharedFlow<ViewState<Boolean>> get() = _ingredienteMarcouResult
+
+    private val _ingredienteDesmarcarTodasResult: MutableSharedFlow<ViewState<Boolean>> = MutableSharedFlow()
+    val ingredienteDesmarcarTodasResult: SharedFlow<ViewState<Boolean>> get() = _ingredienteDesmarcarTodasResult
 
     fun insereIngrediente(ingredientes: List<Ingrediente>, receita: Receita) {
         this.ingredientes = ingredientes
@@ -66,9 +74,29 @@ class IngredienteViewModel(
     fun recuperaIngredientes(receita: Receita) {
         this.receita = receita
 
-        fetchData(::recuperaIngredientesByReceitaId) {
+        fetchData(::recuperaIngredientesByReceitaIdUseCase) {
             onAny { viewState ->
                 _ingredienteGetResult.emit(viewState)
+            }
+        }
+    }
+
+    fun marcarDesmarcarIngrediente(ingrediente: Ingrediente) {
+        this.ingrediente = ingrediente
+
+        fetchData(::marcarDesmarcarIngredienteUseCase) {
+            onAny { viewState ->
+                _ingredienteMarcouResult.emit(viewState)
+            }
+        }
+    }
+
+    fun desmarcarTodosIngredientes(receita: Receita) {
+        this.receita = receita
+
+        fetchData(::desmarcarTodosIngredientesUseCase) {
+            onAny { viewState ->
+                _ingredienteDesmarcarTodasResult.emit(viewState)
             }
         }
     }
@@ -79,6 +107,10 @@ class IngredienteViewModel(
 
     private suspend fun deletaIngredienteUseCase() = deletaIngredienteUseCase.runAsync(ingrediente)
 
-    private suspend fun recuperaIngredientesByReceitaId() = recuperaIngredienteByReceitaUseCase.runAsync(receita)
+    private suspend fun recuperaIngredientesByReceitaIdUseCase() = recuperaIngredienteByReceitaUseCase.runAsync(receita)
+
+    private suspend fun marcarDesmarcarIngredienteUseCase() = marcarDesmarcarIngredienteUseCase.runAsync(ingrediente.id, ingrediente.marcado)
+
+    private suspend fun desmarcarTodosIngredientesUseCase() = desmarcarTodosIngredientesUseCase.runAsync(receita.id)
 
 }

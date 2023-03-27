@@ -21,6 +21,17 @@ interface IngredienteService {
         @Path("id") id: Long
     ): Response<IngredienteResponseDTO>
 
+    @PUT("/api/ingredientes/marcou/{id}/{marcado}")
+    suspend fun marcarDesmarcarIngrediente(
+        @Path("id") id: Long,
+        @Path("marcado") marcado: Boolean
+    ): Response<Void>
+
+    @PUT("/api/ingredientes/desmarcarTodos/{receitaId}")
+    suspend fun desmarcarTodosIngredientes(
+        @Path("receitaId") receitaId: Long
+    ): Response<Void>
+
     @DELETE("/api/ingredientes/{id}")
     suspend fun deletaIngrediente(@Path("id") id: Long): Response<Void>
 }

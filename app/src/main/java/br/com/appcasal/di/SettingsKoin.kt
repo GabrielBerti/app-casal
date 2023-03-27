@@ -84,13 +84,15 @@ val settingsUseCaseModule = module {
     factory { AlteraIngredienteUseCase(get()) }
     factory { DeletaIngredienteUseCase(get()) }
     factory { RecuperaIngredienteByReceitaUseCase(get()) }
+    factory { MarcarDesmarcarIngredienteUseCase(get()) }
+    factory { DesmarcarTodosIngredientesUseCase(get()) }
 }
 
 val settingsViewModelModule = module {
     viewModel { MetaViewModel(get(), get(), get(), get(), get()) }
     viewModel { TransacaoViewModel(get(), get(), get(), get(), get()) }
     viewModel { ReceitaViewModel(get(), get(), get(), get()) }
-    viewModel { IngredienteViewModel(get(), get(), get(), get()) }
+    viewModel { IngredienteViewModel(get(), get(), get(), get(), get(), get()) }
 }
 
 val settingsKoinModule = settingsServiceModule +

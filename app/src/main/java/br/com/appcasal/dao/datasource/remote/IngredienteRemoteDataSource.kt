@@ -13,19 +13,26 @@ class IngredienteRemoteDataSource(
 
     suspend fun insereIngrediente(ingredientes: List<Ingrediente>, receita: Receita): IngredienteResponseDTO {
         val dto = ingredienteService.insereIngrediente(ingredientes.map { IngredienteRequestDTO.mapFrom(it, receita) })
-
         return dto.body() ?: IngredienteResponseDTO()
     }
 
     suspend fun alteraIngrediente(ingrediente: Ingrediente, receita: Receita): IngredienteResponseDTO {
         val dto = ingredienteService.alteraIngrediente(IngredienteRequestDTO.mapFrom(ingrediente, receita), ingrediente.id)
-
         return dto.body() ?: IngredienteResponseDTO()
+    }
+
+    suspend fun marcarDesmarcarIngrediente(idIngrediente: Long, marcado: Boolean): Boolean {
+        ingredienteService.marcarDesmarcarIngrediente(idIngrediente, marcado)
+        return true
+    }
+
+    suspend fun desmarcarTodosIngredientes(receitaId: Long): Boolean {
+        ingredienteService.desmarcarTodosIngredientes(receitaId)
+        return true
     }
 
     suspend fun recuperaIngredientesByReceitaId(receita: Receita): List<IngredienteResponseDTO> {
         val dto = ingredienteService.recuperaIngredientesByReceitaId(receita.id)
-
         return dto.body() ?: emptyList()
     }
 

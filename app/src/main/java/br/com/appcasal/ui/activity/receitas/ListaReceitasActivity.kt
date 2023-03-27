@@ -132,7 +132,7 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
 
     private fun chamaDetalheReceita(receita: Receita) {
         val it = Intent(this, DetalheReceitaActivity::class.java)
-        it.putExtra("receitaId", receita.id.toString())
+        it.putExtra("receita", receita)
         startActivity(it)
     }
 

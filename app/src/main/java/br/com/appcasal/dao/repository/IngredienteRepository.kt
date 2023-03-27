@@ -11,19 +11,26 @@ class IngredienteRepository(
 
     suspend fun insereIngrediente(ingredientes: List<Ingrediente>, receita: Receita): Ingrediente {
         val result = ingredienteRemoteDataSource.insereIngrediente(ingredientes, receita)
-
         return mapFrom(result)  // TODO fazer mapfrom
     }
 
     suspend fun alteraIngrediente(ingrediente: Ingrediente, receita: Receita): Ingrediente {
         val result = ingredienteRemoteDataSource.alteraIngrediente(ingrediente, receita)
-
         return mapFrom(result)  // TODO fazer mapfrom
+    }
+
+    suspend fun marcarDesmarcarIngrediente(idIngrediente: Long, marcado: Boolean): Boolean {
+        ingredienteRemoteDataSource.marcarDesmarcarIngrediente(idIngrediente, marcado)
+        return true
+    }
+
+    suspend fun desmarcarTodosIngredientes(receitaId: Long): Boolean {
+        ingredienteRemoteDataSource.desmarcarTodosIngredientes(receitaId)
+        return true
     }
 
     suspend fun recuperaIngredientesByReceitaId(receita: Receita): List<Ingrediente> {
         val result = ingredienteRemoteDataSource.recuperaIngredientesByReceitaId(receita)
-
         return result.map { mapFrom(it)} // TODO fazer mapfrom
     }
 

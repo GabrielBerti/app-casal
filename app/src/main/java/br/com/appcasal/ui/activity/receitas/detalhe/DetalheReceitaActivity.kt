@@ -5,60 +5,55 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import br.com.appcasal.R
 import br.com.appcasal.databinding.ActivityReceitaDetalheBinding
-import br.com.appcasal.domain.model.Ingrediente
 import br.com.appcasal.domain.model.Receita
 import br.com.appcasal.ui.activity.receitas.ListaReceitasActivity
 import br.com.appcasal.ui.activity.receitas.detalhe.ListaIngredientesDetalheAdapter.CheckouIngrediente
+import br.com.appcasal.ui.collectResult
+import br.com.appcasal.viewmodel.IngredienteViewModel
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetalheReceitaActivity : AppCompatActivity(), CheckouIngrediente {
 
-    private lateinit var activityReceitaDetalhe: ActivityReceitaDetalheBinding
-    private lateinit var adapter: ListaIngredientesDetalheAdapter
-    private lateinit var rv: RecyclerView
+    private lateinit var binding: ActivityReceitaDetalheBinding
+    private val ingredienteViewModel: IngredienteViewModel by viewModel()
 
-    private var receitaId: Long = 0L
-    private lateinit var receitaNome: TextView
-    private lateinit var receitaDescricao: TextView
-    private lateinit var buttonDesmarcaTodosIngredientes: Button
-
-    private var ingredientes: MutableList<Ingrediente> = Companion.ingredientes
-    private lateinit var receitaSelected: List<Receita>
-
-    companion object {
-        private val ingredientes: MutableList<Ingrediente> = mutableListOf()
-    }
-
-  //  private lateinit var receitaDao: ReceitaDAO
-   // private lateinit var ingredienteDAO: IngredienteDAO
+    private lateinit var receita: Receita
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityReceitaDetalhe = ActivityReceitaDetalheBinding.inflate(layoutInflater)
-        val view = activityReceitaDetalhe.root
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_receita_detalhe)
 
-        setContentView(view)
-
-        receitaNome = findViewById<TextView>(R.id.receita_nome_detalhe)
-        receitaDescricao = findViewById<TextView>(R.id.receita_descricao_detalhe)
-        buttonDesmarcaTodosIngredientes = findViewById<Button>(R.id.desmarcar_tudo)
-
-      //  ingredienteDAO = db.ingredienteDao()
-     //   receitaDao = db.receitaDao()
-
+        setupListeners()
         setListeners()
         setLayout()
         configuraAdapter()
     }
 
+    private fun setupListeners() {
+        lifecycleScope.launch {
+            ingredienteViewModel.ingredienteMarcouResult.collectResult(this) {
+                onError { }
+            }
+
+            ingredienteViewModel.ingredienteDesmarcarTodasResult.collectResult(this) {
+                onError { }
+                onSuccess {
+                    receita.ingredientes?.forEach { it.marcado = false }
+                    configuraAdapter()
+                }
+            }
+        }
+    }
+
     private fun setListeners() {
-        buttonDesmarcaTodosIngredientes.setOnClickListener() {
+        binding.desmarcarTudo.setOnClickListener {
             dialogDesmarcaTodosIngredientes()
         }
     }
@@ -68,28 +63,18 @@ class DetalheReceitaActivity : AppCompatActivity(), CheckouIngrediente {
         supportActionBar!!.setHomeButtonEnabled(true)
         supportActionBar!!.title = resources.getString(R.string.detalhe_receita)
 
-        val extras = intent.extras
-        if (extras != null) {
-            receitaId = extras.getString("receitaId")!!.toLong()
-       //     receitaSelected = receitaDao.buscaReceitaById(receitaId)
-            receitaNome.text = receitaSelected[0].nome
-            receitaDescricao.text = receitaSelected[0].descricao
+        receita = intent.extras?.getParcelable("receita")!!
 
-          //  ingredientes = ingredienteDAO.buscaIngredientesByReceita(receitaId)
-        }
+            binding.receitaNomeDetalhe.text = receita.nome
+            binding.receitaDescricaoDetalhe.text = receita.descricao
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun configuraAdapter() {
-        rv = findViewById(R.id.lista_ingredientes_detalhe_listview)
-        rv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        if(receita.ingredientes != null)
+            binding.rvIngredientes.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            binding.rvIngredientes.adapter = ListaIngredientesDetalheAdapter(receita.ingredientes!!, this, this)
 
-        atualizaAdapter()
-        rv.adapter = adapter
-    }
-
-    private fun atualizaAdapter() {
-        adapter = ListaIngredientesDetalheAdapter(ingredientes, this, this)
     }
 
     private fun dialogDesmarcaTodosIngredientes() {
@@ -101,16 +86,13 @@ class DetalheReceitaActivity : AppCompatActivity(), CheckouIngrediente {
         builder.setPositiveButton(
             "Sim"
         ) { _, _ ->
-       //     ingredienteDAO.desmarcaTodosIngredientes()
-        //    ingredientes = ingredienteDAO.buscaIngredientesByReceita(receitaId)
-            atualizaAdapter()
-            rv.adapter = adapter
+            ingredienteViewModel.desmarcarTodosIngredientes(receita)
         }
 
         builder.setNegativeButton(
             "Não"
         ) { _, _ ->
-            null
+
         }
 
         val alertDialog: AlertDialog = builder.create()
@@ -134,8 +116,8 @@ class DetalheReceitaActivity : AppCompatActivity(), CheckouIngrediente {
     }
 
     override fun atualizaIngrediente(position: Int, isChecked: Boolean) {
-        ingredientes[position].marcado = isChecked
-     //   ingredienteDAO.altera(ingredientes[position])
-        atualizaAdapter()
+
+        if(receita.ingredientes?.get(position) != null)
+            ingredienteViewModel.marcarDesmarcarIngrediente(receita.ingredientes?.get(position)!!)
     }
 }
