@@ -3,9 +3,8 @@ package br.com.appcasal.ui.activity.receitas.cadastro
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.widget.EditText
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,25 +15,24 @@ import br.com.appcasal.domain.model.Receita
 import br.com.appcasal.domain.model.TipoSnackbar
 import br.com.appcasal.ui.activity.receitas.ListaReceitasActivity
 import br.com.appcasal.ui.collectResult
-import br.com.appcasal.ui.collectViewState
 import br.com.appcasal.ui.dialog.ingredientes.AdicionaIngredienteDialog
 import br.com.appcasal.ui.dialog.ingredientes.AlteraIngredienteDialog
 import br.com.appcasal.util.Util
+import br.com.appcasal.viewmodel.IngredienteViewModel
 import br.com.appcasal.viewmodel.ReceitaViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
+class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
 
-    private lateinit var activityFormReceitas: FormReceitasBinding
-    val receitaViewModel: ReceitaViewModel by viewModel()
+    private lateinit var binding: FormReceitasBinding
+    private val receitaViewModel: ReceitaViewModel by viewModel()
+    private val ingredienteViewModel: IngredienteViewModel by viewModel()
 
     private lateinit var adapter: ListaIngredientesAdapter
     private lateinit var rv: RecyclerView
     private var receita: Receita? = null
     private var util = Util()
-    private lateinit var receitaNome: EditText
-    private lateinit var receitaDescricao: TextView
 
     private var ingredientes: MutableList<Ingrediente>? = null
 
@@ -46,34 +44,35 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
         viewDaActivity as ViewGroup
     }
 
-    //private lateinit var ingredienteDAO: IngredienteDAO
-    //private lateinit var receitaDAO: ReceitaDAO
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityFormReceitas = FormReceitasBinding.inflate(layoutInflater)
-        val view = activityFormReceitas.root
-        setContentView(view)
-
-        receitaNome = findViewById<EditText>(R.id.receita_nome)
-        receitaDescricao = findViewById<TextView>(R.id.receita_descricao)
-
-        //ingredienteDAO = db.ingredienteDao()
-        //receitaDAO = db.receitaDao()
+        binding = DataBindingUtil.setContentView(this, R.layout.form_receitas)
 
         setupListeners()
 
         setLayout()
         setListeners()
         configuraAdapter()
+        setupSwipeRefresh()
+    }
+
+    private fun setupSwipeRefresh() {
+        binding.swipeRefresh.setOnRefreshListener {
+            if(receita != null) {
+                ingredienteViewModel.recuperaIngredientes(receita!!)
+            }
+            binding.swipeRefresh.isRefreshing = false
+        }
     }
 
     private fun setupListeners() {
         lifecycleScope.launch {
+
             receitaViewModel.receitaInsertResult.collectResult(this) {
                 onError { }
                 onSuccess {
                     receita = it
+                    insereIngredientes()
                     createSnackBar(
                         TipoSnackbar.SUCESSO,
                         resources.getString(R.string.receita_inserida_sucesso, it.descricao)
@@ -85,10 +84,44 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
                 onError { }
                 onSuccess {
                     receita = it
+                    insereIngredientes()
                     createSnackBar(
                         TipoSnackbar.SUCESSO,
                         resources.getString(R.string.receita_alterada_sucesso)
                     )
+                }
+            }
+
+            ingredienteViewModel.ingredienteInsertResult.collectResult(this) {
+                onError {
+                }
+                onSuccess {
+                    ingredienteViewModel.recuperaIngredientes(receita!!)
+                }
+            }
+
+            ingredienteViewModel.ingredienteUpdateResult.collectResult(this) {
+                onError {
+                }
+                onSuccess {
+                    ingredienteViewModel.recuperaIngredientes(receita!!)
+                }
+            }
+
+            ingredienteViewModel.ingredienteDeleteResult.collectResult(this) {
+                onError {
+                }
+                onSuccess {
+                    ingredienteViewModel.recuperaIngredientes(receita!!)
+                }
+            }
+
+            ingredienteViewModel.ingredienteGetResult.collectResult(this) {
+                onError {
+                }
+                onSuccess {
+                    ingredientes = it.toMutableList()
+                    atualizaIngredientes()
                 }
             }
         }
@@ -98,11 +131,12 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true) //Mostrar o botão
         supportActionBar!!.setHomeButtonEnabled(true)      //Ativar o botão
 
-        receita = intent.getSerializableExtra("receita") as Receita?
+        receita = intent.extras?.getParcelable("receita") as Receita?
 
         if (receita != null) {
-            receitaNome.setText(receita?.nome)// = receitaSelected[0].nome
-            receitaDescricao.text = receita?.descricao//receitaSelected[0].descricao
+            binding.receitaNome.setText(receita?.nome)
+            binding.receitaDescricao.setText(receita?.descricao)
+            ingredientes = receita?.ingredientes?.toMutableList() ?: arrayListOf()
 
             supportActionBar!!.title = resources.getString(R.string.altera_receita)
         } else {
@@ -113,13 +147,13 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
     }
 
     private fun setListeners() {
-        activityFormReceitas.fabAdicionaIngredientes.setOnClickListener() {
+        binding.fabAdicionaIngredientes.setOnClickListener {
             chamaDialogDeAdicaoIngrediente()
-            receitaNome.clearFocus()
-            receitaDescricao.clearFocus()
+            binding.receitaNome.clearFocus()
+            binding.receitaDescricao.clearFocus()
         }
 
-        activityFormReceitas.btnSalvarReceita.setOnClickListener() {
+        binding.btnSalvarReceita.setOnClickListener {
 
             if (!isValidForm()) {
                 createSnackBar(
@@ -127,19 +161,18 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
                     resources.getString(R.string.campos_receita_obrigatorios),
                 )
             } else {
-                //salva ou altera receita
-                salvaReceita()
+                salvarOuAlterarReceita()
             }
         }
     }
 
-    private fun salvaReceita() {
+    private fun salvarOuAlterarReceita() {
         if (receita != null) {
             receitaViewModel.alteraReceita(
                 Receita(
                     receita?.id ?: 0,
-                    receitaNome.text.toString(),
-                    receitaDescricao.text.toString(),
+                    binding.receitaNome.text.toString(),
+                    binding.receitaDescricao.text.toString(),
                     listOf()
                 )
             )
@@ -147,8 +180,8 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
             receitaViewModel.insereReceita(
                 Receita(
                     0,
-                    receitaNome.text.toString(),
-                    receitaDescricao.text.toString(),
+                    binding.receitaNome.text.toString(),
+                    binding.receitaDescricao.text.toString(),
                     listOf()
                 )
             )
@@ -156,22 +189,28 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
     }
 
     private fun createSnackBar(tipoSnackbar: TipoSnackbar, msg: String) {
-        util.createSnackBar(receitaNome, msg, resources, tipoSnackbar)
+        util.createSnackBar(binding.receitaNome, msg, resources, tipoSnackbar)
     }
 
     private fun isValidForm(): Boolean {
-        if (receitaNome.text.toString().isNullOrBlank() || ingredientes == null) {
+        if (binding.receitaNome.text.toString().isNullOrBlank() || ingredientes == null) {
             return false
         }
 
         return true
     }
 
-    private fun insereIngredientes(receitaId: Long) {
-        ingredientes?.forEach {
-            if (!isUpdated(it.id)) {
-                ///   ingredienteDAO.adiciona(Ingrediente(it.id, it.descricao, false, receitaId))
+    private fun insereIngredientes() {
+        val ingredientesAindaNaoInseridos: MutableList<Ingrediente> = arrayListOf()
+        lifecycleScope.launch {
+            ingredientes?.forEach {
+                if (!isUpdated(it.id)) {
+                    ingredientesAindaNaoInseridos.add(it)
+                }
             }
+
+            if (ingredientesAindaNaoInseridos.isNotEmpty())
+                ingredienteViewModel.insereIngrediente(ingredientesAindaNaoInseridos, receita!!)
         }
     }
 
@@ -196,40 +235,57 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
     }
 
     private fun chamaDialogDeAdicaoIngrediente() {
-        util.aplicaOpacidadeFundo(activityFormReceitas.llFormReceita)
+        util.aplicaOpacidadeFundo(binding.llFormReceita)
         AdicionaIngredienteDialog(viewGroupDaActivity, this)
             .chama(
                 null,
                 receita?.id ?: 0,
-                activityFormReceitas.llFormReceita
+                binding.llFormReceita
             ) { ingredienteCriado ->
                 adiciona(ingredienteCriado)
-                util.retiraOpacidadeFundo(activityFormReceitas.llFormReceita)
+                util.retiraOpacidadeFundo(binding.llFormReceita)
             }
     }
 
-    private fun adiciona(ingrediente: Ingrediente) {
+    private fun chamaDialogDeAlteracaoIngrediente(ingrediente: Ingrediente, posicao: Int) {
+        AlteraIngredienteDialog(viewGroupDaActivity, this)
+            .chama(
+                ingrediente.id,
+                receita?.id ?: 0,
+                ingrediente,
+                binding.llFormReceita
+            ) { receitaAlterada ->
+                altera(receitaAlterada, posicao)
+            }
+    }
+
+
+    private fun altera(ingrediente: Ingrediente, posicao: Int) {
         if (isUpdated(ingrediente.id)) {
-            //   ingredienteDAO.adiciona(ingrediente)
-            atualizaIngredientes()
-        } else {
-            ingredientes?.add(ingrediente)
-            atualizaListaIngredientesAindaNaoSalvos()
+            ingredienteViewModel.alteraIngrediente(ingrediente, receita!!)
+            return
+        }
+
+        ingredientes?.forEach {
+            if (it.id == ingrediente.id) {
+                ingredientes!![posicao] = ingrediente
+                atualizaIngredientes()
+                return
+            }
         }
     }
 
-    private fun atualizaListaIngredientesAindaNaoSalvos() {
-        if (ingredientes != null) {
-            rv.adapter = ListaIngredientesAdapter(ingredientes!!, this, this)
-
+    private fun adiciona(ingrediente: Ingrediente) {
+        if (isUpdated(receita?.id ?: 0)) {
+            ingredienteViewModel.insereIngrediente(listOf(ingrediente), receita!!)
+        } else {
+            ingredientes?.add(ingrediente)
+            atualizaIngredientes()
         }
     }
 
     private fun atualizaIngredientes() {
-        //    ingredientes = ingredienteDAO.buscaIngredientesByReceita(receitaId)
-        if (ingredientes != null) {
-            rv.adapter = ListaIngredientesAdapter(ingredientes!!, this, this)
-        }
+        rv.adapter = ListaIngredientesAdapter(ingredientes ?: listOf(), this, this)
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
@@ -248,46 +304,11 @@ class FormReceitasActivity() : AppCompatActivity(), ClickIngrediente {
 
     private fun remove(posicao: Int) {
         if (isUpdated(ingredientes!![posicao].id)) {
-            //insere os ingredientes q ainda nao foram inseridos para nao perde-los quando atualizar adapter
-            insereIngredientes(receita?.id ?: 0)
-            //    ingredienteDAO.remove(ingredientes[posicao])
-            adapter.notifyItemRemoved(posicao)
-            atualizaIngredientes()
+            ingredienteViewModel.deletaIngrediente(ingredientes!![posicao])
         } else {
             ingredientes?.remove(ingredientes!![posicao])
             adapter.notifyItemRemoved(posicao)
-            atualizaListaIngredientesAindaNaoSalvos()
-        }
-    }
-
-    private fun chamaDialogDeAlteracaoIngrediente(ingrediente: Ingrediente, posicao: Int) {
-        AlteraIngredienteDialog(viewGroupDaActivity, this)
-            .chama(
-                ingrediente.id,
-                receita?.id ?: 0,
-                ingrediente,
-                activityFormReceitas.llFormReceita
-            ) { receitaAlterada ->
-                altera(receitaAlterada, posicao)
-            }
-    }
-
-    private fun altera(ingrediente: Ingrediente, posicao: Int) {
-
-        var encontrou = false
-
-        ingredientes?.forEach {
-            if (it.id == ingrediente.id && isUpdated(ingrediente.id)) {
-                //    ingredienteDAO.altera(ingrediente)
-                atualizaIngredientes()
-                encontrou = true
-                return
-            }
-        }
-
-        if (!encontrou) {
-            ingredientes!![posicao] = ingrediente
-            atualizaListaIngredientesAindaNaoSalvos()
+            atualizaIngredientes()
         }
     }
 

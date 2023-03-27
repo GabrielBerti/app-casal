@@ -3,10 +3,9 @@ package br.com.appcasal.ui.activity.receitas
 import android.content.Intent
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import br.com.appcasal.R
 import br.com.appcasal.databinding.ActivityListaReceitasBinding
 import br.com.appcasal.domain.model.Receita
@@ -22,30 +21,30 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
 
-    private lateinit var activityListaReceitas: ActivityListaReceitasBinding
+    private lateinit var binding: ActivityListaReceitasBinding
     val viewModel: ReceitaViewModel by viewModel()
 
-    private lateinit var clReceita: CoordinatorLayout
-    private lateinit var adapter: ListaReceitasAdapter
-    private lateinit var rv: RecyclerView
     private var util = Util()
 
     private var receitas: List<Receita> = emptyList()
 
     override fun onResume() {
         super.onResume()
-        activityListaReceitas = ActivityListaReceitasBinding.inflate(layoutInflater)
-        val view = activityListaReceitas.root
-
-        setContentView(view)
-
-        clReceita = findViewById<CoordinatorLayout>(R.id.cl_lista_receitas)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_lista_receitas)
 
         setupListeners()
         viewModel.recuperaReceitas()
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         setListeners()
+        setupSwipeRefresh()
+    }
+
+    private fun setupSwipeRefresh() {
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.recuperaReceitas()
+            binding.swipeRefresh.isRefreshing = false
+        }
     }
 
     private fun setupListeners() {
@@ -74,25 +73,16 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
     }
 
     private fun configuraAdapter(receitas: List<Receita>) {
-        rv = findViewById(R.id.lista_metas_listview)
-        rv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-
-        adapter = ListaReceitasAdapter(receitas, this, this)
-        rv.adapter = adapter
+        binding.rvReceitas.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.rvReceitas.adapter = ListaReceitasAdapter(receitas, this, this)
     }
 
     private fun createSnackBar(tipoSnackbar: TipoSnackbar, msg: String) {
-        util.createSnackBar(clReceita, msg, resources, tipoSnackbar)
+        util.createSnackBar(binding.clListaReceitas, msg, resources, tipoSnackbar)
     }
 
     override fun clickReceita(receita: Receita) {
         chamaDetalheReceita(receita)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.menu, menu)
-        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -106,7 +96,7 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
     }
 
     private fun setListeners() {
-        activityListaReceitas.fabAdicionaReceita
+        binding.fabAdicionaReceita
             .setOnClickListener {
                 abreTelaDeCadastro()
             }
@@ -114,7 +104,7 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
 
-        val posicao: Int = (rv.adapter as ListaReceitasAdapter).posicao
+        val posicao: Int = (binding.rvReceitas.adapter as ListaReceitasAdapter).posicao
 
         when (item.itemId) {
             1 -> {

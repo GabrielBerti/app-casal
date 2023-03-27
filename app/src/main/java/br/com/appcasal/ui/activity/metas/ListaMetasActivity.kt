@@ -103,9 +103,9 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
     }
 
     private fun setupSwipeRefresh() {
-        binding.swipeRefreshHome.setOnRefreshListener {
+        binding.swipeRefresh.setOnRefreshListener {
             viewModel.recuperaMetas()
-            binding.swipeRefreshHome.isRefreshing = false
+            binding.swipeRefresh.isRefreshing = false
         }
     }
 

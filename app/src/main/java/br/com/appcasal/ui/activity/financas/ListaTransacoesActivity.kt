@@ -138,9 +138,9 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
     }
 
     private fun setupSwipeRefresh() {
-        binding.swipeRefreshHome.setOnRefreshListener {
+        binding.swipeRefresh.setOnRefreshListener {
             viewModel.recuperaTransacoes()
-            binding.swipeRefreshHome.isRefreshing = false
+            binding.swipeRefresh.isRefreshing = false
         }
     }
 
