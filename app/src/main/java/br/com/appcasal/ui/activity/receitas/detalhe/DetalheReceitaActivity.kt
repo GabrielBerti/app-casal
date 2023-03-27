@@ -15,14 +15,14 @@ import br.com.appcasal.domain.model.Receita
 import br.com.appcasal.ui.activity.receitas.ListaReceitasActivity
 import br.com.appcasal.ui.activity.receitas.detalhe.ListaIngredientesDetalheAdapter.CheckouIngrediente
 import br.com.appcasal.ui.collectResult
-import br.com.appcasal.viewmodel.IngredienteViewModel
+import br.com.appcasal.viewmodel.DetalheReceitaViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetalheReceitaActivity : AppCompatActivity(), CheckouIngrediente {
 
     private lateinit var binding: ActivityReceitaDetalheBinding
-    private val ingredienteViewModel: IngredienteViewModel by viewModel()
+    private val ingredienteViewModel: DetalheReceitaViewModel by viewModel()
 
     private lateinit var receita: Receita
 

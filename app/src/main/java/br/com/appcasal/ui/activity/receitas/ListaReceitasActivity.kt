@@ -15,14 +15,14 @@ import br.com.appcasal.ui.activity.receitas.detalhe.DetalheReceitaActivity
 import br.com.appcasal.ui.collectResult
 import br.com.appcasal.ui.collectViewState
 import br.com.appcasal.util.Util
-import br.com.appcasal.viewmodel.ReceitaViewModel
+import br.com.appcasal.viewmodel.ListaReceitasViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
 
     private lateinit var binding: ActivityListaReceitasBinding
-    val viewModel: ReceitaViewModel by viewModel()
+    val viewModel: ListaReceitasViewModel by viewModel()
 
     private var util = Util()
 

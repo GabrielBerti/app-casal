@@ -15,10 +15,7 @@ import br.com.appcasal.dao.service.MetaService
 import br.com.appcasal.dao.service.ReceitaService
 import br.com.appcasal.dao.service.TransacaoService
 import br.com.appcasal.domain.usecase.*
-import br.com.appcasal.viewmodel.IngredienteViewModel
-import br.com.appcasal.viewmodel.MetaViewModel
-import br.com.appcasal.viewmodel.ReceitaViewModel
-import br.com.appcasal.viewmodel.TransacaoViewModel
+import br.com.appcasal.viewmodel.*
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -89,10 +86,11 @@ val settingsUseCaseModule = module {
 }
 
 val settingsViewModelModule = module {
-    viewModel { MetaViewModel(get(), get(), get(), get(), get()) }
-    viewModel { TransacaoViewModel(get(), get(), get(), get(), get()) }
-    viewModel { ReceitaViewModel(get(), get(), get(), get()) }
-    viewModel { IngredienteViewModel(get(), get(), get(), get(), get(), get()) }
+    viewModel { ListaMetasViewModel(get(), get(), get(), get(), get()) }
+    viewModel { ListaTransacoesViewModel(get(), get(), get(), get(), get()) }
+    viewModel { FormReceitasViewModel(get(), get(), get(), get(), get(), get()) }
+    viewModel { DetalheReceitaViewModel(get(), get()) }
+    viewModel { ListaReceitasViewModel(get(), get()) }
 }
 
 val settingsKoinModule = settingsServiceModule +

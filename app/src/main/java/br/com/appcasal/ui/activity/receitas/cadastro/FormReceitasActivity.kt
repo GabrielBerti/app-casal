@@ -18,16 +18,14 @@ import br.com.appcasal.ui.collectResult
 import br.com.appcasal.ui.dialog.ingredientes.AdicionaIngredienteDialog
 import br.com.appcasal.ui.dialog.ingredientes.AlteraIngredienteDialog
 import br.com.appcasal.util.Util
-import br.com.appcasal.viewmodel.IngredienteViewModel
-import br.com.appcasal.viewmodel.ReceitaViewModel
+import br.com.appcasal.viewmodel.FormReceitasViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
 
     private lateinit var binding: FormReceitasBinding
-    private val receitaViewModel: ReceitaViewModel by viewModel()
-    private val ingredienteViewModel: IngredienteViewModel by viewModel()
+    private val viewModel: FormReceitasViewModel by viewModel()
 
     private lateinit var adapter: ListaIngredientesAdapter
     private lateinit var rv: RecyclerView
@@ -59,7 +57,7 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
     private fun setupSwipeRefresh() {
         binding.swipeRefresh.setOnRefreshListener {
             if(receita != null) {
-                ingredienteViewModel.recuperaIngredientes(receita!!)
+                viewModel.recuperaIngredientes(receita!!)
             }
             binding.swipeRefresh.isRefreshing = false
         }
@@ -68,7 +66,7 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
     private fun setupListeners() {
         lifecycleScope.launch {
 
-            receitaViewModel.receitaInsertResult.collectResult(this) {
+            viewModel.receitaInsertResult.collectResult(this) {
                 onError { }
                 onSuccess {
                     receita = it
@@ -80,7 +78,7 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
                 }
             }
 
-            receitaViewModel.receitaUpdateResult.collectResult(this) {
+            viewModel.receitaUpdateResult.collectResult(this) {
                 onError { }
                 onSuccess {
                     receita = it
@@ -92,31 +90,31 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
                 }
             }
 
-            ingredienteViewModel.ingredienteInsertResult.collectResult(this) {
+            viewModel.ingredienteInsertResult.collectResult(this) {
                 onError {
                 }
                 onSuccess {
-                    ingredienteViewModel.recuperaIngredientes(receita!!)
+                    viewModel.recuperaIngredientes(receita!!)
                 }
             }
 
-            ingredienteViewModel.ingredienteUpdateResult.collectResult(this) {
+            viewModel.ingredienteUpdateResult.collectResult(this) {
                 onError {
                 }
                 onSuccess {
-                    ingredienteViewModel.recuperaIngredientes(receita!!)
+                    viewModel.recuperaIngredientes(receita!!)
                 }
             }
 
-            ingredienteViewModel.ingredienteDeleteResult.collectResult(this) {
+            viewModel.ingredienteDeleteResult.collectResult(this) {
                 onError {
                 }
                 onSuccess {
-                    ingredienteViewModel.recuperaIngredientes(receita!!)
+                    viewModel.recuperaIngredientes(receita!!)
                 }
             }
 
-            ingredienteViewModel.ingredienteGetResult.collectResult(this) {
+            viewModel.ingredienteGetResult.collectResult(this) {
                 onError {
                 }
                 onSuccess {
@@ -168,7 +166,7 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
 
     private fun salvarOuAlterarReceita() {
         if (receita != null) {
-            receitaViewModel.alteraReceita(
+            viewModel.alteraReceita(
                 Receita(
                     receita?.id ?: 0,
                     binding.receitaNome.text.toString(),
@@ -177,7 +175,7 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
                 )
             )
         } else {
-            receitaViewModel.insereReceita(
+            viewModel.insereReceita(
                 Receita(
                     0,
                     binding.receitaNome.text.toString(),
@@ -210,7 +208,7 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
             }
 
             if (ingredientesAindaNaoInseridos.isNotEmpty())
-                ingredienteViewModel.insereIngrediente(ingredientesAindaNaoInseridos, receita!!)
+                viewModel.insereIngrediente(ingredientesAindaNaoInseridos, receita!!)
         }
     }
 
@@ -262,7 +260,7 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
 
     private fun altera(ingrediente: Ingrediente, posicao: Int) {
         if (isUpdated(ingrediente.id)) {
-            ingredienteViewModel.alteraIngrediente(ingrediente, receita!!)
+            viewModel.alteraIngrediente(ingrediente, receita!!)
             return
         }
 
@@ -277,7 +275,7 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
 
     private fun adiciona(ingrediente: Ingrediente) {
         if (isUpdated(receita?.id ?: 0)) {
-            ingredienteViewModel.insereIngrediente(listOf(ingrediente), receita!!)
+            viewModel.insereIngrediente(listOf(ingrediente), receita!!)
         } else {
             ingredientes?.add(ingrediente)
             atualizaIngredientes()
@@ -304,7 +302,7 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
 
     private fun remove(posicao: Int) {
         if (isUpdated(ingredientes!![posicao].id)) {
-            ingredienteViewModel.deletaIngrediente(ingredientes!![posicao])
+            viewModel.deletaIngrediente(ingredientes!![posicao])
         } else {
             ingredientes?.remove(ingredientes!![posicao])
             adapter.notifyItemRemoved(posicao)

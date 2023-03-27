@@ -7,7 +7,7 @@ import br.com.appcasal.ui.ViewState
 import br.com.appcasal.ui.fetchData
 import kotlinx.coroutines.flow.*
 
-class TransacaoViewModel(
+class ListaTransacoesViewModel(
     private val getTransacoesUseCase: GetTransacoesUseCase,
     private val insereTransacaoUseCase: InsereTransacaoUseCase,
     private val alteraTransacaoUseCase: AlteraTransacaoUseCase,

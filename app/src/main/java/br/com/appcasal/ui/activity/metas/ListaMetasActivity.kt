@@ -17,7 +17,7 @@ import br.com.appcasal.ui.collectViewState
 import br.com.appcasal.ui.dialog.metas.AdicionaMetaDialog
 import br.com.appcasal.ui.dialog.metas.AlteraMetaDialog
 import br.com.appcasal.util.Util
-import br.com.appcasal.viewmodel.MetaViewModel
+import br.com.appcasal.viewmodel.ListaMetasViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -26,7 +26,7 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
     private lateinit var binding: ActivityListaMetasBinding
 
     private var util = Util()
-    val viewModel: MetaViewModel by viewModel()
+    val viewModel: ListaMetasViewModel by viewModel()
 
     private var metas: List<Meta> = emptyList()
 

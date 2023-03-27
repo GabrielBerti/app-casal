@@ -19,7 +19,7 @@ import br.com.appcasal.ui.collectViewState
 import br.com.appcasal.ui.dialog.financas.AdicionaTransacaoDialog
 import br.com.appcasal.ui.dialog.financas.AlteraTransacaoDialog
 import br.com.appcasal.util.Util
-import br.com.appcasal.viewmodel.TransacaoViewModel
+import br.com.appcasal.viewmodel.ListaTransacoesViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -28,7 +28,7 @@ import java.math.BigDecimal
 class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
 
     private lateinit var binding: ActivityListaTransacoesBinding
-    val viewModel: TransacaoViewModel by viewModel()
+    val viewModel: ListaTransacoesViewModel by viewModel()
 
     private var util = Util()
     private lateinit var snackbar: Snackbar

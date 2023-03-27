@@ -8,18 +8,24 @@ import br.com.appcasal.ui.ViewState
 import br.com.appcasal.ui.fetchData
 import kotlinx.coroutines.flow.*
 
-class IngredienteViewModel(
+class FormReceitasViewModel(
     private val insereIngredienteUseCase: InsereIngredienteUseCase,
+    private val insereReceitaUseCase: InsereReceitaUseCase,
+    private val alteraReceitaUseCase: AlteraReceitaUseCase,
     private val alteraIngredienteUseCase: AlteraIngredienteUseCase,
     private val deletaIngredienteUseCase: DeletaIngredienteUseCase,
-    private val recuperaIngredienteByReceitaUseCase: RecuperaIngredienteByReceitaUseCase,
-    private val marcarDesmarcarIngredienteUseCase: MarcarDesmarcarIngredienteUseCase,
-    private val desmarcarTodosIngredientesUseCase: DesmarcarTodosIngredientesUseCase
+    private val recuperaIngredienteByReceitaUseCase: RecuperaIngredienteByReceitaUseCase
 ) : ViewModel() {
 
     private lateinit var ingredientes: List<Ingrediente>
     private lateinit var ingrediente: Ingrediente
     private lateinit var receita: Receita
+
+    private val _receitaInsertResult: MutableSharedFlow<ViewState<Receita>> = MutableSharedFlow()
+    val receitaInsertResult: SharedFlow<ViewState<Receita>> get() = _receitaInsertResult
+
+    private val _receitaUpdateResult: MutableSharedFlow<ViewState<Receita>> = MutableSharedFlow()
+    val receitaUpdateResult: SharedFlow<ViewState<Receita>> get() = _receitaUpdateResult
 
     private val _ingredienteInsertResult: MutableSharedFlow<ViewState<Ingrediente>> = MutableSharedFlow()
     val ingredienteInsertResult: SharedFlow<ViewState<Ingrediente>> get() = _ingredienteInsertResult
@@ -32,12 +38,6 @@ class IngredienteViewModel(
 
     private val _ingredienteGetResult: MutableSharedFlow<ViewState<List<Ingrediente>>> = MutableSharedFlow()
     val ingredienteGetResult: SharedFlow<ViewState<List<Ingrediente>>> get() = _ingredienteGetResult
-
-    private val _ingredienteMarcouResult: MutableSharedFlow<ViewState<Boolean>> = MutableSharedFlow()
-    val ingredienteMarcouResult: SharedFlow<ViewState<Boolean>> get() = _ingredienteMarcouResult
-
-    private val _ingredienteDesmarcarTodasResult: MutableSharedFlow<ViewState<Boolean>> = MutableSharedFlow()
-    val ingredienteDesmarcarTodasResult: SharedFlow<ViewState<Boolean>> get() = _ingredienteDesmarcarTodasResult
 
     fun insereIngrediente(ingredientes: List<Ingrediente>, receita: Receita) {
         this.ingredientes = ingredientes
@@ -81,25 +81,29 @@ class IngredienteViewModel(
         }
     }
 
-    fun marcarDesmarcarIngrediente(ingrediente: Ingrediente) {
-        this.ingrediente = ingrediente
-
-        fetchData(::marcarDesmarcarIngredienteUseCase) {
-            onAny { viewState ->
-                _ingredienteMarcouResult.emit(viewState)
-            }
-        }
-    }
-
-    fun desmarcarTodosIngredientes(receita: Receita) {
+    fun insereReceita(receita: Receita) {
         this.receita = receita
 
-        fetchData(::desmarcarTodosIngredientesUseCase) {
+        fetchData(::insereReceitaUseCase) {
             onAny { viewState ->
-                _ingredienteDesmarcarTodasResult.emit(viewState)
+                _receitaInsertResult.emit(viewState)
             }
         }
     }
+
+    fun alteraReceita(receita: Receita) {
+        this.receita = receita
+
+        fetchData(::alteraReceitaUseCase) {
+            onAny { viewState ->
+                _receitaUpdateResult.emit(viewState)
+            }
+        }
+    }
+
+    private suspend fun insereReceitaUseCase() = insereReceitaUseCase.runAsync(receita)
+
+    private suspend fun alteraReceitaUseCase() = alteraReceitaUseCase.runAsync(receita)
 
     private suspend fun insereIngredienteUseCase() = insereIngredienteUseCase.runAsync(ingredientes, receita)
 
@@ -108,9 +112,4 @@ class IngredienteViewModel(
     private suspend fun deletaIngredienteUseCase() = deletaIngredienteUseCase.runAsync(ingrediente)
 
     private suspend fun recuperaIngredientesByReceitaIdUseCase() = recuperaIngredienteByReceitaUseCase.runAsync(receita)
-
-    private suspend fun marcarDesmarcarIngredienteUseCase() = marcarDesmarcarIngredienteUseCase.runAsync(ingrediente.id, ingrediente.marcado)
-
-    private suspend fun desmarcarTodosIngredientesUseCase() = desmarcarTodosIngredientesUseCase.runAsync(receita.id)
-
 }
