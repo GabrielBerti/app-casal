@@ -53,8 +53,9 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
 
         setupListeners()
         viewModel.recuperaTransacoes()
-        setToolbar()
-        configuraResumo()
+
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setHomeButtonEnabled(true)
 
         //instancia a snackbar
         createSnackBar(
@@ -75,7 +76,15 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
                 onSuccess {
                     transacoes = it
                     configuraAdapter(it)
+                    viewModel.recuperaResumo()
                 }
+            }
+
+            viewModel.resumoGetResult.collectViewState(this) {
+                onLoading { }
+                onError {
+                }
+                onSuccess { configuraResumo(it) }
             }
 
             viewModel.transacaoInsertResult.collectResult(this) {
@@ -144,11 +153,6 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
         }
     }
 
-    private fun setToolbar() {
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setHomeButtonEnabled(true)
-    }
-
     private fun configuraAdapter(transacoes: List<Transacao>) {
         binding.rvTransacoes.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rvTransacoes.adapter = ListaTransacoesAdapter(transacoes, this, this)
@@ -156,13 +160,6 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
 
     override fun clickTransacao(transacao: Transacao) {
         chamaDialogDeAlteracao(transacao)
-    }
-
-    fun atualiza() {
-        val resumo = Resumo(transacoes)
-        adicionaSaldoBiel(resumo.saldoBiel)
-        adicionaSaldoMari(resumo.saldoMari)
-        adicionaTotal(resumo.total)
     }
 
     private fun adicionaSaldoBiel(saldoBiel: BigDecimal) {
@@ -319,8 +316,15 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
         binding.fabAdicionaTransacaoClose.visibility = View.GONE
     }
 
-    private fun configuraResumo() {
-        atualiza()
+    private fun configuraResumo(resumo: Resumo) {
+        val saldoBiel = resumo.saldoBiel ?: BigDecimal.ZERO
+        val saldoMari = resumo.saldoMari ?: BigDecimal.ZERO
+
+        adicionaSaldoBiel(saldoBiel)
+        adicionaSaldoMari(saldoMari)
+
+        val saldoTotal = saldoBiel.subtract(saldoMari)
+        adicionaTotal(saldoTotal)
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {

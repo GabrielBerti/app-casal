@@ -1,6 +1,7 @@
 package br.com.appcasal.viewmodel
 
 import androidx.lifecycle.ViewModel
+import br.com.appcasal.domain.model.Resumo
 import br.com.appcasal.domain.model.Transacao
 import br.com.appcasal.domain.usecase.*
 import br.com.appcasal.ui.ViewState
@@ -12,13 +13,17 @@ class ListaTransacoesViewModel(
     private val insereTransacaoUseCase: InsereTransacaoUseCase,
     private val alteraTransacaoUseCase: AlteraTransacaoUseCase,
     private val deletaTransacaoUseCase: DeletaTransacaoUseCase,
-    private val deletaTodasTransacoesUseCase: DeletaTodasTransacoesUseCase
+    private val deletaTodasTransacoesUseCase: DeletaTodasTransacoesUseCase,
+    private val getResumoUseCase: GetResumoUseCase
 ) : ViewModel() {
 
     private lateinit var transacao: Transacao
 
     private val _transacaoGetResult = MutableStateFlow<ViewState<List<Transacao>>>(ViewState.Initial())
     val transacaoGetResult: StateFlow<ViewState<List<Transacao>>> get() = _transacaoGetResult
+
+    private val _resumoGetResult = MutableStateFlow<ViewState<Resumo>>(ViewState.Initial())
+    val resumoGetResult: StateFlow<ViewState<Resumo>> get() = _resumoGetResult
 
     private val _transacaoInsertResult: MutableSharedFlow<ViewState<Transacao>> = MutableSharedFlow()
     val transacaoInsertResult: SharedFlow<ViewState<Transacao>> get() = _transacaoInsertResult
@@ -34,6 +39,10 @@ class ListaTransacoesViewModel(
 
     fun recuperaTransacoes() = fetchData(::recuperaTransacoesUseCase) {
         onAny { viewState -> _transacaoGetResult.update { viewState } }
+    }
+
+    fun recuperaResumo() = fetchData(::recuperaResumoUseCase) {
+        onAny { viewState -> _resumoGetResult.update { viewState } }
     }
 
     fun insereTransacao(transacao: Transacao) {
@@ -84,5 +93,7 @@ class ListaTransacoesViewModel(
     private suspend fun deletaTransacaoUseCase() = deletaTransacaoUseCase.runAsync(transacao)
 
     private suspend fun deletaTodasTransacoesUseCase() = deletaTodasTransacoesUseCase.runAsync()
+
+    private suspend fun recuperaResumoUseCase() = getResumoUseCase.runAsync()
 
 }

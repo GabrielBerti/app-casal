@@ -67,6 +67,7 @@ val settingsUseCaseModule = module {
     factory { DeletaMetaUseCase(get()) }
 
     factory { GetTransacoesUseCase(get()) }
+    factory { GetResumoUseCase(get()) }
     factory { InsereTransacaoUseCase(get()) }
     factory { AlteraTransacaoUseCase(get()) }
     factory { DeletaTransacaoUseCase(get()) }
@@ -87,7 +88,7 @@ val settingsUseCaseModule = module {
 
 val settingsViewModelModule = module {
     viewModel { ListaMetasViewModel(get(), get(), get(), get(), get()) }
-    viewModel { ListaTransacoesViewModel(get(), get(), get(), get(), get()) }
+    viewModel { ListaTransacoesViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { FormReceitasViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { DetalheReceitaViewModel(get(), get()) }
     viewModel { ListaReceitasViewModel(get(), get()) }

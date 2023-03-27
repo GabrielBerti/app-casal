@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import br.com.appcasal.MainActivity
 import br.com.appcasal.R
 import br.com.appcasal.databinding.ActivityListaReceitasBinding
 import br.com.appcasal.domain.model.Receita
@@ -88,7 +89,8 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                finish()
+                val it = Intent(this, MainActivity::class.java)
+                startActivity(it)
                 return super.onOptionsItemSelected(item)
             }
             else -> super.onOptionsItemSelected(item)

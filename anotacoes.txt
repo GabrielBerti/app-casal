@@ -1,36 +1,34 @@
 -- ajustes gerais:
     -- fazer tela de splash
     -- Opcao de nao dar nota ou dar nota 0
-    -- Nota quebrada(depende da Mari quebrar a img da estrela em duas partes)
+    -- Nota quebrada(pegar imagem quebrada com a Mari)
     -- reciclagem das metas zoada quando tem muitos registros
     -- scroll view da home
 
-
+------------------------------------------------------------------------------------------------------------------------
 -- Integrar com o back end
-    -- transacao(02/04)
-        -- recuperar valores
 
-    -- viagem (até 09/04)
+    -- viagem (até 02/04)
             -- fazer crud
             -- tirar opcao de remover tudo
             -- swipe refresh
             -- refatorar para usar databinding
 
-    -- gastos viagem (até 16/04)
+    -- gastos viagem (até 09/04)
         -- fazer crud
 
-    -- lugares conhecidos viagem (até 16/04)
+    -- lugares conhecidos viagem (até 09/04)
         -- fazer crud
 
 
-    -- trocar notas das viagens e dos lugares conhecidos que estao com tipo int para double (até 23/04)
-    -- fazer tratamentos de erros e loading nas telas(até 23/04)
-    -- colocar filtro debounced na telas de metas, viagens e receitas (até 30/04)
+    -- trocar notas das viagens e dos lugares conhecidos que estao com tipo int para double (até 16/04)
+    -- fazer tratamentos de erros e loading nas telas(até 16/04)
+    -- colocar filtro debounced na telas de metas, viagens e receitas (até 23/04)
     -- trocar datas que estao com tipo string para Date (até 30/04)
     -- resolver TODOs e assert nulls (até 07/05)
     -- colocar nome dos itens inseridos e alterados na mensagem de sucesso(até 07/05)
     -- ordenacao de todas as listas(até 07/05)
-
+------------------------------------------------------------------------------------------------------------------------
 
 
 
