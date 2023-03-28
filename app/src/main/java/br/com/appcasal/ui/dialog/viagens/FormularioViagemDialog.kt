@@ -16,8 +16,6 @@ import br.com.appcasal.R
 import br.com.appcasal.domain.model.Viagem
 import br.com.appcasal.util.Util
 import java.util.*
-import kotlin.properties.Delegates
-
 
 abstract class FormularioViagemDialog(
         private val context: Context,
@@ -78,7 +76,7 @@ abstract class FormularioViagemDialog(
                         dataFim = dataFimEmTexto,
                         nota = estrelaMarcarda,
                         lugaresVisitados = listOf(),
-                        gastosViagem = listOf()
+                        gastosViagens = listOf()
                     )
                 } else {
                     Viagem(
@@ -88,7 +86,7 @@ abstract class FormularioViagemDialog(
                         dataFim = dataFimEmTexto,
                         nota = estrelaMarcarda,
                         lugaresVisitados = listOf(),
-                        gastosViagem = listOf()
+                        gastosViagens = listOf()
                     )
                 }
 

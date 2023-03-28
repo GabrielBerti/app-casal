@@ -62,7 +62,7 @@ class ListaLugaresVisitadosViagemAdapter(
             val lugarVisitado = lugaresVisitados[posicao]
 
             nomeLugarVisitado.text = lugarVisitado.nome
-            util.exibeEstrelas(lugarVisitado.legal.toDouble(), estrela1, estrela2, estrela3, estrela4, estrela5) // todo
+            util.exibeEstrelas(lugarVisitado.nota, estrela1, estrela2, estrela3, estrela4, estrela5)
         }
 
         override fun onCreateContextMenu(

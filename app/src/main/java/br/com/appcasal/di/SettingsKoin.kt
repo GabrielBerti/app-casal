@@ -40,6 +40,18 @@ val settingsServiceModule = module {
             ViagemService::class.java
         )
     }
+
+    single<LugarVisitadoService> {
+        CorporativeRetrofit(get(), BuildConfig.BASE_URL).retrofit.create(
+            LugarVisitadoService::class.java
+        )
+    }
+
+    single<GastoViagemService> {
+        CorporativeRetrofit(get(), BuildConfig.BASE_URL).retrofit.create(
+            GastoViagemService::class.java
+        )
+    }
 }
 
 val settingsDataSourceModule = module {
@@ -48,6 +60,8 @@ val settingsDataSourceModule = module {
     single { ReceitaRemoteDataSource(get()) }
     single { IngredienteRemoteDataSource(get()) }
     single { ViagemRemoteDataSource(get()) }
+    single { LugarVisitadoRemoteDataSource(get()) }
+    single { GastoViagemRemoteDataSource(get()) }
 }
 
 val settingsRepositoryModule = module {
@@ -56,6 +70,8 @@ val settingsRepositoryModule = module {
     single { ReceitaRepository(get()) }
     single { IngredienteRepository(get()) }
     single { ViagemRepository(get()) }
+    single { LugarVisitadoRepository(get()) }
+    single { GastoViagemRepository(get()) }
 }
 
 val settingsUseCaseModule = module {
@@ -80,7 +96,7 @@ val settingsUseCaseModule = module {
     factory { InsereIngredienteUseCase(get()) }
     factory { AlteraIngredienteUseCase(get()) }
     factory { DeletaIngredienteUseCase(get()) }
-    factory { RecuperaIngredienteByReceitaUseCase(get()) }
+    factory { GetIngredienteByReceitaUseCase(get()) }
     factory { MarcarDesmarcarIngredienteUseCase(get()) }
     factory { DesmarcarTodosIngredientesUseCase(get()) }
 
@@ -88,6 +104,16 @@ val settingsUseCaseModule = module {
     factory { InsereViagemUseCase(get()) }
     factory { AlteraViagemUseCase(get()) }
     factory { DeletaViagemUseCase(get()) }
+
+    factory { GetLugarVisitadoByViagemUseCase(get()) }
+    factory { InsereLugarVisitadoUseCase(get()) }
+    factory { AlteraLugarVisitadoUseCase(get()) }
+    factory { DeletaLugarVisitadoUseCase(get()) }
+
+    factory { GetGastoViagemByViagemUseCase(get()) }
+    factory { InsereGastoViagemUseCase(get()) }
+    factory { AlteraGastoViagemUseCase(get()) }
+    factory { DeletaGastoViagemUseCase(get()) }
 }
 
 val settingsViewModelModule = module {
@@ -97,6 +123,8 @@ val settingsViewModelModule = module {
     viewModel { DetalheReceitaViewModel(get(), get()) }
     viewModel { ListaReceitasViewModel(get(), get()) }
     viewModel { ListaViagensViewModel(get(), get(), get(), get()) }
+    viewModel { LugaresVisitadosViewModel(get(), get(), get(), get()) }
+    viewModel { GastosViagemViewModel(get(), get(), get(), get()) }
 }
 
 val settingsKoinModule = settingsServiceModule +

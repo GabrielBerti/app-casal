@@ -22,11 +22,11 @@ abstract class FormularioGastoViagemDialog(
     protected lateinit var campoDescricaoGasto: EditText
     abstract protected val tituloBotaoPositivo: String
 
-    fun chama(id: Long?, idViagem: Long, delegate: (gastoViagem: GastoViagem) -> Unit) {
-        configuraFormulario(id, idViagem, delegate)
+    fun chama(id: Long?, delegate: (gastoViagem: GastoViagem) -> Unit) {
+        configuraFormulario(id, delegate)
     }
 
-    private fun configuraFormulario(id: Long?, idViagem: Long, delegate: (gastoViagem: GastoViagem) -> Unit) {
+    private fun configuraFormulario(id: Long?, delegate: (gastoViagem: GastoViagem) -> Unit) {
         val titulo = tituloPor()
 
         val dialog = AlertDialog.Builder(context)
@@ -52,25 +52,23 @@ abstract class FormularioGastoViagemDialog(
             val valorGastoEmTexto = campoValorGasto.text.toString()
             val valorGasto = util.converteCampoValor(valorGastoEmTexto, context)
 
-            if(descricaoGastoEmTexto.isNullOrBlank()) {
+            if(descricaoGastoEmTexto.isBlank()) {
                 campoDescricaoGasto.error = context.getString(R.string.descricao_gasto_obrigatorio)
-            } else if(valorGastoEmTexto.isNullOrBlank()) {
+            } else if(valorGastoEmTexto.isBlank()) {
                 campoValorGasto.error = context.getString(R.string.valor_gasto_obrigatorio)
-            } else if(valorGastoEmTexto == "0") {
+            } else if(campoValorGasto.text.toString().toDouble() < 0.01) {
                 campoValorGasto.error = context.getString(R.string.valor_gasto_maior_que_zero)
             } else {
-                var gastoViagemCriada: GastoViagem = if (id == null) {
+                val gastoViagemCriada: GastoViagem = if (id == null) {
                     GastoViagem(
                         valor = valorGasto,
                         descricao = descricaoGastoEmTexto,
-                        viagemId = idViagem
                     )
                 } else {
                     GastoViagem(
                         id = id,
                         valor = valorGasto,
                         descricao = descricaoGastoEmTexto,
-                        viagemId = idViagem
                     )
                 }
 

@@ -8,16 +8,15 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import br.com.appcasal.R
 import br.com.appcasal.databinding.ActivityDetalheViagemBinding
-import br.com.appcasal.ui.activity.receitas.ListaReceitasActivity
+import br.com.appcasal.domain.model.Viagem
 import br.com.appcasal.ui.activity.viagens.ListaViagensActivity
 import br.com.appcasal.ui.activity.viagens.detalhes.gastos_viagem.GastosViagemFragment
 import br.com.appcasal.ui.activity.viagens.detalhes.lugares_visitados.LugaresVisitadosFragment
 
-
 class DetalheViagemActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetalheViagemBinding
-    private var viagemId: Long = 0L
+    private var viagem: Viagem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,10 +27,7 @@ class DetalheViagemActivity : AppCompatActivity() {
         setToolbar()
         setListeners()
 
-        val extras = intent.extras
-        if (extras != null) {
-            viagemId = extras.getString("viagemId")!!.toLong()
-        }
+        viagem = intent.extras?.getParcelable("viagem") as Viagem?
 
         instanciaFragmentGastos()
     }
@@ -56,15 +52,17 @@ class DetalheViagemActivity : AppCompatActivity() {
     private fun instanciaFragmentGastos() {
         val fm = supportFragmentManager
         val ft = fm.beginTransaction()
-        ft.replace(R.id.fl_detalhes_viagem, GastosViagemFragment(viagemId))
+        ft.replace(R.id.fl_detalhes_viagem, GastosViagemFragment(viagem!!))
         ft.commit()
     }
 
     private fun instanciaFragmentLugaresVisitados() {
-        val fm = supportFragmentManager
-        val ft = fm.beginTransaction()
-        ft.replace(R.id.fl_detalhes_viagem, LugaresVisitadosFragment(viagemId))
-        ft.commit()
+        if(viagem != null) {
+            val fm = supportFragmentManager
+            val ft = fm.beginTransaction()
+            ft.replace(R.id.fl_detalhes_viagem, LugaresVisitadosFragment(viagem!!))
+            ft.commit()
+        }
     }
 
     private fun setShapeButtonSelectAndUnselected(buttonSelected: AppCompatButton, buttonUnselected: AppCompatButton) {

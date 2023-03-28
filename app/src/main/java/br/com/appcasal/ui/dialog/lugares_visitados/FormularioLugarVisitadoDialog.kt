@@ -19,7 +19,7 @@ abstract class FormularioLugarVisitadoDialog(
 
     private var util = Util()
     private val viewCriada = criaLayout()
-    protected var estrelaMarcarda = 1
+    protected var estrelaMarcarda: Double = 1.0
 
     protected lateinit var nomeLugarVisitado: EditText
     abstract protected val tituloBotaoPositivo: String
@@ -29,11 +29,11 @@ abstract class FormularioLugarVisitadoDialog(
     protected lateinit var estrela4: ImageView
     protected lateinit var estrela5: ImageView
 
-    fun chama(id: Long?, idViagem: Long, delegate: (lugarVisitado: LugarVisitado) -> Unit) {
-        configuraFormulario(id, idViagem, delegate)
+    fun chama(id: Long?, delegate: (lugarVisitado: LugarVisitado) -> Unit) {
+        configuraFormulario(id, delegate)
     }
 
-    private fun configuraFormulario(id: Long?, idViagem: Long, delegate: (lugarVisitado: LugarVisitado) -> Unit) {
+    private fun configuraFormulario(id: Long?, delegate: (lugarVisitado: LugarVisitado) -> Unit) {
         val titulo = tituloPor()
 
         val dialog = AlertDialog.Builder(context)
@@ -60,18 +60,16 @@ abstract class FormularioLugarVisitadoDialog(
             if(nomeLugarVisitadoEmTexto.isBlank()) {
                 nomeLugarVisitado.error = context.getString(R.string.nome_lugar_visitado_obrigatorio)
             } else {
-                var lugarVisitadoCriado: LugarVisitado = if (id == null) {
+                val lugarVisitadoCriado: LugarVisitado = if (id == null) {
                     LugarVisitado(
                         nome = nomeLugarVisitadoEmTexto,
-                        legal = estrelaMarcarda,
-                        viagemId = idViagem
+                        nota = estrelaMarcarda,
                     )
                 } else {
                     LugarVisitado(
                         id = id,
                         nome = nomeLugarVisitadoEmTexto,
-                        legal = estrelaMarcarda,
-                        viagemId = idViagem
+                        nota = estrelaMarcarda,
                     )
                 }
 
@@ -118,14 +116,14 @@ abstract class FormularioLugarVisitadoDialog(
         estrela1.setOnClickListener {
             desmarcaEstrelas()
             it.alpha = 1f
-            estrelaMarcarda = 1
+            estrelaMarcarda = 1.0
         }
 
         estrela2.setOnClickListener {
             desmarcaEstrelas()
             estrela1.alpha = 1f
             it.alpha = 1f
-            estrelaMarcarda = 2
+            estrelaMarcarda = 2.0
         }
 
         estrela3.setOnClickListener {
@@ -133,7 +131,7 @@ abstract class FormularioLugarVisitadoDialog(
             estrela1.alpha = 1f
             estrela2.alpha = 1f
             it.alpha = 1f
-            estrelaMarcarda = 3
+            estrelaMarcarda = 3.0
         }
 
         estrela4.setOnClickListener {
@@ -142,7 +140,7 @@ abstract class FormularioLugarVisitadoDialog(
             estrela2.alpha = 1f
             estrela3.alpha = 1f
             it.alpha = 1f
-            estrelaMarcarda = 4
+            estrelaMarcarda = 4.0
         }
 
         estrela5.setOnClickListener {
@@ -152,7 +150,7 @@ abstract class FormularioLugarVisitadoDialog(
             estrela3.alpha = 1f
             estrela4.alpha = 1f
             it.alpha = 1f
-            estrelaMarcarda = 5
+            estrelaMarcarda = 5.0
         }
     }
 

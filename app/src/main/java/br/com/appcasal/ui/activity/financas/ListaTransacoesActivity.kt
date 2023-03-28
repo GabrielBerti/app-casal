@@ -31,7 +31,7 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
     val viewModel: ListaTransacoesViewModel by viewModel()
 
     private var util = Util()
-    private lateinit var snackbar: Snackbar
+    private var snackbar: Snackbar? = null
 
     private val corBiel = R.color.biel
     private val corMari = R.color.mari
@@ -57,13 +57,6 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setHomeButtonEnabled(true)
 
-        //instancia a snackbar
-        createSnackBar(
-            TipoSnackbar.SUCESSO,
-            resources.getString(R.string.transacao_inserida_sucesso),
-            View.GONE
-        )
-
         configuraFab()
         setupSwipeRefresh()
     }
@@ -72,7 +65,19 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
         lifecycleScope.launch {
             viewModel.transacaoGetResult.collectViewState(this) {
                 onLoading { }
-                onError { configuraAdapter(listOf(Transacao(1, BigDecimal.ONE, "dfsdf", Tipo.BIEL, "21/08/2023"))) } //TODO tratar erro
+                onError {
+                    configuraAdapter(
+                        listOf(
+                            Transacao(
+                                1,
+                                BigDecimal.ONE,
+                                "dfsdf",
+                                Tipo.BIEL,
+                                "21/08/2023"
+                            )
+                        )
+                    )
+                } //TODO tratar erro
                 onSuccess {
                     transacoes = it
                     configuraAdapter(it)
@@ -154,7 +159,8 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
     }
 
     private fun configuraAdapter(transacoes: List<Transacao>) {
-        binding.rvTransacoes.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.rvTransacoes.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rvTransacoes.adapter = ListaTransacoesAdapter(transacoes, this, this)
     }
 
@@ -261,7 +267,7 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
 
         binding.fabAdicionaTransacao
             .setOnClickListener {
-                snackbar.dismiss()
+                snackbar?.dismiss()
                 binding.fabAdicionaTransacaoClose.visibility = View.VISIBLE
                 it.visibility = View.GONE
                 controlaCamposFab(View.VISIBLE, false)
@@ -330,7 +336,7 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
     override fun onContextItemSelected(item: MenuItem): Boolean {
         val posicao: Int = (binding.rvTransacoes.adapter as ListaTransacoesAdapter).posicao
 
-        when(item.itemId) {
+        when (item.itemId) {
             1 -> {
                 viewModel.deletaTransacao(transacoes[posicao])
             }
@@ -349,13 +355,23 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
     private fun chamaDialogDeAlteracao(transacao: Transacao) {
         util.aplicaOpacidadeFundo(binding.llHeaderAndBodyTransacoes)
         AlteraTransacaoDialog(viewGroupDaActivity, this)
-            .chama(transacao, transacao.id, binding.llHeaderAndBodyTransacoes) { transacaoAlterada ->
+            .chama(
+                transacao,
+                transacao.id,
+                binding.llHeaderAndBodyTransacoes
+            ) { transacaoAlterada ->
                 viewModel.alteraTransacao(transacaoAlterada)
             }
     }
 
     private fun createSnackBar(tipoSnackbar: TipoSnackbar, msg: String, visibility: Int) {
         snackbar =
-            util.createSnackBarWithReturn(binding.clListaTransacoes, msg, resources, tipoSnackbar, visibility)
+            util.createSnackBarWithReturn(
+                binding.clListaTransacoes,
+                msg,
+                resources,
+                tipoSnackbar,
+                visibility
+            )
     }
 }

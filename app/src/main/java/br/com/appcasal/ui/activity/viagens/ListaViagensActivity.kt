@@ -50,13 +50,6 @@ class ListaViagensActivity : AppCompatActivity(), ClickViagem {
         setToolbar()
         setListeners()
         setupSwipeRefresh()
-
-        //instancia a snackbar
-        createSnackBar(
-            TipoSnackbar.SUCESSO,
-            resources.getString(R.string.viagem_inserida_sucesso),
-            View.GONE
-        )
     }
 
     private fun setupSwipeRefresh() {
@@ -147,7 +140,6 @@ class ListaViagensActivity : AppCompatActivity(), ClickViagem {
     private fun setListeners() {
         binding.fabAdicionaViagem
             .setOnClickListener {
-                snackbar.dismiss()
                 chamaDialogDeAdicao()
             }
     }
@@ -185,7 +177,7 @@ class ListaViagensActivity : AppCompatActivity(), ClickViagem {
 
     private fun chamaDetalheViagem(viagem: Viagem) {
         val it = Intent(this, DetalheViagemActivity::class.java)
-        it.putExtra("viagemId", viagem.id.toString())
+        it.putExtra("viagem", viagem)
         startActivity(it)
     }
 

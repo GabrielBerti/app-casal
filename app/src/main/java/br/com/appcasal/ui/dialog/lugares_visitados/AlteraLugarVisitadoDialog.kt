@@ -20,10 +20,10 @@ class AlteraLugarVisitadoDialog(
         return R.string.altera_lugar_visitado
     }
 
-    fun chamaAlteracao(lugarVisitado: LugarVisitado, id: Long, idViagem: Long, delegate: (lugarVisitado: LugarVisitado) -> Unit) {
-        super.chama(id, idViagem, delegate)
+    fun chamaAlteracao(lugarVisitado: LugarVisitado, id: Long, delegate: (lugarVisitado: LugarVisitado) -> Unit) {
+        super.chama(id, delegate)
         nomeLugarVisitado.setText(lugarVisitado.nome)
-        util.exibeEstrelas(lugarVisitado.legal.toDouble(), estrela1, estrela2, estrela3, estrela4, estrela5) // todo
-        estrelaMarcarda = lugarVisitado.legal
+        util.exibeEstrelas(lugarVisitado.nota, estrela1, estrela2, estrela3, estrela4, estrela5)
+        estrelaMarcarda = lugarVisitado.nota
     }
 }

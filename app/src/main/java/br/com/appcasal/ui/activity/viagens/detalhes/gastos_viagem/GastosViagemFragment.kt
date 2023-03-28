@@ -6,32 +6,32 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import br.com.alura.financask.extension.formataParaBrasileiro
 import br.com.appcasal.R
 import br.com.appcasal.databinding.FragmentGastosViagemBinding
-import br.com.appcasal.domain.model.GastoViagem
-import br.com.appcasal.domain.model.TipoSnackbar
+import br.com.appcasal.domain.model.*
+import br.com.appcasal.ui.collectResult
+import br.com.appcasal.ui.collectViewState
 import br.com.appcasal.ui.dialog.gastos_viagem.AdicionaGastoViagemDialog
 import br.com.appcasal.ui.dialog.gastos_viagem.AlteraGastoViagemDialog
 import br.com.appcasal.util.Util
+import br.com.appcasal.viewmodel.GastosViagemViewModel
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.math.BigDecimal
 
-class GastosViagemFragment(private val viagemId: Long) : Fragment(), ClickGastoViagem {
+class GastosViagemFragment(private val viagem: Viagem) : Fragment(), ClickGastoViagem {
 
     private lateinit var binding: FragmentGastosViagemBinding
-    private lateinit var rv: RecyclerView
-    private lateinit var adapter: ListaGastosViagemAdapter
+    val viewModel: GastosViagemViewModel by viewModel()
+
+    private var gastosViagem: List<GastoViagem> = listOf()
+
     private lateinit var snackbar: Snackbar
     private var util = Util()
-    private var gastosViagem: List<GastoViagem> = Companion.gastoViagem
-    //private lateinit var gastosViagemDAO: GastosViagemDAO
-
-    companion object {
-        private val gastoViagem: MutableList<GastoViagem> = mutableListOf()
-    }
 
     private val viewDaActivity by lazy {
         requireActivity().window.decorView
@@ -53,13 +53,67 @@ class GastosViagemFragment(private val viagemId: Long) : Fragment(), ClickGastoV
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //gastosViagemDAO = db.gastosViagemDao()
-
-        //gastosViagem = gastosViagemDAO.buscaGastosViagemByViagem(viagemId = viagemId)
-
+        gastosViagem = viagem.gastosViagens.toMutableList()
+        setupListeners()
+        setListeners()
         exibeValorTotalGasto()
         configuraAdapter()
-        setListeners()
+        setupSwipeRefresh()
+    }
+
+    private fun setupSwipeRefresh() {
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.recuperaGastosViagem(viagem)
+            binding.swipeRefresh.isRefreshing = false
+        }
+    }
+
+    private fun setupListeners() {
+        lifecycleScope.launch {
+            viewModel.gastoViagemGetResult.collectViewState(this) {
+                onLoading { }
+                onError { }
+                onSuccess {
+                    gastosViagem = it.toMutableList()
+                    configuraAdapter()
+                    exibeValorTotalGasto()
+                }
+            }
+
+            viewModel.gastoViagemInsertResult.collectResult(this) {
+                onError { }
+                onSuccess {
+                    createSnackBar(
+                        TipoSnackbar.SUCESSO,
+                        resources.getString(R.string.gasto_viagem_inserido_sucesso, it.descricao)
+                    )
+                    viewModel.recuperaGastosViagem(viagem)
+                }
+            }
+
+            viewModel.gastoViagemUpdateResult.collectResult(this) {
+                onError { }
+                onSuccess {
+                    createSnackBar(
+                        TipoSnackbar.SUCESSO,
+                        resources.getString(R.string.gasto_viagem_alterado_sucesso)
+                    )
+                    viewModel.recuperaGastosViagem(viagem)
+                }
+            }
+
+            viewModel.gastoViagemDeleteResult.collectResult(this) {
+                onError { }
+                onSuccess {
+                    createSnackBar(
+                        TipoSnackbar.SUCESSO,
+                        resources.getString(R.string.gasto_viagem_removido_sucesso)
+                    )
+                    viewModel.recuperaGastosViagem(viagem)
+                    binding.rvGastosViagem.adapter?.notifyDataSetChanged()
+                }
+            }
+        }
     }
 
     private fun exibeValorTotalGasto() {
@@ -76,13 +130,8 @@ class GastosViagemFragment(private val viagemId: Long) : Fragment(), ClickGastoV
     }
 
     private fun configuraAdapter() {
-        rv = binding.rvListaGastosViagem
-
-        rv.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-
-        adapter = ListaGastosViagemAdapter(gastosViagem, requireContext(), this)
-        rv.adapter = adapter
+        binding.rvGastosViagem.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.rvGastosViagem.adapter = ListaGastosViagemAdapter(gastosViagem, requireContext(), this)
     }
 
     private fun somaValorTotalGastoViagem(): String {
@@ -96,87 +145,38 @@ class GastosViagemFragment(private val viagemId: Long) : Fragment(), ClickGastoV
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
-        var posicao = -1
-        posicao = (rv.adapter as ListaGastosViagemAdapter).posicao
+        val posicao: Int = (binding.rvGastosViagem.adapter as ListaGastosViagemAdapter).posicao
 
         when (item.itemId) {
             1 -> {
-                val descricaoGastoRemovido = gastosViagem[posicao].descricao
-                remove(posicao)
-                adapter.notifyItemRemoved(posicao)
-
-                createSnackBar(
-                    TipoSnackbar.SUCESSO,
-                    resources.getString(
-                        R.string.gasto_viagem_removido_sucesso,
-                        descricaoGastoRemovido
-                    ),
-                    View.VISIBLE
-                )
+                viewModel.deletaGastoViagem(gastosViagem[posicao])
             }
         }
 
         return super.onContextItemSelected(item)
     }
 
-    private fun remove(posicaoDaTransacao: Int) {
-      //  gastosViagemDAO.remove(gastosViagem[posicaoDaTransacao])
-        adapter.notifyItemRemoved(posicaoDaTransacao)
-        atualizaGastosViagem()
-        exibeValorTotalGasto()
-    }
-
-    private fun atualizaGastosViagem() {
-     //   gastosViagem = gastosViagemDAO.buscaGastosViagemByViagem(viagemId)
-        rv.adapter = ListaGastosViagemAdapter(gastosViagem, requireContext(), this)
-    }
-
     private fun chamaDialogDeAdicao() {
         AdicionaGastoViagemDialog(viewGroupDaActivity, requireContext())
-            .chama(null, viagemId) { viagemCriada ->
-                adiciona(viagemCriada)
-                createSnackBar(
-                    TipoSnackbar.SUCESSO,
-                    resources.getString(
-                        R.string.gasto_viagem_inserido_sucesso,
-                        viagemCriada.descricao
-                    ),
-                    View.VISIBLE
-                )
+            .chama(null) { gastoViagemCriado ->
+                viewModel.insereGastoViagem(gastoViagemCriado, viagem)
             }
     }
 
     private fun chamaDialogDeAlteracao(gastoViagem: GastoViagem) {
         AlteraGastoViagemDialog(viewGroupDaActivity, requireContext())
-            .chamaAlteracao(gastoViagem, gastoViagem.id, gastoViagem.viagemId) { transacaoAlterada ->
-                altera(transacaoAlterada)
-                createSnackBar(
-                    TipoSnackbar.SUCESSO,
-                    resources.getString(R.string.gasto_viagem_alterado_sucesso),
-                    View.VISIBLE
-                )
+            .chamaAlteracao(gastoViagem, gastoViagem.id) { gastoViagemAlterado ->
+                viewModel.alteraGastoViagem(gastoViagemAlterado, viagem)
             }
     }
 
-    private fun adiciona(gastoViagem: GastoViagem) {
-    //    gastosViagemDAO.adiciona(gastoViagem)
-        atualizaGastosViagem()
-        exibeValorTotalGasto()
-    }
-
-    private fun altera(gastoViagem: GastoViagem) {
-  //      gastosViagemDAO.altera(gastoViagem)
-        atualizaGastosViagem()
-        exibeValorTotalGasto()
-    }
-
-    private fun createSnackBar(tipoSnackbar: TipoSnackbar, msg: String, visibility: Int) {
+    private fun createSnackBar(tipoSnackbar: TipoSnackbar, msg: String) {
         snackbar = util.createSnackBarWithReturn(
             requireActivity().findViewById(R.id.cl_detalhe_viagem),
             msg,
             resources,
             tipoSnackbar,
-            visibility
+            View.VISIBLE
         )
     }
 

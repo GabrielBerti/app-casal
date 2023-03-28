@@ -14,7 +14,7 @@ class FormReceitasViewModel(
     private val alteraReceitaUseCase: AlteraReceitaUseCase,
     private val alteraIngredienteUseCase: AlteraIngredienteUseCase,
     private val deletaIngredienteUseCase: DeletaIngredienteUseCase,
-    private val recuperaIngredienteByReceitaUseCase: RecuperaIngredienteByReceitaUseCase
+    private val recuperaIngredienteByReceitaUseCase: GetIngredienteByReceitaUseCase
 ) : ViewModel() {
 
     private lateinit var ingredientes: List<Ingrediente>

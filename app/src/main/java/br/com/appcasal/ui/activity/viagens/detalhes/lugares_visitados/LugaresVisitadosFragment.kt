@@ -12,12 +12,13 @@ import br.com.appcasal.R
 import br.com.appcasal.databinding.FragmentLugaresVisitadosViagemBinding
 import br.com.appcasal.domain.model.LugarVisitado
 import br.com.appcasal.domain.model.TipoSnackbar
+import br.com.appcasal.domain.model.Viagem
 import br.com.appcasal.ui.dialog.lugares_visitados.AdicionaLugarVisitadoDialog
 import br.com.appcasal.ui.dialog.lugares_visitados.AlteraLugarVisitadoDialog
 import br.com.appcasal.util.Util
 import com.google.android.material.snackbar.Snackbar
 
-class LugaresVisitadosFragment(private val viagemId: Long) : Fragment(), ClickLugarVisitadoViagem {
+class LugaresVisitadosFragment(private val viagem: Viagem) : Fragment(), ClickLugarVisitadoViagem {
 
     private lateinit var binding: FragmentLugaresVisitadosViagemBinding
     private lateinit var rv: RecyclerView
@@ -76,8 +77,7 @@ class LugaresVisitadosFragment(private val viagemId: Long) : Fragment(), ClickLu
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
-        var posicao = -1
-        posicao = (rv.adapter as ListaLugaresVisitadosViagemAdapter).posicao
+        val posicao: Int = (rv.adapter as ListaLugaresVisitadosViagemAdapter).posicao
 
         when (item.itemId) {
             1 -> {
@@ -112,7 +112,7 @@ class LugaresVisitadosFragment(private val viagemId: Long) : Fragment(), ClickLu
 
     private fun chamaDialogDeAdicao() {
         AdicionaLugarVisitadoDialog(viewGroupDaActivity, requireContext())
-            .chama(null, viagemId) { lugarVisitadoCriado ->
+            .chama(null) { lugarVisitadoCriado ->
                 adiciona(lugarVisitadoCriado)
                 createSnackBar(
                     TipoSnackbar.SUCESSO,
@@ -127,7 +127,7 @@ class LugaresVisitadosFragment(private val viagemId: Long) : Fragment(), ClickLu
 
     private fun chamaDialogDeAlteracao(lugarVisitado: LugarVisitado) {
         AlteraLugarVisitadoDialog(viewGroupDaActivity, requireContext())
-            .chamaAlteracao(lugarVisitado, lugarVisitado.id, lugarVisitado.viagemId) { transacaoAlterada ->
+            .chamaAlteracao(lugarVisitado, lugarVisitado.id) { transacaoAlterada ->
                 altera(transacaoAlterada)
                 createSnackBar(
                     TipoSnackbar.SUCESSO,

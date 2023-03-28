@@ -1,7 +1,10 @@
 package br.com.appcasal.domain.model
 
+import android.os.Parcelable
 import br.com.appcasal.dao.dto.network.response.ViagemResponseDTO
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 class Viagem(
     val id: Long = 0L,
     val local: String,
@@ -9,8 +12,8 @@ class Viagem(
     val dataFim: String,
     val nota: Double,
     val lugaresVisitados: List<LugarVisitado>,
-    val gastosViagem: List<GastoViagem>
-) {
+    val gastosViagens: List<GastoViagem>
+): Parcelable {
     companion object {
         fun mapFrom(viagemResponseDTO: ViagemResponseDTO) =
             Viagem(
@@ -20,7 +23,7 @@ class Viagem(
                 dataFim = viagemResponseDTO.dataFim ?: "",
                 nota = viagemResponseDTO.nota ?: 0.0,
                 lugaresVisitados = viagemResponseDTO.lugaresVisitados ?: listOf(),
-                gastosViagem = viagemResponseDTO.gastosViagem ?: listOf()
+                gastosViagens = viagemResponseDTO.gastosViagem ?: listOf()
             )
     }
 }
