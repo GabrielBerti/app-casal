@@ -46,14 +46,13 @@ class GastosViagemFragment(private val viagem: Viagem) : Fragment(), ClickGastoV
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentGastosViagemBinding.inflate(layoutInflater)
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        gastosViagem = viagem.gastosViagens.toMutableList()
+        gastosViagem = viagem.gastosViagens
         setupListeners()
         setListeners()
         exibeValorTotalGasto()

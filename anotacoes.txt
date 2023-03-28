@@ -1,4 +1,5 @@
 -- ajustes gerais:
+    -- no detalhe da viagem colocar o nome da viagem em cima
     -- Opcao de nao dar nota ou dar nota 0
     -- reciclagem das metas zoada quando tem muitos registros
     -- scroll view da home
@@ -6,19 +7,12 @@
     -- fazer tela de splash
 
 ------------------------------------------------------------------------------------------------------------------------
--- Integrar com o back end
-
-    -- lugares conhecidos viagem
-        -- fazer crud
-        -- fazer data binding
-        -- swipe refresh
-
-
     -- resolver TODOs e assert nulls
     -- colocar nome dos itens inseridos e alterados na mensagem de sucesso
     -- fazer tratamentos de erros e loading nas telas
     -- colocar filtro debounced na telas de metas, viagens e receitas
     -- trocar datas que estao com tipo string para Date
+    -- ao inserir ou alterar sempre salvas as descrições com a primeira letra maiuscula
     -- ordenacao de todas as listas
 ------------------------------------------------------------------------------------------------------------------------
 

@@ -6,31 +6,31 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import br.com.appcasal.R
 import br.com.appcasal.databinding.FragmentLugaresVisitadosViagemBinding
 import br.com.appcasal.domain.model.LugarVisitado
 import br.com.appcasal.domain.model.TipoSnackbar
 import br.com.appcasal.domain.model.Viagem
+import br.com.appcasal.ui.collectResult
+import br.com.appcasal.ui.collectViewState
 import br.com.appcasal.ui.dialog.lugares_visitados.AdicionaLugarVisitadoDialog
 import br.com.appcasal.ui.dialog.lugares_visitados.AlteraLugarVisitadoDialog
 import br.com.appcasal.util.Util
+import br.com.appcasal.viewmodel.LugaresVisitadosViewModel
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LugaresVisitadosFragment(private val viagem: Viagem) : Fragment(), ClickLugarVisitadoViagem {
 
     private lateinit var binding: FragmentLugaresVisitadosViagemBinding
-    private lateinit var rv: RecyclerView
-    private lateinit var adapter: ListaLugaresVisitadosViagemAdapter
+    val viewModel: LugaresVisitadosViewModel by viewModel()
+    private var lugaresVisitados: List<LugarVisitado> = listOf()
+
     private lateinit var snackbar: Snackbar
     private var util = Util()
-    private var lugaresVisitados: List<LugarVisitado> = Companion.lugaresVisitados
-    //private lateinit var lugaresVisitadosDAO: LugaresVisitadosDAO
-
-    companion object {
-        private val lugaresVisitados: MutableList<LugarVisitado> = mutableListOf()
-    }
 
     private val viewDaActivity by lazy {
         requireActivity().window.decorView
@@ -45,19 +45,71 @@ class LugaresVisitadosFragment(private val viagem: Viagem) : Fragment(), ClickLu
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentLugaresVisitadosViagemBinding.inflate(layoutInflater)
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-    //    lugaresVisitadosDAO = db.lugaresVisitadosDao()
-
-     //   lugaresVisitados = lugaresVisitadosDAO.buscaLugaresVisitadosByViagem(viagemId = viagemId)
-
+        lugaresVisitados = viagem.lugaresVisitados
+        setupListeners()
         configuraAdapter()
         setListeners()
+        setupSwipeRefresh()
+    }
+
+    private fun setupSwipeRefresh() {
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.recuperaLugaresVisitados(viagem)
+            binding.swipeRefresh.isRefreshing = false
+        }
+    }
+
+    private fun setupListeners() {
+        lifecycleScope.launch {
+            viewModel.lugarVisitadoGetResult.collectViewState(this) {
+                onLoading { }
+                onError { }
+                onSuccess {
+                    lugaresVisitados = it
+                    configuraAdapter()
+                }
+            }
+
+            viewModel.lugarVisitadoInsertResult.collectResult(this) {
+                onError { }
+                onSuccess {
+                    createSnackBar(
+                        TipoSnackbar.SUCESSO,
+                        resources.getString(R.string.lugar_visitado_inserido_sucesso, it.nome)
+                    )
+                    viewModel.recuperaLugaresVisitados(viagem)
+                }
+            }
+
+            viewModel.lugarVisitadoUpdateResult.collectResult(this) {
+                onError { }
+                onSuccess {
+                    createSnackBar(
+                        TipoSnackbar.SUCESSO,
+                        resources.getString(R.string.lugar_visitado_alterado_sucesso, it.nome)
+                    )
+                    viewModel.recuperaLugaresVisitados(viagem)
+                }
+            }
+
+            viewModel.lugarVisitadoDeleteResult.collectResult(this) {
+                onError { }
+                onSuccess {
+                    createSnackBar(
+                        TipoSnackbar.SUCESSO,
+                        resources.getString(R.string.lugar_visitado_removido_sucesso)
+                    )
+                    viewModel.recuperaLugaresVisitados(viagem)
+                    binding.rvLugaresVisitadosViagem.adapter?.notifyDataSetChanged()
+                }
+            }
+        }
     }
 
     private fun setListeners() {
@@ -67,93 +119,45 @@ class LugaresVisitadosFragment(private val viagem: Viagem) : Fragment(), ClickLu
     }
 
     private fun configuraAdapter() {
-        rv = binding.rvListaLugaresVisitadosViagem
-
-        rv.layoutManager =
+        binding.rvLugaresVisitadosViagem.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-
-        adapter = ListaLugaresVisitadosViagemAdapter(lugaresVisitados, requireContext(), this)
-        rv.adapter = adapter
+        binding.rvLugaresVisitadosViagem.adapter =
+            ListaLugaresVisitadosViagemAdapter(lugaresVisitados, requireContext(), this)
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
-        val posicao: Int = (rv.adapter as ListaLugaresVisitadosViagemAdapter).posicao
+        val posicao: Int = (binding.rvLugaresVisitadosViagem.adapter as ListaLugaresVisitadosViagemAdapter).posicao
 
         when (item.itemId) {
             1 -> {
-                val nomeLugarVisitadoRemovido = lugaresVisitados[posicao].nome
-                remove(posicao)
-                adapter.notifyItemRemoved(posicao)
-
-                createSnackBar(
-                    TipoSnackbar.SUCESSO,
-                    resources.getString(
-                        R.string.lugar_visitado_removido_sucesso,
-                        nomeLugarVisitadoRemovido
-                    ),
-                    View.VISIBLE
-                )
+                viewModel.deletaLugarVisitado(lugaresVisitados[posicao])
             }
         }
 
         return super.onContextItemSelected(item)
     }
 
-    private fun atualizaLugaresVisitados() {
-        //lugaresVisitados = lugaresVisitadosDAO.buscaLugaresVisitadosByViagem(viagemId)
-        rv.adapter = ListaLugaresVisitadosViagemAdapter(lugaresVisitados, requireContext(), this)
-    }
-
-    private fun remove(posicaoDaTransacao: Int) {
-      //  lugaresVisitadosDAO.remove(lugaresVisitados[posicaoDaTransacao])
-        adapter.notifyItemRemoved(posicaoDaTransacao)
-        atualizaLugaresVisitados()
-    }
-
     private fun chamaDialogDeAdicao() {
         AdicionaLugarVisitadoDialog(viewGroupDaActivity, requireContext())
             .chama(null) { lugarVisitadoCriado ->
-                adiciona(lugarVisitadoCriado)
-                createSnackBar(
-                    TipoSnackbar.SUCESSO,
-                    resources.getString(
-                        R.string.lugar_visitado_inserido_sucesso,
-                        lugarVisitadoCriado.nome
-                    ),
-                    View.VISIBLE
-                )
+                viewModel.insereLugarVisitado(lugarVisitadoCriado, viagem)
             }
     }
 
     private fun chamaDialogDeAlteracao(lugarVisitado: LugarVisitado) {
         AlteraLugarVisitadoDialog(viewGroupDaActivity, requireContext())
-            .chamaAlteracao(lugarVisitado, lugarVisitado.id) { transacaoAlterada ->
-                altera(transacaoAlterada)
-                createSnackBar(
-                    TipoSnackbar.SUCESSO,
-                    resources.getString(R.string.transacao_alterada_sucesso),
-                    View.VISIBLE
-                )
+            .chamaAlteracao(lugarVisitado, lugarVisitado.id) { lugarVisitadoAlterado ->
+                viewModel.alteraLugarVisitado(lugarVisitadoAlterado, viagem)
             }
     }
 
-    private fun adiciona(lugarVisitado: LugarVisitado) {
-     //   lugaresVisitadosDAO.adiciona(lugarVisitado)
-        atualizaLugaresVisitados()
-    }
-
-    private fun altera(lugarVisitado: LugarVisitado) {
-      //  lugaresVisitadosDAO.altera(lugarVisitado)
-        atualizaLugaresVisitados()
-    }
-
-    private fun createSnackBar(tipoSnackbar: TipoSnackbar, msg: String, visibility: Int) {
+    private fun createSnackBar(tipoSnackbar: TipoSnackbar, msg: String) {
         snackbar = util.createSnackBarWithReturn(
             requireActivity().findViewById(R.id.cl_detalhe_viagem),
             msg,
             resources,
             tipoSnackbar,
-            visibility
+            View.VISIBLE
         )
     }
 

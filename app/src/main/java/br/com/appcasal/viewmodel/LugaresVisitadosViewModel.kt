@@ -18,8 +18,8 @@ class LugaresVisitadosViewModel(
     private lateinit var lugarVisitado: LugarVisitado
     private lateinit var viagem: Viagem
 
-    private val _lugarVisitadoGetResult: MutableSharedFlow<ViewState<List<LugarVisitado>>> = MutableSharedFlow()
-    val lugarVisitadoGetResult: SharedFlow<ViewState<List<LugarVisitado>>> get() = _lugarVisitadoGetResult
+    private val _lugarVisitadoGetResult = MutableStateFlow<ViewState<List<LugarVisitado>>>(ViewState.Initial())
+    val lugarVisitadoGetResult: StateFlow<ViewState<List<LugarVisitado>>> get() = _lugarVisitadoGetResult
 
     private val _lugarVisitadoInsertResult: MutableSharedFlow<ViewState<LugarVisitado>> = MutableSharedFlow()
     val lugarVisitadoInsertResult: SharedFlow<ViewState<LugarVisitado>> get() = _lugarVisitadoInsertResult

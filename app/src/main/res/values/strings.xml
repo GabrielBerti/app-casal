@@ -97,7 +97,7 @@
     <string name="nao">Não</string>
     <string name="lugar_visitado_inserido_sucesso">Lugar %s inserido com sucesso !</string>
     <string name="lugar_visitado_alterado_sucesso">Lugar %s alterado com sucesso !</string>
-    <string name="lugar_visitado_removido_sucesso">Lugar %s removido com sucesso !</string>
+    <string name="lugar_visitado_removido_sucesso">Lugar removido com sucesso !</string>
     <string name="altera_lugar_visitado">Altera lugar visitado</string>
     <string name="adiciona_lugar_visitado">Adiciona lugar visitado</string>
     <string name="nome_lugar_visitado_obrigatorio">"Campo lugar visitado obrigatório"</string>
