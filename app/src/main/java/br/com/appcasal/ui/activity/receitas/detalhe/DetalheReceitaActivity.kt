@@ -37,10 +37,26 @@ class DetalheReceitaActivity : AppCompatActivity(), CheckouIngrediente {
         setListeners()
         setLayout()
         configuraAdapter()
+        setupSwipeRefresh()
+    }
+
+    private fun setupSwipeRefresh() {
+        binding.swipeRefresh.setOnRefreshListener {
+            ingredienteViewModel.recuperaIngredientes(receita)
+            binding.swipeRefresh.isRefreshing = false
+        }
     }
 
     private fun setupListeners() {
         lifecycleScope.launch {
+            ingredienteViewModel.ingredienteGetResult.collectResult(this) {
+                onError { }
+                onSuccess {
+                    receita.ingredientes = it
+                    configuraAdapter()
+                }
+            }
+
             ingredienteViewModel.ingredienteMarcouResult.collectResult(this) {
                 onError { }
             }

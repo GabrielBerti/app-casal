@@ -9,7 +9,7 @@ class Receita(
     val id: Long = 0L,
     val nome: String,
     val descricao: String,
-    val ingredientes: List<Ingrediente>?
+    var ingredientes: List<Ingrediente>?
 ): Parcelable {
     companion object {
         fun mapFrom(receitaResponseDTO: ReceitaResponseDTO) =
