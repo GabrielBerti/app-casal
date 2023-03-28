@@ -16,6 +16,7 @@ import br.com.appcasal.R
 import br.com.appcasal.domain.model.Viagem
 import br.com.appcasal.util.Util
 import java.util.*
+import kotlin.properties.Delegates
 
 
 abstract class FormularioViagemDialog(
@@ -29,7 +30,7 @@ abstract class FormularioViagemDialog(
     protected lateinit var campoDataFim: EditText
     abstract protected val tituloBotaoPositivo: String
 
-    private var estrelaMarcarda = 1
+    protected var estrelaMarcarda: Double = 1.0
     protected lateinit var estrela1: ImageView
     protected lateinit var estrela2: ImageView
     protected lateinit var estrela3: ImageView
@@ -67,15 +68,17 @@ abstract class FormularioViagemDialog(
             val dataInicioEmTexto = campoDataInicio.text.toString()
             val dataFimEmTexto = campoDataFim.text.toString()
 
-            if(localEmTexto.isNullOrBlank()) {
+            if(localEmTexto.isBlank()) {
                 campoLocal.error = context.getString(R.string.local_obrigatorio)
             } else {
-                var viagemCriada: Viagem = if (id == null) {
+                val viagemCriada: Viagem = if (id == null) {
                     Viagem(
                         local = localEmTexto,
                         dataInicio = dataInicioEmTexto,
                         dataFim = dataFimEmTexto,
-                        nota = estrelaMarcarda
+                        nota = estrelaMarcarda,
+                        lugaresVisitados = listOf(),
+                        gastosViagem = listOf()
                     )
                 } else {
                     Viagem(
@@ -83,7 +86,9 @@ abstract class FormularioViagemDialog(
                         local = localEmTexto,
                         dataInicio = dataInicioEmTexto,
                         dataFim = dataFimEmTexto,
-                        nota = estrelaMarcarda
+                        nota = estrelaMarcarda,
+                        lugaresVisitados = listOf(),
+                        gastosViagem = listOf()
                     )
                 }
 
@@ -168,14 +173,14 @@ abstract class FormularioViagemDialog(
         estrela1.setOnClickListener {
             desmarcaEstrelas()
             it.alpha = 1f
-            estrelaMarcarda = 1
+            estrelaMarcarda = 1.0
         }
 
         estrela2.setOnClickListener {
             desmarcaEstrelas()
             estrela1.alpha = 1f
             it.alpha = 1f
-            estrelaMarcarda = 2
+            estrelaMarcarda = 2.0
         }
 
         estrela3.setOnClickListener {
@@ -183,7 +188,7 @@ abstract class FormularioViagemDialog(
             estrela1.alpha = 1f
             estrela2.alpha = 1f
             it.alpha = 1f
-            estrelaMarcarda = 3
+            estrelaMarcarda = 3.0
         }
 
         estrela4.setOnClickListener {
@@ -192,7 +197,7 @@ abstract class FormularioViagemDialog(
             estrela2.alpha = 1f
             estrela3.alpha = 1f
             it.alpha = 1f
-            estrelaMarcarda = 4
+            estrelaMarcarda = 4.0
         }
 
         estrela5.setOnClickListener {
@@ -202,7 +207,7 @@ abstract class FormularioViagemDialog(
             estrela3.alpha = 1f
             estrela4.alpha = 1f
             it.alpha = 1f
-            estrelaMarcarda = 5
+            estrelaMarcarda = 5.0
         }
     }
 

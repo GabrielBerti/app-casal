@@ -58,11 +58,11 @@ class ListaLugaresVisitadosViagemAdapter(
             itemView.setOnCreateContextMenuListener(this)
         }
 
-        fun bind(lugarVisitado: List<LugarVisitado>, posicao: Int) {
-            val lugarVisitado = lugarVisitado[posicao]
+        fun bind(lugaresVisitados: List<LugarVisitado>, posicao: Int) {
+            val lugarVisitado = lugaresVisitados[posicao]
 
             nomeLugarVisitado.text = lugarVisitado.nome
-            util.exibeEstrelas(lugarVisitado.legal, estrela1, estrela2, estrela3, estrela4, estrela5)
+            util.exibeEstrelas(lugarVisitado.legal.toDouble(), estrela1, estrela2, estrela3, estrela4, estrela5) // todo
         }
 
         override fun onCreateContextMenu(

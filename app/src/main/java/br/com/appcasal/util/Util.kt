@@ -24,7 +24,7 @@ class Util {
 
     fun hideKeyboard(campo: EditText, context: Context) {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(campo.windowToken, 0);
+        imm.hideSoftInputFromWindow(campo.windowToken, 0)
     }
 
     fun createSnackBar(view: View, msg: String, resources: Resources, tipoSnackbar: TipoSnackbar) {
@@ -40,7 +40,7 @@ class Util {
             .setActionTextColor(Color.WHITE)
             .setBackgroundTint(colorBackground)
             .setAction(resources.getString(R.string.fechar)) {
-                null
+
             }
 
         val layout = snackbar.view
@@ -103,7 +103,7 @@ class Util {
     }
 
     fun exibeEstrelas(
-        nota: Int,
+        nota: Double,
         estrela1: ImageView,
         estrela2: ImageView,
         estrela3: ImageView,
@@ -111,25 +111,25 @@ class Util {
         estrela5: ImageView
     ) {
         when (nota) {
-            1 -> {
+            1.0 -> {
                 estrela1.alpha = 1f
             }
-            2 -> {
+            2.0 -> {
                 estrela1.alpha = 1f
                 estrela2.alpha = 1f
             }
-            3 -> {
+            3.0 -> {
                 estrela1.alpha = 1f
                 estrela2.alpha = 1f
                 estrela3.alpha = 1f
             }
-            4 -> {
+            4.0 -> {
                 estrela1.alpha = 1f
                 estrela2.alpha = 1f
                 estrela3.alpha = 1f
                 estrela4.alpha = 1f
             }
-            5 -> {
+            5.0 -> {
                 estrela1.alpha = 1f
                 estrela2.alpha = 1f
                 estrela3.alpha = 1f

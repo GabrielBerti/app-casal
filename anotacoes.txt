@@ -8,12 +8,6 @@
 ------------------------------------------------------------------------------------------------------------------------
 -- Integrar com o back end
 
-    -- viagem (até 02/04)
-            -- fazer crud
-            -- tirar opcao de remover tudo
-            -- swipe refresh
-            -- refatorar para usar databinding
-
     -- gastos viagem (até 09/04)
         -- fazer crud
 

@@ -77,7 +77,6 @@
     <string name="viagem_inserida_sucesso">Viagem %s inserida com sucesso !</string>
     <string name="viagem_alterada_sucesso">Viagem alterada com sucesso !</string>
     <string name="viagem_removida_sucesso">Viagem %s removida com sucesso !</string>
-    <string name="viagens_removidas_sucesso">Viagens removidas com sucesso !</string>
 
     <string name="botao_gastos_viagem">Gastos</string>
     <string name="botao_lugares_visitados">Lugares visitados</string>

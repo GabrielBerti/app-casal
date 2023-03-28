@@ -9,7 +9,7 @@ import br.com.appcasal.util.Util
 
 class AlteraViagemDialog(
         viewGroup: ViewGroup,
-        private val context: Context
+        context: Context
 ) : FormularioViagemDialog(context, viewGroup) {
 
     private var util = Util()
@@ -24,6 +24,7 @@ class AlteraViagemDialog(
     fun chama(viagem: Viagem, id: Long, linearLayout: LinearLayout, delegate: (viagem: Viagem) -> Unit) {
         super.chama(id, linearLayout, delegate)
         campoLocal.setText(viagem.local)
+        estrelaMarcarda = viagem.nota
         util.exibeEstrelas(viagem.nota, estrela1, estrela2, estrela3, estrela4, estrela5)
     }
 }

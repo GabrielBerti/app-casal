@@ -1,39 +1,36 @@
 package br.com.appcasal.ui.activity.viagens
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import br.com.appcasal.MainActivity
 import br.com.appcasal.R
-import br.com.appcasal.dao.*
 import br.com.appcasal.databinding.ActivityListaViagensBinding
 import br.com.appcasal.domain.model.TipoSnackbar
 import br.com.appcasal.domain.model.Viagem
 import br.com.appcasal.ui.activity.viagens.detalhes.DetalheViagemActivity
+import br.com.appcasal.ui.collectResult
+import br.com.appcasal.ui.collectViewState
 import br.com.appcasal.ui.dialog.viagens.AdicionaViagemDialog
 import br.com.appcasal.ui.dialog.viagens.AlteraViagemDialog
 import br.com.appcasal.util.Util
+import br.com.appcasal.viewmodel.ListaViagensViewModel
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ListaViagensActivity : AppCompatActivity(), ClickViagem {
 
-    private lateinit var activityListaViagens: ActivityListaViagensBinding
-    private lateinit var clViagem: CoordinatorLayout
-    private lateinit var adapter: ListaViagensAdapter
-    private lateinit var rv: RecyclerView
+    private lateinit var binding: ActivityListaViagensBinding
+    val viewModel: ListaViagensViewModel by viewModel()
+    private var viagens: List<Viagem> = emptyList()
+
     private var util = Util()
     private lateinit var snackbar: Snackbar
-
-    private var viagens: List<Viagem> = Companion.viagens
-
-    companion object {
-        private val viagens: MutableList<Viagem> = mutableListOf()
-    }
 
     private val viewDaActivity by lazy {
         window.decorView
@@ -43,28 +40,16 @@ class ListaViagensActivity : AppCompatActivity(), ClickViagem {
         viewDaActivity as ViewGroup
     }
 
-   // private lateinit var viagemDao: ViagemDAO
-  //  private lateinit var gastosViagemDAO: GastosViagemDAO
-  //  private lateinit var lugaresVisitadosDAO: LugaresVisitadosDAO
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityListaViagens = ActivityListaViagensBinding.inflate(layoutInflater)
-        val view = activityListaViagens.root
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_lista_viagens)
 
-        setContentView(view)
-
-        clViagem = findViewById<CoordinatorLayout>(R.id.cl_lista_viagens)
-
-       // viagemDao = db.viagemDao()
-      //  gastosViagemDAO = db.gastosViagemDao()
-       // lugaresVisitadosDAO = db.lugaresVisitadosDao()
-
-       // viagens = viagemDao.buscaTodos()
+        setupListeners()
+        viewModel.recuperaViagens()
 
         setToolbar()
-        configuraAdapter()
         setListeners()
+        setupSwipeRefresh()
 
         //instancia a snackbar
         createSnackBar(
@@ -74,170 +59,128 @@ class ListaViagensActivity : AppCompatActivity(), ClickViagem {
         )
     }
 
+    private fun setupSwipeRefresh() {
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.recuperaViagens()
+            binding.swipeRefresh.isRefreshing = false
+        }
+    }
+
+    private fun setupListeners() {
+        lifecycleScope.launch {
+            viewModel.viagemGetResult.collectViewState(this) {
+                onLoading { }
+                onError { } //TODO tratar erro
+                onSuccess {
+                    viagens = it
+                    configuraAdapter(it)
+                }
+            }
+
+            viewModel.viagemInsertResult.collectResult(this) {
+                onError { }
+                onSuccess {
+                    util.retiraOpacidadeFundo(binding.llListaViagens)
+                    createSnackBar(
+                        TipoSnackbar.SUCESSO,
+                        resources.getString(R.string.viagem_inserida_sucesso, it.local)
+                    )
+                    viewModel.recuperaViagens()
+                }
+            }
+
+            viewModel.viagemUpdateResult.collectResult(this) {
+                onError { }
+                onSuccess {
+                    util.retiraOpacidadeFundo(binding.llListaViagens)
+                    createSnackBar(
+                        TipoSnackbar.SUCESSO,
+                        resources.getString(R.string.viagem_alterada_sucesso)
+                    )
+                    viewModel.recuperaViagens()
+                }
+            }
+
+            viewModel.viagemDeleteResult.collectResult(this) {
+                onError { }
+                onSuccess {
+                    createSnackBar(
+                        TipoSnackbar.SUCESSO,
+                        resources.getString(R.string.viagem_removida_sucesso)
+                    )
+                    viewModel.recuperaViagens()
+                    binding.rvViagens.adapter?.notifyDataSetChanged()
+                }
+            }
+        }
+    }
+
     private fun setToolbar() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setHomeButtonEnabled(true)
     }
 
-    private fun configuraAdapter() {
-        rv = findViewById(R.id.rv_lista_viagens)
-        rv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-
-        adapter = ListaViagensAdapter(viagens, this, this)
-        rv.adapter = adapter
+    private fun configuraAdapter(viagens: List<Viagem>) {
+        binding.rvViagens.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.rvViagens.adapter = ListaViagensAdapter(viagens, this, this)
     }
 
     private fun createSnackBar(tipoSnackbar: TipoSnackbar, msg: String) {
-        util.createSnackBar(clViagem, msg, resources, tipoSnackbar)
+        util.createSnackBar(binding.clListaViagens, msg, resources, tipoSnackbar)
     }
 
     override fun clickViagem(viagem: Viagem) {
         chamaDetalheViagem(viagem)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.menu, menu)
-        return true
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.clear_all -> {
-                if (viagens.isNotEmpty()) {
-                    dialogRemoveViagens()
-                }
-
-                true
-            }
             android.R.id.home -> {
-                startActivity(
-                    Intent(
-                        this,
-                        MainActivity::class.java
-                    )
-                )
-                finishAffinity()
-                true
+                val it = Intent(this, MainActivity::class.java)
+                startActivity(it)
+                return super.onOptionsItemSelected(item)
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
     private fun setListeners() {
-        activityListaViagens.fabAdicionaViagem
+        binding.fabAdicionaViagem
             .setOnClickListener {
                 snackbar.dismiss()
                 chamaDialogDeAdicao()
             }
     }
 
-    private fun atualizaViagens() {
-        //viagens = viagemDao.buscaTodos()
-        rv.adapter = ListaViagensAdapter(viagens, this, this)
-    }
-
     override fun onContextItemSelected(item: MenuItem): Boolean {
 
-        var posicao = -1
-        posicao = (rv.adapter as ListaViagensAdapter).posicao
+        val posicao: Int = (binding.rvViagens.adapter as ListaViagensAdapter).posicao
 
         when (item.itemId) {
             1 -> {
                 chamaDialogDeAlteracao(viagens[posicao])
             }
             2 -> {
-                val nomeViagemRemovida = viagens[posicao].local
-                remove(posicao)
-                adapter.notifyItemRemoved(posicao)
-                createSnackBar(
-                    TipoSnackbar.SUCESSO,
-                    resources.getString(R.string.viagem_removida_sucesso, nomeViagemRemovida)
-                )
+                viewModel.deletaViagem(viagens[posicao])
             }
         }
 
         return super.onContextItemSelected(item)
     }
 
-    private fun remove(posicao: Int) {
-       // lugaresVisitadosDAO.deleteLugaresVisitadosByViagem(viagens[posicao].id)
-       // gastosViagemDAO.deleteGastosViagemByViagem(viagens[posicao].id)
-      //  viagemDao.remove(viagens[posicao])
-        adapter.notifyItemRemoved(posicao)
-        atualizaViagens()
-    }
-
-    private fun removeTodasViagens() {
-        viagens.forEach { viagem ->
-        //    lugaresVisitadosDAO.deleteLugaresVisitadosByViagem(viagem.id)
-         //   gastosViagemDAO.deleteGastosViagemByViagem(viagem.id)
-       //     viagemDao.remove(viagem)
-        }
-        atualizaViagens()
-    }
-
-    private fun adiciona(viagem: Viagem) {
-    //    viagemDao.adiciona(viagem)
-        atualizaViagens()
-    }
-
-    private fun altera(viagem: Viagem) {
-    //    viagemDao.altera(viagem)
-        atualizaViagens()
-    }
-
     private fun chamaDialogDeAdicao() {
         AdicionaViagemDialog(viewGroupDaActivity, this)
-            .chama(null, activityListaViagens.llListaViagens) { viagemCriada ->
-                adiciona(viagemCriada)
-                util.retiraOpacidadeFundo(activityListaViagens.llListaViagens)
-                createSnackBar(
-                    TipoSnackbar.SUCESSO,
-                    resources.getString(R.string.viagem_inserida_sucesso, viagemCriada.local),
-                    View.VISIBLE
-                )
+            .chama(null, binding.llListaViagens) { viagemCriada ->
+                viewModel.insereViagem(viagemCriada)
             }
     }
 
     private fun chamaDialogDeAlteracao(viagem: Viagem) {
-        util.aplicaOpacidadeFundo(activityListaViagens.llListaViagens)
+        util.aplicaOpacidadeFundo(binding.llListaViagens)
         AlteraViagemDialog(viewGroupDaActivity, this)
-            .chama(viagem, viagem.id, activityListaViagens.llListaViagens) { viagemAlterada ->
-                altera(viagemAlterada)
-                util.retiraOpacidadeFundo(activityListaViagens.llListaViagens)
-                createSnackBar(
-                    TipoSnackbar.SUCESSO,
-                    resources.getString(R.string.viagem_alterada_sucesso),
-                    View.VISIBLE
-                )
+            .chama(viagem, viagem.id, binding.llListaViagens) { viagemAlterada ->
+                viewModel.alteraViagem(viagemAlterada)
             }
-    }
-
-    private fun dialogRemoveViagens() {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-
-        builder.setTitle("Limpar")
-        builder.setMessage("Zerar viagens ?")
-
-        builder.setPositiveButton(
-            "Sim"
-        ) { _, _ ->
-            removeTodasViagens()
-            createSnackBar(
-                TipoSnackbar.SUCESSO,
-                resources.getString(R.string.viagens_removidas_sucesso)
-            )
-        }
-
-        builder.setNegativeButton(
-            "Não"
-        ) { _, _ ->
-            null
-        }
-
-        val alertDialog: AlertDialog = builder.create()
-        alertDialog.show()
     }
 
     private fun chamaDetalheViagem(viagem: Viagem) {
@@ -248,7 +191,7 @@ class ListaViagensActivity : AppCompatActivity(), ClickViagem {
 
     private fun createSnackBar(tipoSnackbar: TipoSnackbar, msg: String, visibility: Int) {
         snackbar =
-            util.createSnackBarWithReturn(clViagem, msg, resources, tipoSnackbar, visibility)
+            util.createSnackBarWithReturn(binding.clListaViagens, msg, resources, tipoSnackbar, visibility)
     }
 
 }

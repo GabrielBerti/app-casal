@@ -1,19 +1,10 @@
 package br.com.appcasal.di
 
 import br.com.appcasal.BuildConfig
-import br.com.appcasal.dao.datasource.remote.IngredienteRemoteDataSource
-import br.com.appcasal.dao.datasource.remote.MetaRemoteDataSource
-import br.com.appcasal.dao.datasource.remote.ReceitaRemoteDataSource
-import br.com.appcasal.dao.datasource.remote.TransacaoRemoteDataSource
+import br.com.appcasal.dao.datasource.remote.*
 import br.com.appcasal.dao.dto.network.CorporativeRetrofit
-import br.com.appcasal.dao.repository.IngredienteRepository
-import br.com.appcasal.dao.repository.MetaRepository
-import br.com.appcasal.dao.repository.ReceitaRepository
-import br.com.appcasal.dao.repository.TransacaoRepository
-import br.com.appcasal.dao.service.IngredienteService
-import br.com.appcasal.dao.service.MetaService
-import br.com.appcasal.dao.service.ReceitaService
-import br.com.appcasal.dao.service.TransacaoService
+import br.com.appcasal.dao.repository.*
+import br.com.appcasal.dao.service.*
 import br.com.appcasal.domain.usecase.*
 import br.com.appcasal.viewmodel.*
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -43,6 +34,12 @@ val settingsServiceModule = module {
             IngredienteService::class.java
         )
     }
+
+    single<ViagemService> {
+        CorporativeRetrofit(get(), BuildConfig.BASE_URL).retrofit.create(
+            ViagemService::class.java
+        )
+    }
 }
 
 val settingsDataSourceModule = module {
@@ -50,6 +47,7 @@ val settingsDataSourceModule = module {
     single { TransacaoRemoteDataSource(get()) }
     single { ReceitaRemoteDataSource(get()) }
     single { IngredienteRemoteDataSource(get()) }
+    single { ViagemRemoteDataSource(get()) }
 }
 
 val settingsRepositoryModule = module {
@@ -57,6 +55,7 @@ val settingsRepositoryModule = module {
     single { TransacaoRepository(get()) }
     single { ReceitaRepository(get()) }
     single { IngredienteRepository(get()) }
+    single { ViagemRepository(get()) }
 }
 
 val settingsUseCaseModule = module {
@@ -84,6 +83,11 @@ val settingsUseCaseModule = module {
     factory { RecuperaIngredienteByReceitaUseCase(get()) }
     factory { MarcarDesmarcarIngredienteUseCase(get()) }
     factory { DesmarcarTodosIngredientesUseCase(get()) }
+
+    factory { GetViagensUseCase(get()) }
+    factory { InsereViagemUseCase(get()) }
+    factory { AlteraViagemUseCase(get()) }
+    factory { DeletaViagemUseCase(get()) }
 }
 
 val settingsViewModelModule = module {
@@ -92,6 +96,7 @@ val settingsViewModelModule = module {
     viewModel { FormReceitasViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { DetalheReceitaViewModel(get(), get()) }
     viewModel { ListaReceitasViewModel(get(), get()) }
+    viewModel { ListaViagensViewModel(get(), get(), get(), get()) }
 }
 
 val settingsKoinModule = settingsServiceModule +

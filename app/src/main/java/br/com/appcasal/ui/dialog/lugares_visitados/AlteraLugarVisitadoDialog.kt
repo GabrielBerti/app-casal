@@ -8,7 +8,7 @@ import br.com.appcasal.util.Util
 
 class AlteraLugarVisitadoDialog(
         viewGroup: ViewGroup,
-        private val context: Context
+        context: Context
 ) : FormularioLugarVisitadoDialog(context, viewGroup) {
 
     private var util = Util()
@@ -23,7 +23,7 @@ class AlteraLugarVisitadoDialog(
     fun chamaAlteracao(lugarVisitado: LugarVisitado, id: Long, idViagem: Long, delegate: (lugarVisitado: LugarVisitado) -> Unit) {
         super.chama(id, idViagem, delegate)
         nomeLugarVisitado.setText(lugarVisitado.nome)
-        util.exibeEstrelas(lugarVisitado.legal, estrela1, estrela2, estrela3, estrela4, estrela5)
+        util.exibeEstrelas(lugarVisitado.legal.toDouble(), estrela1, estrela2, estrela3, estrela4, estrela5) // todo
         estrelaMarcarda = lugarVisitado.legal
     }
 }
