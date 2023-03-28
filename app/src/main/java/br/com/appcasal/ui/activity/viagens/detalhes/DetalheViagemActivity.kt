@@ -16,35 +16,35 @@ import br.com.appcasal.ui.activity.viagens.detalhes.lugares_visitados.LugaresVis
 class DetalheViagemActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetalheViagemBinding
-    private var viagem: Viagem? = null
+    private lateinit var viagem: Viagem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetalheViagemBinding.inflate(layoutInflater)
         val view = binding.root
-
         setContentView(view)
-        setToolbar()
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         setListeners()
-
-        viagem = intent.extras?.getParcelable("viagem") as Viagem?
-
+        viagem = intent.extras?.getParcelable("viagem") ?: Viagem(0L, "", "", "", 0.0, listOf(), listOf())
         instanciaFragmentGastos()
-    }
-
-    private fun setToolbar() {
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setHomeButtonEnabled(true)
     }
 
     private fun setListeners() {
         binding.btnGastosViagem.setOnClickListener {
-            setShapeButtonSelectAndUnselected(binding.btnGastosViagem, binding.btnLugaresVisitadosViagem)
+            setShapeButtonSelectAndUnselected(
+                binding.btnGastosViagem,
+                binding.btnLugaresVisitadosViagem
+            )
             instanciaFragmentGastos()
         }
 
         binding.btnLugaresVisitadosViagem.setOnClickListener {
-            setShapeButtonSelectAndUnselected(binding.btnLugaresVisitadosViagem, binding.btnGastosViagem)
+            setShapeButtonSelectAndUnselected(
+                binding.btnLugaresVisitadosViagem,
+                binding.btnGastosViagem
+            )
             instanciaFragmentLugaresVisitados()
         }
     }
@@ -52,20 +52,21 @@ class DetalheViagemActivity : AppCompatActivity() {
     private fun instanciaFragmentGastos() {
         val fm = supportFragmentManager
         val ft = fm.beginTransaction()
-        ft.replace(R.id.fl_detalhes_viagem, GastosViagemFragment(viagem!!))
+        ft.replace(R.id.fl_detalhes_viagem, GastosViagemFragment(viagem))
         ft.commit()
     }
 
     private fun instanciaFragmentLugaresVisitados() {
-        if(viagem != null) {
-            val fm = supportFragmentManager
-            val ft = fm.beginTransaction()
-            ft.replace(R.id.fl_detalhes_viagem, LugaresVisitadosFragment(viagem!!))
-            ft.commit()
-        }
+        val fm = supportFragmentManager
+        val ft = fm.beginTransaction()
+        ft.replace(R.id.fl_detalhes_viagem, LugaresVisitadosFragment(viagem))
+        ft.commit()
     }
 
-    private fun setShapeButtonSelectAndUnselected(buttonSelected: AppCompatButton, buttonUnselected: AppCompatButton) {
+    private fun setShapeButtonSelectAndUnselected(
+        buttonSelected: AppCompatButton,
+        buttonUnselected: AppCompatButton
+    ) {
         buttonSelected.setBackgroundResource(R.drawable.button_detalhe_viagem_selected)
         buttonSelected.setTextColor(ContextCompat.getColor(this, R.color.colorPrimaryVariant))
 

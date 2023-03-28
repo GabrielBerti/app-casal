@@ -51,11 +51,10 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_lista_transacoes)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         setupListeners()
         viewModel.recuperaTransacoes()
-
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setHomeButtonEnabled(true)
 
         configuraFab()
         setupSwipeRefresh()
@@ -65,19 +64,7 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
         lifecycleScope.launch {
             viewModel.transacaoGetResult.collectViewState(this) {
                 onLoading { }
-                onError {
-                    configuraAdapter(
-                        listOf(
-                            Transacao(
-                                1,
-                                BigDecimal.ONE,
-                                "dfsdf",
-                                Tipo.BIEL,
-                                "21/08/2023"
-                            )
-                        )
-                    )
-                } //TODO tratar erro
+                onError { }
                 onSuccess {
                     transacoes = it
                     configuraAdapter(it)

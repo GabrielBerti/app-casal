@@ -13,10 +13,9 @@ class Ingrediente(
     companion object {
         fun mapFrom(ingredienteResponseDTO: IngredienteResponseDTO) =
             Ingrediente(
-                // TODO tirar !!
-                id = ingredienteResponseDTO.id!!,
-                descricao = ingredienteResponseDTO.descricao!!,
-                marcado = ingredienteResponseDTO.marcado!!,
+                id = ingredienteResponseDTO.id ?: 0,
+                descricao = ingredienteResponseDTO.descricao ?: "",
+                marcado = ingredienteResponseDTO.marcado ?: false,
             )
     }
 }

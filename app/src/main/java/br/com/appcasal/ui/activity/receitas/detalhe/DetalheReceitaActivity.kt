@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.appcasal.R
 import br.com.appcasal.databinding.ActivityReceitaDetalheBinding
+import br.com.appcasal.domain.model.Ingrediente
 import br.com.appcasal.domain.model.Receita
 import br.com.appcasal.ui.activity.receitas.ListaReceitasActivity
 import br.com.appcasal.ui.activity.receitas.detalhe.ListaIngredientesDetalheAdapter.CheckouIngrediente
@@ -29,6 +30,8 @@ class DetalheReceitaActivity : AppCompatActivity(), CheckouIngrediente {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_receita_detalhe)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setupListeners()
         setListeners()
@@ -59,21 +62,21 @@ class DetalheReceitaActivity : AppCompatActivity(), CheckouIngrediente {
     }
 
     private fun setLayout() {
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setHomeButtonEnabled(true)
-        supportActionBar!!.title = resources.getString(R.string.detalhe_receita)
+        supportActionBar?.title = resources.getString(R.string.detalhe_receita)
 
-        receita = intent.extras?.getParcelable("receita")!!
+        receita = intent.extras?.getParcelable("receita") ?: Receita(0L, "", "", listOf())
 
-            binding.receitaNomeDetalhe.text = receita.nome
-            binding.receitaDescricaoDetalhe.text = receita.descricao
+        binding.receitaNomeDetalhe.text = receita.nome
+        binding.receitaDescricaoDetalhe.text = receita.descricao
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun configuraAdapter() {
-        if(receita.ingredientes != null)
-            binding.rvIngredientes.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-            binding.rvIngredientes.adapter = ListaIngredientesDetalheAdapter(receita.ingredientes!!, this, this)
+        if (receita.ingredientes != null)
+            binding.rvIngredientes.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.rvIngredientes.adapter =
+            ListaIngredientesDetalheAdapter(receita.ingredientes ?: listOf(), this, this)
 
     }
 
@@ -116,8 +119,8 @@ class DetalheReceitaActivity : AppCompatActivity(), CheckouIngrediente {
     }
 
     override fun atualizaIngrediente(position: Int, isChecked: Boolean) {
-
-        if(receita.ingredientes?.get(position) != null)
-            ingredienteViewModel.marcarDesmarcarIngrediente(receita.ingredientes?.get(position)!!)
+        ingredienteViewModel.marcarDesmarcarIngrediente(
+            receita.ingredientes?.get(position) ?: Ingrediente(0L, "", false)
+        )
     }
 }

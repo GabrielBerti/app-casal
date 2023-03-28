@@ -8,17 +8,17 @@ class ViagemRepository(
 ) {
     suspend fun recuperaViagens(): List<Viagem> {
         val result = viagemRemoteDataSource.recuperaViagens()
-        return result.map { Viagem.mapFrom(it) } // TODO fazer mapfrom
+        return result.map { Viagem.mapFrom(it) }
     }
 
     suspend fun insereViagem(viagem: Viagem): Viagem {
         val result = viagemRemoteDataSource.insereViagem(viagem)
-        return Viagem.mapFrom(result)  // TODO fazer mapfrom
+        return Viagem.mapFrom(result)
     }
 
     suspend fun alteraViagem(viagem: Viagem): Viagem {
         val result = viagemRemoteDataSource.alteraViagem(viagem)
-        return Viagem.mapFrom(result)  // TODO fazer mapfrom
+        return Viagem.mapFrom(result)
     }
 
     suspend fun deletaViagem(viagem: Viagem): Boolean {

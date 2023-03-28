@@ -33,10 +33,11 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
         super.onResume()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_lista_receitas)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         setupListeners()
         viewModel.recuperaReceitas()
 
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         setListeners()
         setupSwipeRefresh()
     }
@@ -52,7 +53,7 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
         lifecycleScope.launch {
             viewModel.receitaGetResult.collectViewState(this) {
                 onLoading { }
-                onError { configuraAdapter(listOf(Receita(1, "fegf", "dfdsfd", listOf()))) } //TODO tratar erro
+                onError { }
                 onSuccess {
                     receitas = it
                     configuraAdapter(it)

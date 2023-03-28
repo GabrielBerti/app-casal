@@ -43,11 +43,11 @@ class ListaViagensActivity : AppCompatActivity(), ClickViagem {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_lista_viagens)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setupListeners()
         viewModel.recuperaViagens()
 
-        setToolbar()
         setListeners()
         setupSwipeRefresh()
     }
@@ -63,7 +63,7 @@ class ListaViagensActivity : AppCompatActivity(), ClickViagem {
         lifecycleScope.launch {
             viewModel.viagemGetResult.collectViewState(this) {
                 onLoading { }
-                onError { } //TODO tratar erro
+                onError { }
                 onSuccess {
                     viagens = it
                     configuraAdapter(it)
@@ -106,11 +106,6 @@ class ListaViagensActivity : AppCompatActivity(), ClickViagem {
                 }
             }
         }
-    }
-
-    private fun setToolbar() {
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setHomeButtonEnabled(true)
     }
 
     private fun configuraAdapter(viagens: List<Viagem>) {

@@ -41,11 +41,10 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_lista_metas)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setupListeners()
         viewModel.recuperaMetas()
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         configuraSpinner()
         configuraFab()
@@ -57,7 +56,7 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
         lifecycleScope.launch {
             viewModel.metaGetResult.collectViewState(this) {
                 onLoading { }
-                onError { configuraAdapter(listOf(Meta(1, "fegf", true))) } //TODO tratar erro
+                onError { }
                 onSuccess {
                     metas = it
                     configuraAdapter(it)

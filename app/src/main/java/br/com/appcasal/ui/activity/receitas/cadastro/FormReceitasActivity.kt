@@ -29,10 +29,10 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
 
     private lateinit var adapter: ListaIngredientesAdapter
     private lateinit var rv: RecyclerView
-    private var receita: Receita? = null
+    private lateinit var receita: Receita
     private var util = Util()
 
-    private var ingredientes: MutableList<Ingrediente>? = null
+    private var ingredientes: MutableList<Ingrediente> = arrayListOf()
 
     private val viewDaActivity by lazy {
         window.decorView
@@ -56,9 +56,7 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
 
     private fun setupSwipeRefresh() {
         binding.swipeRefresh.setOnRefreshListener {
-            if(receita != null) {
-                viewModel.recuperaIngredientes(receita!!)
-            }
+            viewModel.recuperaIngredientes(receita)
             binding.swipeRefresh.isRefreshing = false
         }
     }
@@ -94,7 +92,7 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
                 onError {
                 }
                 onSuccess {
-                    viewModel.recuperaIngredientes(receita!!)
+                    viewModel.recuperaIngredientes(receita)
                 }
             }
 
@@ -102,7 +100,7 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
                 onError {
                 }
                 onSuccess {
-                    viewModel.recuperaIngredientes(receita!!)
+                    viewModel.recuperaIngredientes(receita)
                 }
             }
 
@@ -110,7 +108,7 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
                 onError {
                 }
                 onSuccess {
-                    viewModel.recuperaIngredientes(receita!!)
+                    viewModel.recuperaIngredientes(receita)
                 }
             }
 
@@ -126,20 +124,19 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
     }
 
     private fun setLayout() {
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true) //Mostrar o botão
-        supportActionBar!!.setHomeButtonEnabled(true)      //Ativar o botão
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        receita = intent.extras?.getParcelable("receita") as Receita?
+        receita = intent.extras?.getParcelable("receita") ?: Receita(0L, "", "", listOf())
 
-        if (receita != null) {
-            binding.receitaNome.setText(receita?.nome)
-            binding.receitaDescricao.setText(receita?.descricao)
-            ingredientes = receita?.ingredientes?.toMutableList() ?: arrayListOf()
+        if (receita.id != 0L) {
+            binding.receitaNome.setText(receita.nome)
+            binding.receitaDescricao.setText(receita.descricao)
+            ingredientes = receita.ingredientes?.toMutableList() ?: arrayListOf()
 
-            supportActionBar!!.title = resources.getString(R.string.altera_receita)
+            supportActionBar?.title = resources.getString(R.string.altera_receita)
         } else {
             ingredientes = mutableListOf()
-            supportActionBar!!.title = resources.getString(R.string.adicionar_receita)
+            supportActionBar?.title = resources.getString(R.string.adicionar_receita)
         }
 
     }
@@ -165,10 +162,10 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
     }
 
     private fun salvarOuAlterarReceita() {
-        if (receita != null) {
+        if (receita.id != 0L) {
             viewModel.alteraReceita(
                 Receita(
-                    receita?.id ?: 0,
+                    receita.id,
                     binding.receitaNome.text.toString(),
                     binding.receitaDescricao.text.toString(),
                     listOf()
@@ -191,7 +188,7 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
     }
 
     private fun isValidForm(): Boolean {
-        if (binding.receitaNome.text.toString().isBlank() || ingredientes?.size == 0) {
+        if (binding.receitaNome.text.toString().isBlank() || ingredientes.size == 0) {
             return false
         }
 
@@ -201,25 +198,22 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
     private fun insereIngredientes() {
         val ingredientesAindaNaoInseridos: MutableList<Ingrediente> = arrayListOf()
         lifecycleScope.launch {
-            ingredientes?.forEach {
+            ingredientes.forEach {
                 if (!isUpdated(it.id)) {
                     ingredientesAindaNaoInseridos.add(it)
                 }
             }
 
             if (ingredientesAindaNaoInseridos.isNotEmpty())
-                viewModel.insereIngrediente(ingredientesAindaNaoInseridos, receita!!)
+                viewModel.insereIngrediente(ingredientesAindaNaoInseridos, receita)
         }
     }
 
     private fun configuraAdapter() {
-        if (ingredientes != null) {
-            rv = findViewById(R.id.lista_ingredientes_listview)
-            rv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-            adapter = ListaIngredientesAdapter(ingredientes!!, this, this)
-            rv.adapter = adapter
-        }
-
+        rv = findViewById(R.id.lista_ingredientes_listview)
+        rv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        adapter = ListaIngredientesAdapter(ingredientes, this, this)
+        rv.adapter = adapter
     }
 
     override fun clickIngrediente(ingrediente: Ingrediente, posicao: Int) {
@@ -237,7 +231,7 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
         AdicionaIngredienteDialog(viewGroupDaActivity, this)
             .chama(
                 null,
-                receita?.id ?: 0,
+                receita.id,
                 binding.llFormReceita
             ) { ingredienteCriado ->
                 adiciona(ingredienteCriado)
@@ -249,7 +243,7 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
         AlteraIngredienteDialog(viewGroupDaActivity, this)
             .chama(
                 ingrediente.id,
-                receita?.id ?: 0,
+                receita.id,
                 ingrediente,
                 binding.llFormReceita
             ) { receitaAlterada ->
@@ -260,13 +254,13 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
 
     private fun altera(ingrediente: Ingrediente, posicao: Int) {
         if (isUpdated(ingrediente.id)) {
-            viewModel.alteraIngrediente(ingrediente, receita!!)
+            viewModel.alteraIngrediente(ingrediente, receita)
             return
         }
 
-        ingredientes?.forEach {
+        ingredientes.forEach {
             if (it.id == ingrediente.id) {
-                ingredientes!![posicao] = ingrediente
+                ingredientes[posicao] = ingrediente
                 atualizaIngredientes()
                 return
             }
@@ -274,16 +268,16 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
     }
 
     private fun adiciona(ingrediente: Ingrediente) {
-        if (isUpdated(receita?.id ?: 0)) {
-            viewModel.insereIngrediente(listOf(ingrediente), receita!!)
+        if (isUpdated(receita.id)) {
+            viewModel.insereIngrediente(listOf(ingrediente), receita)
         } else {
-            ingredientes?.add(ingrediente)
+            ingredientes.add(ingrediente)
             atualizaIngredientes()
         }
     }
 
     private fun atualizaIngredientes() {
-        rv.adapter = ListaIngredientesAdapter(ingredientes ?: listOf(), this, this)
+        rv.adapter = ListaIngredientesAdapter(ingredientes, this, this)
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
@@ -301,10 +295,10 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
     }
 
     private fun remove(posicao: Int) {
-        if (isUpdated(ingredientes!![posicao].id)) {
-            viewModel.deletaIngrediente(ingredientes!![posicao])
+        if (isUpdated(ingredientes[posicao].id)) {
+            viewModel.deletaIngrediente(ingredientes[posicao])
         } else {
-            ingredientes?.remove(ingredientes!![posicao])
+            ingredientes.remove(ingredientes[posicao])
             adapter.notifyItemRemoved(posicao)
             atualizaIngredientes()
         }
@@ -314,7 +308,7 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
         return number != 0L
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean { //Botão adicional na ToolBar
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
                 startActivity(

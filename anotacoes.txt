@@ -7,7 +7,7 @@
     -- fazer tela de splash
 
 ------------------------------------------------------------------------------------------------------------------------
-    -- resolver TODOs e assert nulls
+    -- ver para trocar swipe refresh de posicao pois quando a lista fica grande ao rolar para baixo e rolar para cima novamente a tela faz o refresh ao inves de scrollar
     -- colocar nome dos itens inseridos e alterados na mensagem de sucesso
     -- fazer tratamentos de erros e loading nas telas
     -- colocar filtro debounced na telas de metas, viagens e receitas
