@@ -85,8 +85,7 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
                     util.retiraOpacidadeFundo(binding.llHeaderAndBodyTransacoes)
                     createSnackBar(
                         TipoSnackbar.SUCESSO,
-                        resources.getString(R.string.transacao_inserida_sucesso),
-                        View.VISIBLE
+                        resources.getString(R.string.transacao_inserida_sucesso, it.descricao),
                     )
                     viewModel.recuperaTransacoes()
                 }
@@ -98,8 +97,7 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
                     util.retiraOpacidadeFundo(binding.llHeaderAndBodyTransacoes)
                     createSnackBar(
                         TipoSnackbar.SUCESSO,
-                        resources.getString(R.string.transacao_alterada_sucesso),
-                        View.VISIBLE
+                        resources.getString(R.string.transacao_alterada_sucesso, it.descricao)
                     )
                     viewModel.recuperaTransacoes()
                 }
@@ -111,8 +109,7 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
                     controlaCamposFab(View.INVISIBLE, true)
                     createSnackBar(
                         TipoSnackbar.SUCESSO,
-                        resources.getString(R.string.transacao_removida_sucesso),
-                        View.VISIBLE
+                        resources.getString(R.string.transacao_removida_sucesso)
                     )
 
                     viewModel.recuperaTransacoes()
@@ -128,8 +125,7 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
                     controlaCamposFab(View.INVISIBLE, true)
                     createSnackBar(
                         TipoSnackbar.SUCESSO,
-                        resources.getString(R.string.transacoes_removidas_sucesso),
-                        View.VISIBLE
+                        resources.getString(R.string.transacoes_removidas_sucesso)
                     )
                     viewModel.recuperaTransacoes()
                     binding.rvTransacoes.adapter?.notifyDataSetChanged()
@@ -351,14 +347,13 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
             }
     }
 
-    private fun createSnackBar(tipoSnackbar: TipoSnackbar, msg: String, visibility: Int) {
+    private fun createSnackBar(tipoSnackbar: TipoSnackbar, msg: String) {
         snackbar =
             util.createSnackBarWithReturn(
                 binding.clListaTransacoes,
                 msg,
                 resources,
-                tipoSnackbar,
-                visibility
+                tipoSnackbar
             )
     }
 }

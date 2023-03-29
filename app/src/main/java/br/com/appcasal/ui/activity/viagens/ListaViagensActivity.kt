@@ -88,7 +88,7 @@ class ListaViagensActivity : AppCompatActivity(), ClickViagem {
                     util.retiraOpacidadeFundo(binding.llListaViagens)
                     createSnackBar(
                         TipoSnackbar.SUCESSO,
-                        resources.getString(R.string.viagem_alterada_sucesso)
+                        resources.getString(R.string.viagem_alterada_sucesso, it.local)
                     )
                     viewModel.recuperaViagens()
                 }
@@ -174,11 +174,6 @@ class ListaViagensActivity : AppCompatActivity(), ClickViagem {
         val it = Intent(this, DetalheViagemActivity::class.java)
         it.putExtra("viagem", viagem)
         startActivity(it)
-    }
-
-    private fun createSnackBar(tipoSnackbar: TipoSnackbar, msg: String, visibility: Int) {
-        snackbar =
-            util.createSnackBarWithReturn(binding.clListaViagens, msg, resources, tipoSnackbar, visibility)
     }
 
 }

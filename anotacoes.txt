@@ -7,7 +7,6 @@
     -- fazer tela de splash
 
 ------------------------------------------------------------------------------------------------------------------------
-    -- colocar nome dos itens inseridos e alterados na mensagem de sucesso
     -- fazer tratamentos de erros e loading nas telas
     -- colocar filtro debounced na telas de metas, viagens e receitas
     -- trocar datas que estao com tipo string para Date

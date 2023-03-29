@@ -56,7 +56,9 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
 
     private fun setupSwipeRefresh() {
         binding.swipeRefresh.setOnRefreshListener {
-            viewModel.recuperaIngredientes(receita)
+            if(receita.id != 0L) {
+                viewModel.recuperaIngredientes(receita)
+            }
             binding.swipeRefresh.isRefreshing = false
         }
     }
@@ -71,7 +73,7 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
                     insereIngredientes()
                     createSnackBar(
                         TipoSnackbar.SUCESSO,
-                        resources.getString(R.string.receita_inserida_sucesso, it.descricao)
+                        resources.getString(R.string.receita_inserida_sucesso, it.nome)
                     )
                 }
             }
@@ -83,7 +85,7 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
                     insereIngredientes()
                     createSnackBar(
                         TipoSnackbar.SUCESSO,
-                        resources.getString(R.string.receita_alterada_sucesso)
+                        resources.getString(R.string.receita_alterada_sucesso, it.nome)
                     )
                 }
             }

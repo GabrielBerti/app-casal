@@ -95,7 +95,7 @@ class GastosViagemFragment(private val viagem: Viagem) : Fragment(), ClickGastoV
                 onSuccess {
                     createSnackBar(
                         TipoSnackbar.SUCESSO,
-                        resources.getString(R.string.gasto_viagem_alterado_sucesso)
+                        resources.getString(R.string.gasto_viagem_alterado_sucesso, it.descricao)
                     )
                     viewModel.recuperaGastosViagem(viagem)
                 }
@@ -174,8 +174,7 @@ class GastosViagemFragment(private val viagem: Viagem) : Fragment(), ClickGastoV
             requireActivity().findViewById(R.id.cl_detalhe_viagem),
             msg,
             resources,
-            tipoSnackbar,
-            View.VISIBLE
+            tipoSnackbar
         )
     }
 

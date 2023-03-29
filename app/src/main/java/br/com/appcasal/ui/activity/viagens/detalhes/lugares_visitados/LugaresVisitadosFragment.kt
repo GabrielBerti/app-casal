@@ -156,8 +156,7 @@ class LugaresVisitadosFragment(private val viagem: Viagem) : Fragment(), ClickLu
             requireActivity().findViewById(R.id.cl_detalhe_viagem),
             msg,
             resources,
-            tipoSnackbar,
-            View.VISIBLE
+            tipoSnackbar
         )
     }
 
