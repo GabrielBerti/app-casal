@@ -233,7 +233,6 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
         AdicionaIngredienteDialog(viewGroupDaActivity, this)
             .chama(
                 null,
-                receita.id,
                 binding.llFormReceita
             ) { ingredienteCriado ->
                 adiciona(ingredienteCriado)
@@ -245,7 +244,6 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
         AlteraIngredienteDialog(viewGroupDaActivity, this)
             .chama(
                 ingrediente.id,
-                receita.id,
                 ingrediente,
                 binding.llFormReceita
             ) { receitaAlterada ->
