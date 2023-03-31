@@ -1,5 +1,4 @@
 -- ajustes gerais:
-    -- no detalhe da viagem colocar o nome da viagem em cima
     -- Opcao de nao dar nota ou dar nota 0
     -- reciclagem das metas zoada quando tem muitos registros
     -- Nota quebrada(pegar imagem quebrada com a Mari)

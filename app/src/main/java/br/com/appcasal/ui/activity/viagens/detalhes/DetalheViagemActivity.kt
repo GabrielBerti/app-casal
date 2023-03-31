@@ -28,6 +28,8 @@ class DetalheViagemActivity : AppCompatActivity() {
 
         setListeners()
         viagem = intent.extras?.getParcelable("viagem") ?: Viagem(0L, "", "", "", 0.0, listOf(), listOf())
+        binding.localViagem.text = viagem.local
+
         instanciaFragmentGastos()
     }
 
