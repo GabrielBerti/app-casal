@@ -62,13 +62,15 @@ abstract class FormularioViagemDialog(
         val buttonPositive = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
         val buttonNegative = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
         buttonPositive.setOnClickListener {
-            val localEmTexto = campoLocal.text.toString()
+            var localEmTexto = campoLocal.text.toString()
             val dataInicioEmTexto = campoDataInicio.text.toString()
             val dataFimEmTexto = campoDataFim.text.toString()
 
             if(localEmTexto.isBlank()) {
                 campoLocal.error = context.getString(R.string.local_obrigatorio)
             } else {
+                localEmTexto = localEmTexto.substring(0, 1).uppercase() + localEmTexto.substring(1).lowercase()
+
                 val viagemCriada: Viagem = if (id == null) {
                     Viagem(
                         local = localEmTexto,

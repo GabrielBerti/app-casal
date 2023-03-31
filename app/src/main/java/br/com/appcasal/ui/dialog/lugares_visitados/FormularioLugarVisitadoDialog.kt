@@ -55,11 +55,13 @@ abstract class FormularioLugarVisitadoDialog(
         val buttonPositive = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
         val buttonNegative = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
         buttonPositive.setOnClickListener {
-            val nomeLugarVisitadoEmTexto = nomeLugarVisitado.text.toString()
+            var nomeLugarVisitadoEmTexto = nomeLugarVisitado.text.toString()
 
             if(nomeLugarVisitadoEmTexto.isBlank()) {
                 nomeLugarVisitado.error = context.getString(R.string.nome_lugar_visitado_obrigatorio)
             } else {
+                nomeLugarVisitadoEmTexto = nomeLugarVisitadoEmTexto.substring(0, 1).uppercase() + nomeLugarVisitadoEmTexto.substring(1).lowercase()
+
                 val lugarVisitadoCriado: LugarVisitado = if (id == null) {
                     LugarVisitado(
                         nome = nomeLugarVisitadoEmTexto,

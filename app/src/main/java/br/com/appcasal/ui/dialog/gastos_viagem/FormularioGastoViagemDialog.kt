@@ -48,7 +48,7 @@ abstract class FormularioGastoViagemDialog(
         val buttonPositive = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
         val buttonNegative = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
         buttonPositive.setOnClickListener {
-            val descricaoGastoEmTexto = campoDescricaoGasto.text.toString()
+            var descricaoGastoEmTexto = campoDescricaoGasto.text.toString()
             val valorGastoEmTexto = campoValorGasto.text.toString()
             val valorGasto = util.converteCampoValor(valorGastoEmTexto, context)
 
@@ -59,6 +59,7 @@ abstract class FormularioGastoViagemDialog(
             } else if(campoValorGasto.text.toString().toDouble() < 0.01) {
                 campoValorGasto.error = context.getString(R.string.valor_gasto_maior_que_zero)
             } else {
+                descricaoGastoEmTexto = descricaoGastoEmTexto.substring(0, 1).uppercase() + descricaoGastoEmTexto.substring(1).lowercase()
                 val gastoViagemCriada: GastoViagem = if (id == null) {
                     GastoViagem(
                         valor = valorGasto,

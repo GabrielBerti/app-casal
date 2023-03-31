@@ -24,13 +24,12 @@ abstract class FormularioIngredienteDialog(
     protected lateinit var campoDescricaoIngrediente: EditText
     abstract protected val tituloBotaoPositivo: String
 
-    fun chama(id: Long?, idReceita: Long, linearLayout: LinearLayout, delegate: (ingrediente: Ingrediente) -> Unit) {
-        configuraFormulario(id, idReceita, linearLayout, delegate)
+    fun chama(id: Long?, linearLayout: LinearLayout, delegate: (ingrediente: Ingrediente) -> Unit) {
+        configuraFormulario(id, linearLayout, delegate)
     }
 
     private fun configuraFormulario(
         id: Long?,
-        idReceita: Long,
         linearLayout: LinearLayout,
         delegate: (ingrediente: Ingrediente) -> Unit
     ) {
@@ -57,12 +56,14 @@ abstract class FormularioIngredienteDialog(
         val buttonNegative = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
         val button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
         button.setOnClickListener {
-            val campoDescricaoIngredienteEmTexto = campoDescricaoIngrediente.text.toString()
+            var campoDescricaoIngredienteEmTexto = campoDescricaoIngrediente.text.toString()
 
-            if (campoDescricaoIngredienteEmTexto.isNullOrBlank()) {
+            if (campoDescricaoIngredienteEmTexto.isBlank()) {
                 campoDescricaoIngrediente.error =
                     context.getString(R.string.nome_ingrediente_obrigatorio)
             } else {
+                campoDescricaoIngredienteEmTexto = campoDescricaoIngredienteEmTexto.substring(0, 1).uppercase() + campoDescricaoIngredienteEmTexto.substring(1).lowercase()
+
                 val ingredienteCriado: Ingrediente = if (id == null) {
                     Ingrediente(
                         //receitaId = idReceita,

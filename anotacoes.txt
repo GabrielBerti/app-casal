@@ -7,9 +7,8 @@
 
 ------------------------------------------------------------------------------------------------------------------------
     -- fazer tratamentos de erros e loading nas telas
-    -- colocar filtro debounced na telas de metas, viagens e receitas
     -- trocar datas que estao com tipo string para Date
-    -- ao inserir ou alterar sempre salvas as descrições com a primeira letra maiuscula
+    -- colocar filtro debounced na telas de metas, viagens e receitas
     -- ordenacao de todas as listas
 ------------------------------------------------------------------------------------------------------------------------
 
