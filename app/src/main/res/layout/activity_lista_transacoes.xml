@@ -5,7 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
 
+        <variable
+            name="isError"
+            type="Boolean" />
+
+        <variable
+            name="isLoading"
+            type="Boolean" />
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -28,13 +36,49 @@
                     android:id="@+id/lista_transacoes_resumo"
                     layout="@layout/resumo_card" />
 
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:background="@drawable/shape_error_rounded_rect_border"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    android:visibility="@{isError == true ? View.VISIBLE : View.GONE}"
+                    tools:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/ic_error"
+                        app:tint="@color/red"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/erro_carregar_transacoes"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:progressTint="@color/sucesso"
+                    android:visibility="@{isLoading == true ? View.VISIBLE : View.GONE}"
+                    tools:visibility="gone" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_transacoes"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:divider="@null"
                     android:layout_marginTop="5dp"
-                    android:dividerHeight="0dp" />
+                    android:visibility="@{isError == true || isLoading == true ? View.GONE : View.VISIBLE}" />
 
             </LinearLayout>
 

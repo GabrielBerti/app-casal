@@ -13,10 +13,13 @@ import br.com.appcasal.R
 import br.com.appcasal.databinding.ActivityReceitaDetalheBinding
 import br.com.appcasal.domain.model.Ingrediente
 import br.com.appcasal.domain.model.Receita
+import br.com.appcasal.domain.model.TipoSnackbar
 import br.com.appcasal.ui.activity.receitas.ListaReceitasActivity
 import br.com.appcasal.ui.activity.receitas.detalhe.ListaIngredientesDetalheAdapter.CheckouIngrediente
 import br.com.appcasal.ui.collectResult
+import br.com.appcasal.util.Util
 import br.com.appcasal.viewmodel.DetalheReceitaViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -24,6 +27,9 @@ class DetalheReceitaActivity : AppCompatActivity(), CheckouIngrediente {
 
     private lateinit var binding: ActivityReceitaDetalheBinding
     private val ingredienteViewModel: DetalheReceitaViewModel by viewModel()
+
+    private var util = Util()
+    private var snackbar: Snackbar? = null
 
     private lateinit var receita: Receita
 
@@ -50,25 +56,46 @@ class DetalheReceitaActivity : AppCompatActivity(), CheckouIngrediente {
     private fun setupListeners() {
         lifecycleScope.launch {
             ingredienteViewModel.ingredienteGetResult.collectResult(this) {
-                onError { }
+                onError { binding.isError = true }
                 onSuccess {
+                    binding.isError = false
                     receita.ingredientes = it
                     configuraAdapter()
                 }
             }
 
             ingredienteViewModel.ingredienteMarcouResult.collectResult(this) {
-                onError { }
+                onError {
+                    createSnackBar(
+                        TipoSnackbar.ERRO,
+                        resources.getString(R.string.erro_marcar_desmarcar)
+                    )
+                }
             }
 
             ingredienteViewModel.ingredienteDesmarcarTodasResult.collectResult(this) {
-                onError { }
+                onError {
+                    createSnackBar(
+                        TipoSnackbar.ERRO,
+                        resources.getString(R.string.erro_desmarcar_tudo)
+                    )
+                }
                 onSuccess {
                     receita.ingredientes?.forEach { it.marcado = false }
                     configuraAdapter()
                 }
             }
         }
+    }
+
+    private fun createSnackBar(tipoSnackbar: TipoSnackbar, msg: String) {
+        snackbar =
+            util.createSnackBarWithReturn(
+                binding.linearContentDetalhe,
+                msg,
+                resources,
+                tipoSnackbar
+            )
     }
 
     private fun setListeners() {

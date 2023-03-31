@@ -55,8 +55,11 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
     private fun setupListeners() {
         lifecycleScope.launch {
             viewModel.metaGetResult.collectViewState(this) {
-                onLoading { }
-                onError { }
+                onLoading {
+                    if (it) binding.isError = false
+                    binding.isLoading = it
+                }
+                onError { binding.isError = true }
                 onSuccess {
                     metas = it
                     configuraAdapter(it)
@@ -64,7 +67,7 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
             }
 
             viewModel.metaInsertResult.collectResult(this) {
-                onError { }
+                onError { handleError(R.string.erro_inserir) }
                 onSuccess {
                     util.retiraOpacidadeFundo(binding.llMetas)
                     createSnackBar(
@@ -76,7 +79,7 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
             }
 
             viewModel.metaUpdateResult.collectResult(this) {
-                onError { }
+                onError { handleError(R.string.erro_alterar) }
                 onSuccess {
                     util.retiraOpacidadeFundo(binding.llMetas)
                     createSnackBar(
@@ -88,7 +91,7 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
             }
 
             viewModel.metaDeleteResult.collectResult(this) {
-                onError { }
+                onError { handleError(R.string.erro_deletar) }
                 onSuccess {
                     createSnackBar(
                         TipoSnackbar.SUCESSO,
@@ -99,6 +102,14 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
                 }
             }
         }
+    }
+
+    private fun handleError(msg: Int) {
+        util.retiraOpacidadeFundo(binding.llMetas)
+        createSnackBar(
+            TipoSnackbar.ERRO,
+            resources.getString(msg, "meta")
+        )
     }
 
     private fun setupSwipeRefresh() {

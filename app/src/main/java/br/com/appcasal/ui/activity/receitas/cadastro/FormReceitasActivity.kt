@@ -67,7 +67,7 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
         lifecycleScope.launch {
 
             viewModel.receitaInsertResult.collectResult(this) {
-                onError { }
+                onError { handleErrorReceita(R.string.erro_inserir) }
                 onSuccess {
                     receita = it
                     insereIngredientes()
@@ -79,7 +79,7 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
             }
 
             viewModel.receitaUpdateResult.collectResult(this) {
-                onError { }
+                onError { handleErrorReceita(R.string.erro_alterar) }
                 onSuccess {
                     receita = it
                     insereIngredientes()
@@ -91,38 +91,49 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
             }
 
             viewModel.ingredienteInsertResult.collectResult(this) {
-                onError {
-                }
+                onError { handleErrorIngrediente(R.string.erro_inserir) }
                 onSuccess {
                     viewModel.recuperaIngredientes(receita)
                 }
             }
 
             viewModel.ingredienteUpdateResult.collectResult(this) {
-                onError {
-                }
+                onError { handleErrorIngrediente(R.string.erro_alterar) }
                 onSuccess {
                     viewModel.recuperaIngredientes(receita)
                 }
             }
 
             viewModel.ingredienteDeleteResult.collectResult(this) {
-                onError {
-                }
+                onError { handleErrorIngrediente(R.string.erro_deletar) }
                 onSuccess {
                     viewModel.recuperaIngredientes(receita)
                 }
             }
 
             viewModel.ingredienteGetResult.collectResult(this) {
-                onError {
-                }
+                onError { binding.isError = true }
                 onSuccess {
+                    binding.isError = false
                     ingredientes = it.toMutableList()
                     atualizaIngredientes()
                 }
             }
         }
+    }
+
+    private fun handleErrorReceita(msg: Int) {
+        createSnackBar(
+            TipoSnackbar.ERRO,
+            resources.getString(msg, "receita")
+        )
+    }
+
+    private fun handleErrorIngrediente(msg: Int) {
+        createSnackBar(
+            TipoSnackbar.ERRO,
+            resources.getString(msg, "ingrediente")
+        )
     }
 
     private fun setLayout() {

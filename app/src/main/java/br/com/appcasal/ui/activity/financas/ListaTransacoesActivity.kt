@@ -54,7 +54,7 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setupListeners()
-        viewModel.recuperaTransacoes()
+        recuperaResumoETransacoes()
 
         configuraFab()
         setupSwipeRefresh()
@@ -63,48 +63,54 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
     private fun setupListeners() {
         lifecycleScope.launch {
             viewModel.transacaoGetResult.collectViewState(this) {
-                onLoading { }
-                onError { }
+                onLoading {
+                    if (it) binding.isError = false
+                    binding.isLoading = it
+                }
+                onError { binding.isError = true }
                 onSuccess {
                     transacoes = it
                     configuraAdapter(it)
-                    viewModel.recuperaResumo()
                 }
             }
 
             viewModel.resumoGetResult.collectViewState(this) {
-                onLoading { }
-                onError {
+                onLoading {
+                    if (it) binding.listaTransacoesResumo.isError = false
+                    binding.listaTransacoesResumo.isLoading = it
                 }
-                onSuccess { configuraResumo(it) }
+                onError { binding.listaTransacoesResumo.isError = true }
+                onSuccess {
+                    configuraResumo(it)
+                }
             }
 
             viewModel.transacaoInsertResult.collectResult(this) {
-                onError { }
+                onError { handleError(R.string.erro_inserir) }
                 onSuccess {
                     util.retiraOpacidadeFundo(binding.llHeaderAndBodyTransacoes)
                     createSnackBar(
                         TipoSnackbar.SUCESSO,
-                        resources.getString(R.string.transacao_inserida_sucesso, it.descricao),
+                        resources.getString(R.string.transacao_inserida_sucesso, it.descricao)
                     )
-                    viewModel.recuperaTransacoes()
+                    recuperaResumoETransacoes()
                 }
             }
 
             viewModel.transacaoUpdateResult.collectResult(this) {
-                onError { }
+                onError { handleError(R.string.erro_alterar) }
                 onSuccess {
                     util.retiraOpacidadeFundo(binding.llHeaderAndBodyTransacoes)
                     createSnackBar(
                         TipoSnackbar.SUCESSO,
                         resources.getString(R.string.transacao_alterada_sucesso, it.descricao)
                     )
-                    viewModel.recuperaTransacoes()
+                    recuperaResumoETransacoes()
                 }
             }
 
             viewModel.transacaoDeleteResult.collectResult(this) {
-                onError { }
+                onError { handleError(R.string.erro_deletar) }
                 onSuccess {
                     controlaCamposFab(View.INVISIBLE, true)
                     createSnackBar(
@@ -112,31 +118,43 @@ class ListaTransacoesActivity : AppCompatActivity(), ClickTransacao {
                         resources.getString(R.string.transacao_removida_sucesso)
                     )
 
-                    viewModel.recuperaTransacoes()
+                    recuperaResumoETransacoes()
                     binding.rvTransacoes.adapter?.notifyDataSetChanged()
                 }
             }
 
             viewModel.transacaoDeleteAllResult.collectResult(this) {
-                onError { }
+                onError { handleError(R.string.erro_remover_transacoes) }
                 onSuccess {
-                    controlaCamposFab(View.INVISIBLE, true)
-
                     controlaCamposFab(View.INVISIBLE, true)
                     createSnackBar(
                         TipoSnackbar.SUCESSO,
                         resources.getString(R.string.transacoes_removidas_sucesso)
                     )
-                    viewModel.recuperaTransacoes()
+
+                    recuperaResumoETransacoes()
                     binding.rvTransacoes.adapter?.notifyDataSetChanged()
                 }
             }
         }
     }
 
+    private fun recuperaResumoETransacoes() {
+        viewModel.recuperaTransacoes()
+        viewModel.recuperaResumo()
+    }
+
+    private fun handleError(msg: Int) {
+        util.retiraOpacidadeFundo(binding.llHeaderAndBodyTransacoes)
+        createSnackBar(
+            TipoSnackbar.ERRO,
+            resources.getString(msg, "transação")
+        )
+    }
+
     private fun setupSwipeRefresh() {
         binding.swipeRefresh.setOnRefreshListener {
-            viewModel.recuperaTransacoes()
+            recuperaResumoETransacoes()
             binding.swipeRefresh.isRefreshing = false
         }
     }

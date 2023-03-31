@@ -62,8 +62,11 @@ class ListaViagensActivity : AppCompatActivity(), ClickViagem {
     private fun setupListeners() {
         lifecycleScope.launch {
             viewModel.viagemGetResult.collectViewState(this) {
-                onLoading { }
-                onError { }
+                onLoading {
+                    if (it) binding.isError = false
+                    binding.isLoading = it
+                }
+                onError { binding.isError = true }
                 onSuccess {
                     viagens = it
                     configuraAdapter(it)
@@ -71,7 +74,7 @@ class ListaViagensActivity : AppCompatActivity(), ClickViagem {
             }
 
             viewModel.viagemInsertResult.collectResult(this) {
-                onError { }
+                onError { handleError(R.string.erro_inserir) }
                 onSuccess {
                     util.retiraOpacidadeFundo(binding.llListaViagens)
                     createSnackBar(
@@ -83,7 +86,7 @@ class ListaViagensActivity : AppCompatActivity(), ClickViagem {
             }
 
             viewModel.viagemUpdateResult.collectResult(this) {
-                onError { }
+                onError { handleError(R.string.erro_alterar) }
                 onSuccess {
                     util.retiraOpacidadeFundo(binding.llListaViagens)
                     createSnackBar(
@@ -95,7 +98,7 @@ class ListaViagensActivity : AppCompatActivity(), ClickViagem {
             }
 
             viewModel.viagemDeleteResult.collectResult(this) {
-                onError { }
+                onError { handleError(R.string.erro_deletar) }
                 onSuccess {
                     createSnackBar(
                         TipoSnackbar.SUCESSO,
@@ -106,6 +109,14 @@ class ListaViagensActivity : AppCompatActivity(), ClickViagem {
                 }
             }
         }
+    }
+
+    private fun handleError(msg: Int) {
+        util.retiraOpacidadeFundo(binding.llListaViagens)
+        createSnackBar(
+            TipoSnackbar.ERRO,
+            resources.getString(msg, "viagem")
+        )
     }
 
     private fun configuraAdapter(viagens: List<Viagem>) {

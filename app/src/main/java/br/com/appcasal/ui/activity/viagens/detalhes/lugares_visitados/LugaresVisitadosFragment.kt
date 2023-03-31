@@ -68,8 +68,11 @@ class LugaresVisitadosFragment(private val viagem: Viagem) : Fragment(), ClickLu
     private fun setupListeners() {
         lifecycleScope.launch {
             viewModel.lugarVisitadoGetResult.collectViewState(this) {
-                onLoading { }
-                onError { }
+                onLoading {
+                    if (it) binding.isError = false
+                    binding.isLoading = it
+                }
+                onError { binding.isError = true }
                 onSuccess {
                     lugaresVisitados = it
                     configuraAdapter()
@@ -77,7 +80,7 @@ class LugaresVisitadosFragment(private val viagem: Viagem) : Fragment(), ClickLu
             }
 
             viewModel.lugarVisitadoInsertResult.collectResult(this) {
-                onError { }
+                onError { handleError(R.string.erro_inserir) }
                 onSuccess {
                     createSnackBar(
                         TipoSnackbar.SUCESSO,
@@ -88,7 +91,7 @@ class LugaresVisitadosFragment(private val viagem: Viagem) : Fragment(), ClickLu
             }
 
             viewModel.lugarVisitadoUpdateResult.collectResult(this) {
-                onError { }
+                onError { handleError(R.string.erro_alterar) }
                 onSuccess {
                     createSnackBar(
                         TipoSnackbar.SUCESSO,
@@ -99,7 +102,7 @@ class LugaresVisitadosFragment(private val viagem: Viagem) : Fragment(), ClickLu
             }
 
             viewModel.lugarVisitadoDeleteResult.collectResult(this) {
-                onError { }
+                onError { handleError(R.string.erro_deletar) }
                 onSuccess {
                     createSnackBar(
                         TipoSnackbar.SUCESSO,
@@ -110,6 +113,13 @@ class LugaresVisitadosFragment(private val viagem: Viagem) : Fragment(), ClickLu
                 }
             }
         }
+    }
+
+    private fun handleError(msg: Int) {
+        createSnackBar(
+            TipoSnackbar.ERRO,
+            resources.getString(msg, "lugar visitado")
+        )
     }
 
     private fun setListeners() {

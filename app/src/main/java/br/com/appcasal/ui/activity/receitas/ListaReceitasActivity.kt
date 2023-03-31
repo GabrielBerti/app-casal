@@ -52,8 +52,11 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
     private fun setupListeners() {
         lifecycleScope.launch {
             viewModel.receitaGetResult.collectViewState(this) {
-                onLoading { }
-                onError { }
+                onLoading {
+                    if (it) binding.isError = false
+                    binding.isLoading = it
+                }
+                onError { binding.isError = true }
                 onSuccess {
                     receitas = it
                     configuraAdapter(it)
@@ -61,7 +64,12 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
             }
 
             viewModel.receitaDeleteResult.collectResult(this) {
-                onError { }
+                onError {
+                    createSnackBar(
+                        TipoSnackbar.ERRO,
+                        resources.getString(R.string.erro_deletar, "receita")
+                    )
+                }
                 onSuccess {
                     createSnackBar(
                         TipoSnackbar.SUCESSO,

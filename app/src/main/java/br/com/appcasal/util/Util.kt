@@ -53,10 +53,16 @@ class Util {
     fun createSnackBarWithReturn(
         view: View, msg: String, resources: Resources, tipoSnackbar: TipoSnackbar
     ): Snackbar {
-        val colorBackground = if (tipoSnackbar == TipoSnackbar.SUCESSO) {
-            resources.getColor(R.color.colorPrimaryVariant)
-        } else {
-            resources.getColor(R.color.red)
+        val colorBackground = when (tipoSnackbar) {
+            TipoSnackbar.SUCESSO -> {
+                resources.getColor(R.color.sucesso)
+            }
+            TipoSnackbar.ALERTA -> {
+                resources.getColor(R.color.alerta)
+            }
+            else -> {
+                resources.getColor(R.color.erro)
+            }
         }
 
         // Create the Snackbar

@@ -70,8 +70,11 @@ class GastosViagemFragment(private val viagem: Viagem) : Fragment(), ClickGastoV
     private fun setupListeners() {
         lifecycleScope.launch {
             viewModel.gastoViagemGetResult.collectViewState(this) {
-                onLoading { }
-                onError { }
+                onLoading {
+                    if (it) binding.isError = false
+                    binding.isLoading = it
+                }
+                onError { binding.isError = true }
                 onSuccess {
                     gastosViagem = it.toMutableList()
                     configuraAdapter()
@@ -80,7 +83,7 @@ class GastosViagemFragment(private val viagem: Viagem) : Fragment(), ClickGastoV
             }
 
             viewModel.gastoViagemInsertResult.collectResult(this) {
-                onError { }
+                onError { handleError(R.string.erro_inserir) }
                 onSuccess {
                     createSnackBar(
                         TipoSnackbar.SUCESSO,
@@ -91,7 +94,7 @@ class GastosViagemFragment(private val viagem: Viagem) : Fragment(), ClickGastoV
             }
 
             viewModel.gastoViagemUpdateResult.collectResult(this) {
-                onError { }
+                onError { handleError(R.string.erro_alterar) }
                 onSuccess {
                     createSnackBar(
                         TipoSnackbar.SUCESSO,
@@ -102,7 +105,7 @@ class GastosViagemFragment(private val viagem: Viagem) : Fragment(), ClickGastoV
             }
 
             viewModel.gastoViagemDeleteResult.collectResult(this) {
-                onError { }
+                onError { handleError(R.string.erro_deletar) }
                 onSuccess {
                     createSnackBar(
                         TipoSnackbar.SUCESSO,
@@ -113,6 +116,13 @@ class GastosViagemFragment(private val viagem: Viagem) : Fragment(), ClickGastoV
                 }
             }
         }
+    }
+
+    private fun handleError(msg: Int) {
+        createSnackBar(
+            TipoSnackbar.ERRO,
+            resources.getString(msg, "gasto viagem")
+        )
     }
 
     private fun exibeValorTotalGasto() {

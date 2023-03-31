@@ -20,4 +20,8 @@
     <color name="cor_receitas">#3E55F1</color>
     <color name="cor_viagens">#F451E4</color>
     <color name="silver">#cccccc</color>
+    <color name="sucesso">#3BA540</color>
+    <color name="alerta">#CCB80D</color>
+    <color name="erro">#F34848</color>
+    <color name="denotative_error_lightest">#FEF2F5</color>
 </resources>

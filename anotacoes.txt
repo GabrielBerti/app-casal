@@ -5,7 +5,6 @@
     -- fazer tela de splash
 
 ------------------------------------------------------------------------------------------------------------------------
-    -- fazer tratamentos de erros e loading nas telas
     -- trocar datas que estao com tipo string para Date
     -- colocar filtro debounced na telas de metas, viagens e receitas
     -- ordenacao de todas as listas
