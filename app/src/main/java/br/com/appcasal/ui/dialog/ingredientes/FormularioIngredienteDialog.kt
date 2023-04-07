@@ -62,7 +62,7 @@ abstract class FormularioIngredienteDialog(
                 campoDescricaoIngrediente.error =
                     context.getString(R.string.nome_ingrediente_obrigatorio)
             } else {
-                campoDescricaoIngredienteEmTexto = campoDescricaoIngredienteEmTexto.substring(0, 1).uppercase() + campoDescricaoIngredienteEmTexto.substring(1).lowercase()
+                campoDescricaoIngredienteEmTexto = campoDescricaoIngredienteEmTexto.substring(0, 1).uppercase() + campoDescricaoIngredienteEmTexto.substring(1)
 
                 val ingredienteCriado: Ingrediente = if (id == null) {
                     Ingrediente(

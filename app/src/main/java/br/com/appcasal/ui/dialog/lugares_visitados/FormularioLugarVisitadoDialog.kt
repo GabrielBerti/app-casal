@@ -60,7 +60,8 @@ abstract class FormularioLugarVisitadoDialog(
             if(nomeLugarVisitadoEmTexto.isBlank()) {
                 nomeLugarVisitado.error = context.getString(R.string.nome_lugar_visitado_obrigatorio)
             } else {
-                nomeLugarVisitadoEmTexto = nomeLugarVisitadoEmTexto.substring(0, 1).uppercase() + nomeLugarVisitadoEmTexto.substring(1).lowercase()
+
+                nomeLugarVisitadoEmTexto = nomeLugarVisitadoEmTexto.substring(0, 1).uppercase() + nomeLugarVisitadoEmTexto.substring(1)
 
                 val lugarVisitadoCriado: LugarVisitado = if (id == null) {
                     LugarVisitado(

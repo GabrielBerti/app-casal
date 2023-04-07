@@ -6,6 +6,7 @@ import br.com.appcasal.dao.dto.network.response.ResumoResponseDTO
 import br.com.appcasal.dao.dto.network.response.TransacaoResponseDTO
 import br.com.appcasal.dao.service.TransacaoService
 import br.com.appcasal.domain.model.Transacao
+import kotlinx.coroutines.delay
 import java.math.BigDecimal
 
 class TransacaoRemoteDataSource(

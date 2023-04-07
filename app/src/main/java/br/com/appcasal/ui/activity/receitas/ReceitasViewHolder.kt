@@ -32,7 +32,7 @@ class ReceitasViewHolder(
     }
 
     private fun adicionaNomeReceita(receita: Receita) {
-        receitaNome.text = receita.nome.substring(0, 1).uppercase() + receita.nome.substring(1).lowercase()
+        receitaNome.text = receita.nome.substring(0, 1).uppercase() + receita.nome.substring(1)
     }
 
     private fun adicionaIcone() {

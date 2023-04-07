@@ -59,7 +59,7 @@ abstract class FormularioGastoViagemDialog(
             } else if(campoValorGasto.text.toString().toDouble() < 0.01) {
                 campoValorGasto.error = context.getString(R.string.valor_gasto_maior_que_zero)
             } else {
-                descricaoGastoEmTexto = descricaoGastoEmTexto.substring(0, 1).uppercase() + descricaoGastoEmTexto.substring(1).lowercase()
+                descricaoGastoEmTexto = descricaoGastoEmTexto.substring(0, 1).uppercase() + descricaoGastoEmTexto.substring(1)
                 val gastoViagemCriada: GastoViagem = if (id == null) {
                     GastoViagem(
                         valor = valorGasto,

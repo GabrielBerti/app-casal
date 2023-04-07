@@ -69,7 +69,7 @@ abstract class FormularioViagemDialog(
             if(localEmTexto.isBlank()) {
                 campoLocal.error = context.getString(R.string.local_obrigatorio)
             } else {
-                localEmTexto = localEmTexto.substring(0, 1).uppercase() + localEmTexto.substring(1).lowercase()
+                localEmTexto = localEmTexto.substring(0, 1).uppercase() + localEmTexto.substring(1)
 
                 val viagemCriada: Viagem = if (id == null) {
                     Viagem(

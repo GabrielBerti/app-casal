@@ -58,7 +58,7 @@ abstract class FormularioMetaDialog(
             } else if (verificaMetaComMesmaDescricao(descricaoEmTexto)) {
                 campoDescricao.error = context.getString(R.string.descricao_meta_ja_existe)
             } else {
-                descricaoEmTexto = descricaoEmTexto.substring(0, 1).uppercase() + descricaoEmTexto.substring(1).lowercase()
+                descricaoEmTexto = descricaoEmTexto.substring(0, 1).uppercase() + descricaoEmTexto.substring(1)
 
                 val metaCriada: Meta = if (id == null) {
                     Meta(

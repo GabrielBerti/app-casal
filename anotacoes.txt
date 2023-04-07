@@ -6,6 +6,7 @@
 
 ------------------------------------------------------------------------------------------------------------------------
     -- trocar datas que estao com tipo string para Date
+        -- ao alterar uma viagem ela sempre vem com o valor do dia atual e nao com a data cadastrada
     -- colocar filtro debounced na telas de metas, viagens e receitas
     -- ordenacao de todas as listas
 ------------------------------------------------------------------------------------------------------------------------
