@@ -1,11 +1,11 @@
 package br.com.appcasal.ui.activity.metas
 
 import android.content.Context
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import br.com.appcasal.R
+import br.com.appcasal.databinding.MetaItemBinding
 import br.com.appcasal.domain.model.Meta
 
 class ListaMetasAdapter(
@@ -13,7 +13,7 @@ class ListaMetasAdapter(
     private var context: Context,
     private var clickMeta: ClickMeta
 ) :
-    RecyclerView.Adapter<MetasViewHolder>() {
+    RecyclerView.Adapter<ListaMetasAdapter.MetasViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MetasViewHolder {
         val viewCriada: View = LayoutInflater.from(context)
             .inflate(R.layout.meta_item, parent, false)
@@ -23,7 +23,6 @@ class ListaMetasAdapter(
 
     override fun onViewRecycled(holder: MetasViewHolder) {
         holder.itemView.setOnLongClickListener(null)
-
         super.onViewRecycled(holder)
     }
 
@@ -46,6 +45,74 @@ class ListaMetasAdapter(
 
     var posicao = 0
 
+    inner class MetasViewHolder(
+        private val context: Context,
+        itemView: View
+    ) :
+        RecyclerView.ViewHolder(itemView), View.OnCreateContextMenuListener {
+
+        val binding = MetaItemBinding.bind(itemView)
+        var metaConcluida = false
+
+        init {
+            itemView.setOnCreateContextMenuListener(this)
+        }
+
+        fun bind(metas: List<Meta>, posicao: Int) {
+            val meta = metas[posicao]
+            metaConcluida = meta.concluido
+
+            adicionaIcone()
+            adicionaDescricao(meta)
+            adicionaCheckBox(meta)
+        }
+
+        private fun adicionaDescricao(meta: Meta) {
+            binding.metaDescricao.text = meta.descricao
+        }
+
+        private fun adicionaIcone() {
+            binding.metaIcone.setBackgroundResource(R.drawable.ic_alvo)
+        }
+
+        private fun adicionaCheckBox(meta: Meta) {
+            if (meta.concluido) {
+                binding.metaConcluido.setText(R.string.meta_concluida)
+                binding.linearMetaItem.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.colorPrimaryVariant
+                    )
+                )
+                binding.metaConcluido.setTextColor(ContextCompat.getColor(context, R.color.black))
+            } else {
+                binding.metaConcluido.setText(R.string.meta_nao_concluida)
+                binding.linearMetaItem.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.colorDark
+                    )
+                )
+                binding.metaConcluido.setTextColor(ContextCompat.getColor(context, R.color.white))
+            }
+        }
+
+        override fun onCreateContextMenu(
+            menu: ContextMenu?,
+            p1: View?,
+            p2: ContextMenu.ContextMenuInfo?
+        ) {
+            if (menu != null) {
+                if (metaConcluida) {
+                    menu.add(Menu.NONE, 1, Menu.NONE, "Desconcluir meta")
+                } else {
+                    menu.add(Menu.NONE, 1, Menu.NONE, "Concluir meta")
+                }
+
+                menu.add(Menu.NONE, 2, Menu.NONE, "Remover")
+            }
+        }
+    }
 }
 
 interface ClickMeta {

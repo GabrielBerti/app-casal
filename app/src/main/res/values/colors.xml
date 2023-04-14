@@ -10,6 +10,7 @@
     <color name="biel">#2196F3</color>
     <color name="mari">#C80FDC</color>
     <color name="colorPrimaryVariant">#2A9E2E</color>
+    <color name="colorDark">#4b4b4b</color>
     <color name="bgLabelFabTransacao">#BAE3BB</color>
     <color name="red">#F60031</color>
     <color name="concluido">#8BC34A</color>
