@@ -2,12 +2,10 @@ package br.com.appcasal.ui.activity.viagens
 
 import android.content.Context
 import android.view.*
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.appcasal.R
+import br.com.appcasal.databinding.ViagemItemBinding
 import br.com.appcasal.domain.model.Viagem
-import br.com.appcasal.util.Util
 
 class ListaViagensAdapter(
     private var viagens: List<Viagem>,
@@ -15,6 +13,12 @@ class ListaViagensAdapter(
     private var clickViagem: ClickViagem
 ) :
     RecyclerView.Adapter<ListaViagensAdapter.ViagemViewHolder>() {
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        context = recyclerView.context
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViagemViewHolder {
         val viewCriada: View = LayoutInflater.from(context)
             .inflate(R.layout.viagem_item, parent, false)
@@ -23,8 +27,9 @@ class ListaViagensAdapter(
     }
 
     override fun onBindViewHolder(holder: ViagemViewHolder, position: Int) {
-        holder.bind(viagens, position)
         val viagem = viagens[position]
+
+        holder.bind(viagem)
         holder.itemView.setOnClickListener {
             clickViagem.clickViagem(viagem)
         }
@@ -35,9 +40,7 @@ class ListaViagensAdapter(
         }
     }
 
-    override fun getItemCount(): Int {
-        return viagens.size
-    }
+    override fun getItemCount() = viagens.size
 
     var posicao = 0
 
@@ -46,25 +49,45 @@ class ListaViagensAdapter(
     ) :
         RecyclerView.ViewHolder(itemView), View.OnCreateContextMenuListener {
 
-        var localViagem = itemView.findViewById<TextView>(R.id.local_viagem)
-        var dataInicioFim = itemView.findViewById<TextView>(R.id.data_inicio_e_fim)
-        var estrela1 = itemView.findViewById<ImageView>(R.id.estrelaViagem1)
-        var estrela2 = itemView.findViewById<ImageView>(R.id.estrelaViagem2)
-        var estrela3 = itemView.findViewById<ImageView>(R.id.estrelaViagem3)
-        var estrela4 = itemView.findViewById<ImageView>(R.id.estrelaViagem4)
-        var estrela5 = itemView.findViewById<ImageView>(R.id.estrelaViagem5)
-        private var util = Util()
+        val binding = ViagemItemBinding.bind(itemView)
 
         init {
             itemView.setOnCreateContextMenuListener(this)
         }
 
-        fun bind(viagens: List<Viagem>, posicao: Int) {
-            val viagem = viagens[posicao]
+        fun bind(viagem: Viagem) {
+            binding.localViagem.text = viagem.local
+            binding.dataInicioEFim.text = viagem.dataInicio + " até " + viagem.dataFim
 
-            localViagem.text = viagem.local
-            dataInicioFim.text = viagem.dataInicio + " até " + viagem.dataFim
-            util.exibeEstrelas(viagem.nota, estrela1, estrela2, estrela3, estrela4, estrela5)
+            when (viagem.nota) {
+                null -> {
+                    escondeOuMostraEstrelas(true)
+                }
+                0.0 -> {
+                    escondeOuMostraEstrelas(false)
+                    aplicaERetiraOpacidadeEstrelas(0.0)
+                }
+                1.0 -> {
+                    escondeOuMostraEstrelas(false)
+                    aplicaERetiraOpacidadeEstrelas(1.0)
+                }
+                2.0 -> {
+                    escondeOuMostraEstrelas(false)
+                    aplicaERetiraOpacidadeEstrelas(2.0)
+                }
+                3.0 -> {
+                    escondeOuMostraEstrelas(false)
+                    aplicaERetiraOpacidadeEstrelas(3.0)
+                }
+                4.0 -> {
+                    escondeOuMostraEstrelas(false)
+                    aplicaERetiraOpacidadeEstrelas(4.0)
+                }
+                5.0 -> {
+                    escondeOuMostraEstrelas(false)
+                    aplicaERetiraOpacidadeEstrelas(5.0)
+                }
+            }
         }
 
         override fun onCreateContextMenu(
@@ -74,6 +97,66 @@ class ListaViagensAdapter(
         ) {
             menu?.add(Menu.NONE, 1, Menu.NONE, "Alterar")
             menu?.add(Menu.NONE, 2, Menu.NONE, "Remover")
+        }
+
+        private fun escondeOuMostraEstrelas(notaIsNull: Boolean) {
+            if(notaIsNull) {
+                binding.estrelaViagem1.visibility = View.GONE
+                binding.estrelaViagem2.visibility = View.GONE
+                binding.estrelaViagem3.visibility = View.GONE
+                binding.estrelaViagem4.visibility = View.GONE
+                binding.estrelaViagem5.visibility = View.GONE
+            } else {
+                binding.estrelaViagem1.visibility = View.VISIBLE
+                binding.estrelaViagem2.visibility = View.VISIBLE
+                binding.estrelaViagem3.visibility = View.VISIBLE
+                binding.estrelaViagem4.visibility = View.VISIBLE
+                binding.estrelaViagem5.visibility = View.VISIBLE
+            }
+        }
+
+        private fun aplicaERetiraOpacidadeEstrelas(nota: Double) {
+            if(nota == 0.0) {
+                binding.estrelaViagem1.alpha = 0.3f
+                binding.estrelaViagem2.alpha = 0.3f
+                binding.estrelaViagem3.alpha = 0.3f
+                binding.estrelaViagem4.alpha = 0.3f
+                binding.estrelaViagem5.alpha = 0.3f
+            } else if(nota == 1.0) {
+                binding.estrelaViagem2.alpha = 0.3f
+                binding.estrelaViagem3.alpha = 0.3f
+                binding.estrelaViagem4.alpha = 0.3f
+                binding.estrelaViagem5.alpha = 0.3f
+
+                binding.estrelaViagem1.alpha = 1f
+            } else if(nota == 2.0) {
+                binding.estrelaViagem3.alpha = 0.3f
+                binding.estrelaViagem4.alpha = 0.3f
+                binding.estrelaViagem5.alpha = 0.3f
+
+                binding.estrelaViagem1.alpha = 1f
+                binding.estrelaViagem2.alpha = 1f
+            } else if(nota == 3.0) {
+                binding.estrelaViagem4.alpha = 0.3f
+                binding.estrelaViagem5.alpha = 0.3f
+
+                binding.estrelaViagem1.alpha = 1f
+                binding.estrelaViagem2.alpha = 1f
+                binding.estrelaViagem3.alpha = 1f
+            } else if(nota == 4.0) {
+                binding.estrelaViagem5.alpha = 0.3f
+
+                binding.estrelaViagem1.alpha = 1f
+                binding.estrelaViagem2.alpha = 1f
+                binding.estrelaViagem3.alpha = 1f
+                binding.estrelaViagem4.alpha = 1f
+            } else if(nota == 5.0) {
+                binding.estrelaViagem1.alpha = 1f
+                binding.estrelaViagem2.alpha = 1f
+                binding.estrelaViagem3.alpha = 1f
+                binding.estrelaViagem4.alpha = 1f
+                binding.estrelaViagem5.alpha = 1f
+            }
         }
     }
 }

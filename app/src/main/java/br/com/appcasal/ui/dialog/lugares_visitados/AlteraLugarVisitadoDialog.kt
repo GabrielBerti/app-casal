@@ -23,7 +23,7 @@ class AlteraLugarVisitadoDialog(
     fun chamaAlteracao(lugarVisitado: LugarVisitado, id: Long, delegate: (lugarVisitado: LugarVisitado) -> Unit) {
         super.chama(id, delegate)
         nomeLugarVisitado.setText(lugarVisitado.nome)
-        util.exibeEstrelas(lugarVisitado.nota, estrela1, estrela2, estrela3, estrela4, estrela5)
+        util.exibeEEscondeEstrelas(lugarVisitado.nota, estrela1, estrela2, estrela3, estrela4, estrela5)
         estrelaMarcarda = lugarVisitado.nota
     }
 }

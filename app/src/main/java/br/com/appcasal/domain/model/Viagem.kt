@@ -10,7 +10,7 @@ class Viagem(
     val local: String,
     val dataInicio: String,
     val dataFim: String,
-    val nota: Double,
+    val nota: Double?,
     val lugaresVisitados: List<LugarVisitado>,
     val gastosViagens: List<GastoViagem>
 ): Parcelable {
@@ -21,7 +21,7 @@ class Viagem(
                 local = viagemResponseDTO.local ?: "",
                 dataInicio = viagemResponseDTO.dataInicio ?: "",
                 dataFim = viagemResponseDTO.dataFim ?: "",
-                nota = viagemResponseDTO.nota ?: 0.0,
+                nota = viagemResponseDTO.nota,
                 lugaresVisitados = viagemResponseDTO.lugaresVisitados ?: listOf(),
                 gastosViagens = viagemResponseDTO.gastosViagem ?: listOf()
             )

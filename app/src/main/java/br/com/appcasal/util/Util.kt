@@ -107,7 +107,7 @@ class Util {
     }
 
     fun exibeEstrelas(
-        nota: Double,
+        nota: Double?,
         estrela1: ImageView,
         estrela2: ImageView,
         estrela3: ImageView,
@@ -115,6 +115,51 @@ class Util {
         estrela5: ImageView
     ) {
         when (nota) {
+            1.0 -> {
+                estrela1.alpha = 1f
+            }
+            2.0 -> {
+                estrela1.alpha = 1f
+                estrela2.alpha = 1f
+            }
+            3.0 -> {
+                estrela1.alpha = 1f
+                estrela2.alpha = 1f
+                estrela3.alpha = 1f
+            }
+            4.0 -> {
+                estrela1.alpha = 1f
+                estrela2.alpha = 1f
+                estrela3.alpha = 1f
+                estrela4.alpha = 1f
+
+            }
+            5.0 -> {
+                estrela1.alpha = 1f
+                estrela2.alpha = 1f
+                estrela3.alpha = 1f
+                estrela4.alpha = 1f
+                estrela5.alpha = 1f
+            }
+        }
+    }
+
+    fun exibeEEscondeEstrelas(
+        nota: Double?,
+        estrela1: ImageView,
+        estrela2: ImageView,
+        estrela3: ImageView,
+        estrela4: ImageView,
+        estrela5: ImageView
+    ) {
+        when (nota) {
+            null -> {
+                estrela1.visibility = View.GONE
+                estrela2.visibility = View.GONE
+                estrela3.visibility = View.GONE
+                estrela4.visibility = View.GONE
+                estrela5.visibility = View.GONE
+            }
             1.0 -> {
                 estrela1.alpha = 1f
             }

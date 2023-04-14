@@ -82,6 +82,7 @@
     <string name="local_obrigatorio">"Campo local obrigatório"</string>
     <string name="altera_viagem">Altera viagem</string>
     <string name="adiciona_viagem">Adiciona viagem</string>
+    <string name="sem_nota">Sem nota</string>
     <string name="viagem_inserida_sucesso">Viagem %s inserida com sucesso !</string>
     <string name="viagem_alterada_sucesso">Viagem %s alterada com sucesso !</string>
     <string name="viagem_removida_sucesso">Viagem removida com sucesso !</string>

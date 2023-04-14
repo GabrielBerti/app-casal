@@ -93,7 +93,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginEnd="7dp"
-            android:alpha="1"
+            android:alpha="0.3"
             android:src="@drawable/ic_estrela" />
 
         <ImageView android:id="@+id/form_viagem_estrela2"
@@ -125,5 +125,28 @@
             android:src="@drawable/ic_estrela" />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/cb_sem_nota"
+            android:layout_width="32dp"
+            android:layout_height="30dp"
+            android:visibility="visible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:text="@string/sem_nota" />
+
+    </LinearLayout>
+
+
 
 </LinearLayout>

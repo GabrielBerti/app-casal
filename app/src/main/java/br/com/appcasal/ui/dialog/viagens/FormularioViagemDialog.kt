@@ -8,6 +8,7 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -18,8 +19,9 @@ import br.com.appcasal.util.Util
 import java.util.*
 
 abstract class FormularioViagemDialog(
-        private val context: Context,
-        private val viewGroup: ViewGroup) {
+    private val context: Context,
+    private val viewGroup: ViewGroup
+) {
 
     private var util = Util()
     private val viewCriada = criaLayout()
@@ -28,19 +30,29 @@ abstract class FormularioViagemDialog(
     protected lateinit var campoDataFim: EditText
     abstract protected val tituloBotaoPositivo: String
 
-    protected var estrelaMarcarda: Double = 1.0
+    protected var estrelaMarcarda: Double? = 1.0
+    protected var viagemSemNota: Boolean = false
     protected lateinit var estrela1: ImageView
     protected lateinit var estrela2: ImageView
     protected lateinit var estrela3: ImageView
     protected lateinit var estrela4: ImageView
     protected lateinit var estrela5: ImageView
+    protected lateinit var cbSemNota: CheckBox
 
     fun chama(id: Long?, linearLayout: LinearLayout, delegate: (viagem: Viagem) -> Unit) {
         configuraCamposDatas()
         configuraFormulario(id, linearLayout, delegate)
+
+        if(viagemSemNota) {
+            cbSemNota.isChecked = true
+        }
     }
 
-    private fun configuraFormulario(id: Long?, linearLayout: LinearLayout, delegate: (viagem: Viagem) -> Unit) {
+    private fun configuraFormulario(
+        id: Long?,
+        linearLayout: LinearLayout,
+        delegate: (viagem: Viagem) -> Unit
+    ) {
         val titulo = tituloPor()
 
         val dialog = AlertDialog.Builder(context)
@@ -53,7 +65,8 @@ abstract class FormularioViagemDialog(
                 }
                 false
             }
-            .setPositiveButton(tituloBotaoPositivo
+            .setPositiveButton(
+                tituloBotaoPositivo
             ) { _, _ ->
             }
             .setNegativeButton("Cancelar", null)
@@ -66,13 +79,14 @@ abstract class FormularioViagemDialog(
             val dataInicioEmTexto = campoDataInicio.text.toString()
             val dataFimEmTexto = campoDataFim.text.toString()
 
-            if(localEmTexto.isBlank()) {
+            if (localEmTexto.isBlank()) {
                 campoLocal.error = context.getString(R.string.local_obrigatorio)
             } else {
                 localEmTexto = localEmTexto.substring(0, 1).uppercase() + localEmTexto.substring(1)
 
-                val viagemCriada: Viagem = if (id == null) {
+                val viagemCriada =
                     Viagem(
+                        id = id ?: 0,
                         local = localEmTexto,
                         dataInicio = dataInicioEmTexto,
                         dataFim = dataFimEmTexto,
@@ -80,17 +94,6 @@ abstract class FormularioViagemDialog(
                         lugaresVisitados = listOf(),
                         gastosViagens = listOf()
                     )
-                } else {
-                    Viagem(
-                        id = id,
-                        local = localEmTexto,
-                        dataInicio = dataInicioEmTexto,
-                        dataFim = dataFimEmTexto,
-                        nota = estrelaMarcarda,
-                        lugaresVisitados = listOf(),
-                        gastosViagens = listOf()
-                    )
-                }
 
                 util.hideKeyboard(campoLocal, context)
 
@@ -127,8 +130,7 @@ abstract class FormularioViagemDialog(
                     val dataSelecionada = Calendar.getInstance()
                     dataSelecionada.set(ano, mes, dia)
                     campoDataInicio.setText(dataSelecionada.formataParaBrasileiro())
-                }
-                , ano, mes, dia)
+                }, ano, mes, dia)
                 .show()
         }
 
@@ -139,8 +141,7 @@ abstract class FormularioViagemDialog(
                     val dataSelecionada = Calendar.getInstance()
                     dataSelecionada.set(ano, mes, dia)
                     campoDataFim.setText(dataSelecionada.formataParaBrasileiro())
-                }
-                , ano, mes, dia)
+                }, ano, mes, dia)
                 .show()
         }
     }
@@ -149,9 +150,11 @@ abstract class FormularioViagemDialog(
 
     private fun criaLayout(): View {
         val view = LayoutInflater.from(context)
-                .inflate(R.layout.form_viagem,
-                        viewGroup,
-                        false)
+            .inflate(
+                R.layout.form_viagem,
+                viewGroup,
+                false
+            )
 
         campoLocal = view.findViewById<EditText>(R.id.form_local)
         campoDataInicio = view.findViewById<EditText>(R.id.form_data_inicio_viagem)
@@ -161,53 +164,76 @@ abstract class FormularioViagemDialog(
         estrela3 = view.findViewById<ImageView>(R.id.form_viagem_estrela3)
         estrela4 = view.findViewById<ImageView>(R.id.form_viagem_estrela4)
         estrela5 = view.findViewById<ImageView>(R.id.form_viagem_estrela5)
+        cbSemNota = view.findViewById<CheckBox>(R.id.cb_sem_nota)
 
         setListeners()
 
-        util.showKeyboard(campoLocal, context)
+        //util.showKeyboard(campoLocal, context)
 
         return view
     }
 
     private fun setListeners() {
+        cbSemNota.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                desmarcaEstrelas()
+                estrelaMarcarda = null
+            }
+        }
+
         estrela1.setOnClickListener {
-            desmarcaEstrelas()
-            it.alpha = 1f
-            estrelaMarcarda = 1.0
+            if (!cbSemNota.isChecked) {
+                desmarcaEstrelas()
+
+                if (estrelaMarcarda == 1.0) {
+                    estrelaMarcarda = 0.0
+                } else {
+                    it.alpha = 1f
+                    estrelaMarcarda = 1.0
+                }
+            }
         }
 
         estrela2.setOnClickListener {
-            desmarcaEstrelas()
-            estrela1.alpha = 1f
-            it.alpha = 1f
-            estrelaMarcarda = 2.0
+            if (!cbSemNota.isChecked) {
+                desmarcaEstrelas()
+                estrela1.alpha = 1f
+                it.alpha = 1f
+                estrelaMarcarda = 2.0
+            }
         }
 
         estrela3.setOnClickListener {
-            desmarcaEstrelas()
-            estrela1.alpha = 1f
-            estrela2.alpha = 1f
-            it.alpha = 1f
-            estrelaMarcarda = 3.0
+            if (!cbSemNota.isChecked) {
+                desmarcaEstrelas()
+                estrela1.alpha = 1f
+                estrela2.alpha = 1f
+                it.alpha = 1f
+                estrelaMarcarda = 3.0
+            }
         }
 
         estrela4.setOnClickListener {
-            desmarcaEstrelas()
-            estrela1.alpha = 1f
-            estrela2.alpha = 1f
-            estrela3.alpha = 1f
-            it.alpha = 1f
-            estrelaMarcarda = 4.0
+            if (!cbSemNota.isChecked) {
+                desmarcaEstrelas()
+                estrela1.alpha = 1f
+                estrela2.alpha = 1f
+                estrela3.alpha = 1f
+                it.alpha = 1f
+                estrelaMarcarda = 4.0
+            }
         }
 
         estrela5.setOnClickListener {
-            desmarcaEstrelas()
-            estrela1.alpha = 1f
-            estrela2.alpha = 1f
-            estrela3.alpha = 1f
-            estrela4.alpha = 1f
-            it.alpha = 1f
-            estrelaMarcarda = 5.0
+            if (!cbSemNota.isChecked) {
+                desmarcaEstrelas()
+                estrela1.alpha = 1f
+                estrela2.alpha = 1f
+                estrela3.alpha = 1f
+                estrela4.alpha = 1f
+                it.alpha = 1f
+                estrelaMarcarda = 5.0
+            }
         }
     }
 

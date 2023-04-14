@@ -118,8 +118,12 @@ abstract class FormularioLugarVisitadoDialog(
     private fun setListeners() {
         estrela1.setOnClickListener {
             desmarcaEstrelas()
-            it.alpha = 1f
-            estrelaMarcarda = 1.0
+            if (estrelaMarcarda == 1.0) {
+                estrelaMarcarda = 0.0
+            } else {
+                it.alpha = 1f
+                estrelaMarcarda = 1.0
+            }
         }
 
         estrela2.setOnClickListener {

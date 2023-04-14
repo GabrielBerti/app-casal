@@ -94,6 +94,7 @@
                         android:id="@+id/rv_ingredientes"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        tools:listitem="@layout/ingrediente_detalhe_item"
                         android:layout_marginTop="5dp"
                         android:visibility="@{isError == true ? View.GONE : View.VISIBLE}" />
 

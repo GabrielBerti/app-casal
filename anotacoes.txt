@@ -1,5 +1,4 @@
 -- ajustes gerais:
-    -- Opcao de nao dar nota ou dar nota 0
     -- reciclagem das metas zoada quando tem muitos registros
     -- Nota quebrada(pegar imagem quebrada com a Mari)
     -- fazer tela de splash
@@ -9,6 +8,7 @@
         -- ao alterar uma viagem ela sempre vem com o valor do dia atual e nao com a data cadastrada
     -- colocar filtro debounced na telas de metas, viagens e receitas
     -- ordenacao de todas as listas
+    -- nao recarregar ao sair e voltar para as telas
 ------------------------------------------------------------------------------------------------------------------------
 
 

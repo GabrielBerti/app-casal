@@ -2,12 +2,10 @@ package br.com.appcasal.ui.activity.viagens.detalhes.lugares_visitados
 
 import android.content.Context
 import android.view.*
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.appcasal.R
+import br.com.appcasal.databinding.LugarVisitadoItemBinding
 import br.com.appcasal.domain.model.LugarVisitado
-import br.com.appcasal.util.Util
 
 class ListaLugaresVisitadosViagemAdapter(
     private var lugarVisitado: List<LugarVisitado>,
@@ -45,14 +43,7 @@ class ListaLugaresVisitadosViagemAdapter(
         itemView: View
     ) :
         RecyclerView.ViewHolder(itemView), View.OnCreateContextMenuListener {
-
-        private val nomeLugarVisitado = itemView.findViewById<TextView>(R.id.nome_lugar_visitado)
-        private val estrela1 = itemView.findViewById<ImageView>(R.id.estrela1)
-        private val estrela2 = itemView.findViewById<ImageView>(R.id.estrela2)
-        private val estrela3 = itemView.findViewById<ImageView>(R.id.estrela3)
-        private val estrela4 = itemView.findViewById<ImageView>(R.id.estrela4)
-        private val estrela5 = itemView.findViewById<ImageView>(R.id.estrela5)
-        private var util = Util()
+        val binding = LugarVisitadoItemBinding.bind(itemView)
 
         init {
             itemView.setOnCreateContextMenuListener(this)
@@ -61,8 +52,27 @@ class ListaLugaresVisitadosViagemAdapter(
         fun bind(lugaresVisitados: List<LugarVisitado>, posicao: Int) {
             val lugarVisitado = lugaresVisitados[posicao]
 
-            nomeLugarVisitado.text = lugarVisitado.nome
-            util.exibeEstrelas(lugarVisitado.nota, estrela1, estrela2, estrela3, estrela4, estrela5)
+            binding.nomeLugarVisitado.text = lugarVisitado.nome
+            when (lugarVisitado.nota) {
+                0.0 -> {
+                    aplicaERetiraOpacidadeEstrelas(0.0)
+                }
+                1.0 -> {
+                    aplicaERetiraOpacidadeEstrelas(1.0)
+                }
+                2.0 -> {
+                    aplicaERetiraOpacidadeEstrelas(2.0)
+                }
+                3.0 -> {
+                    aplicaERetiraOpacidadeEstrelas(3.0)
+                }
+                4.0 -> {
+                    aplicaERetiraOpacidadeEstrelas(4.0)
+                }
+                5.0 -> {
+                    aplicaERetiraOpacidadeEstrelas(5.0)
+                }
+            }
         }
 
         override fun onCreateContextMenu(
@@ -71,6 +81,50 @@ class ListaLugaresVisitadosViagemAdapter(
             p2: ContextMenu.ContextMenuInfo?
         ) {
             menu?.add(Menu.NONE, 1, Menu.NONE, "Remover")
+        }
+
+        private fun aplicaERetiraOpacidadeEstrelas(nota: Double) {
+            if(nota == 0.0) {
+                binding.estrela1.alpha = 0.3f
+                binding.estrela2.alpha = 0.3f
+                binding.estrela3.alpha = 0.3f
+                binding.estrela4.alpha = 0.3f
+                binding.estrela5.alpha = 0.3f
+            } else if(nota == 1.0) {
+                binding.estrela2.alpha = 0.3f
+                binding.estrela3.alpha = 0.3f
+                binding.estrela4.alpha = 0.3f
+                binding.estrela5.alpha = 0.3f
+
+                binding.estrela1.alpha = 1f
+            } else if(nota == 2.0) {
+                binding.estrela3.alpha = 0.3f
+                binding.estrela4.alpha = 0.3f
+                binding.estrela5.alpha = 0.3f
+
+                binding.estrela1.alpha = 1f
+                binding.estrela2.alpha = 1f
+            } else if(nota == 3.0) {
+                binding.estrela4.alpha = 0.3f
+                binding.estrela5.alpha = 0.3f
+
+                binding.estrela1.alpha = 1f
+                binding.estrela2.alpha = 1f
+                binding.estrela3.alpha = 1f
+            } else if(nota == 4.0) {
+                binding.estrela5.alpha = 0.3f
+
+                binding.estrela1.alpha = 1f
+                binding.estrela2.alpha = 1f
+                binding.estrela3.alpha = 1f
+                binding.estrela4.alpha = 1f
+            } else if(nota == 5.0) {
+                binding.estrela1.alpha = 1f
+                binding.estrela2.alpha = 1f
+                binding.estrela3.alpha = 1f
+                binding.estrela4.alpha = 1f
+                binding.estrela5.alpha = 1f
+            }
         }
     }
 }

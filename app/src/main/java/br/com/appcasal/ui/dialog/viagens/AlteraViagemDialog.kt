@@ -22,6 +22,7 @@ class AlteraViagemDialog(
     }
 
     fun chama(viagem: Viagem, id: Long, linearLayout: LinearLayout, delegate: (viagem: Viagem) -> Unit) {
+        viagemSemNota = viagem.nota == null
         super.chama(id, linearLayout, delegate)
         campoLocal.setText(viagem.local)
         estrelaMarcarda = viagem.nota
