@@ -1,5 +1,4 @@
 -- ajustes gerais:
-    -- reciclagem das metas zoada quando tem muitos registros
     -- Nota quebrada(pegar imagem quebrada com a Mari)
     -- fazer tela de splash
 
