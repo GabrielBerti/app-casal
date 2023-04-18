@@ -1,26 +1,26 @@
 package br.com.appcasal.dao.dto.network
 
+
 import android.content.Context
-import br.com.appcasal.BuildConfig
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.TypeAdapter
+import com.google.gson.*
 import com.google.gson.stream.JsonReader
+import com.google.gson.stream.JsonToken
 import com.google.gson.stream.JsonWriter
-import io.reactivex.*
 import okhttp3.*
-import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.*
+import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
+import java.text.DateFormat
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.jvm.Throws
+
 
 private class AddHeaderInterceptor(val context: Context, val apiKey: String? = null) : Interceptor {
-//  TODO temporary until solves authorization
-    private val mockAuthorization= "{\"ownership\": \"1\",\"currentAccount\": \"51\",\"cooperative\": \"3105\",\"password\": \"88888888\"}"
+    private val mockAuthorization =
+        "{\"ownership\": \"1\",\"currentAccount\": \"51\",\"cooperative\": \"3105\",\"password\": \"88888888\"}"
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder = chain.request().newBuilder()
@@ -36,6 +36,42 @@ private class AddHeaderInterceptor(val context: Context, val apiKey: String? = n
         return chain.proceed(builder.build())
     }
 
+}
+
+class CalendarTypeAdapter : TypeAdapter<Calendar?>() {
+    private var format: DateFormat? = null
+
+    init {
+        format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+        (format as SimpleDateFormat).timeZone = TimeZone.getTimeZone("UTC")
+    }
+
+    @Throws(IOException::class)
+    override fun write(out: JsonWriter, value: Calendar?) {
+        if (value == null) {
+            out.nullValue()
+        } else {
+            val dateString = format?.format(value.time)
+            out.value(dateString)
+        }
+    }
+
+    @Throws(IOException::class)
+    override fun read(inn: JsonReader): Calendar? {
+        if (inn.peek() == JsonToken.NULL) {
+            inn.nextNull()
+            return null
+        }
+        return try {
+            val dateString = inn.nextString()
+            val calendar = Calendar.getInstance()
+            calendar.timeZone = TimeZone.getTimeZone("UTC")
+            calendar.time = format?.parse(dateString)
+            calendar
+        } catch (e: ParseException) {
+            throw IOException(e)
+        }
+    }
 }
 
 class JavaDateTypeAdapter : TypeAdapter<Date>() {
@@ -80,6 +116,7 @@ class CorporativeRetrofit(
         gsonConfig = gson
             ?: GsonBuilder()
                 .registerTypeAdapter(Date::class.java, JavaDateTypeAdapter())
+                .registerTypeAdapter(Calendar::class.java, CalendarTypeAdapter())
                 .create()
 
         retrofit = Retrofit.Builder()

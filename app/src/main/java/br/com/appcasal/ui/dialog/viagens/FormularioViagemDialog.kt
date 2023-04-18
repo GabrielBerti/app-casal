@@ -12,10 +12,11 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
-import br.com.alura.financask.extension.formataParaBrasileiro
+import br.com.appcasal.util.extension.formataParaBrasileiro
 import br.com.appcasal.R
 import br.com.appcasal.domain.model.Viagem
 import br.com.appcasal.util.Util
+import br.com.appcasal.util.extension.converteParaCalendar
 import java.util.*
 
 abstract class FormularioViagemDialog(
@@ -88,8 +89,8 @@ abstract class FormularioViagemDialog(
                     Viagem(
                         id = id ?: 0,
                         local = localEmTexto,
-                        dataInicio = dataInicioEmTexto,
-                        dataFim = dataFimEmTexto,
+                        dataInicio = dataInicioEmTexto.converteParaCalendar(),
+                        dataFim = dataFimEmTexto.converteParaCalendar(),
                         nota = estrelaMarcarda,
                         lugaresVisitados = listOf(),
                         gastosViagens = listOf()

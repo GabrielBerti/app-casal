@@ -3,6 +3,7 @@ package br.com.appcasal.ui.activity.viagens
 import android.content.Context
 import android.view.*
 import androidx.recyclerview.widget.RecyclerView
+import br.com.appcasal.util.extension.formataParaBrasileiro
 import br.com.appcasal.R
 import br.com.appcasal.databinding.ViagemItemBinding
 import br.com.appcasal.domain.model.Viagem
@@ -57,7 +58,7 @@ class ListaViagensAdapter(
 
         fun bind(viagem: Viagem) {
             binding.localViagem.text = viagem.local
-            binding.dataInicioEFim.text = viagem.dataInicio + " até " + viagem.dataFim
+            binding.dataInicioEFim.text = viagem.dataInicio.formataParaBrasileiro() + " até " + viagem.dataFim.formataParaBrasileiro()
 
             when (viagem.nota) {
                 null -> {

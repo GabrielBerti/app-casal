@@ -10,7 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
-import br.com.alura.financask.extension.formataParaBrasileiro
+import br.com.appcasal.util.extension.converteParaCalendar
+import br.com.appcasal.util.extension.formataParaBrasileiro
 import br.com.appcasal.R
 import br.com.appcasal.domain.model.Tipo
 import br.com.appcasal.domain.model.Transacao
@@ -61,9 +62,9 @@ abstract class FormularioTransacaoDialog(
 
             if (isValidForm(descricaoEmTexto, valorEmTexto)) {
                 val valor = util.converteCampoValor(valorEmTexto, context)
-                val data = dataEmTexto//.converteParaCalendar()
+                val data = dataEmTexto.converteParaCalendar()
 
-                var transacaoCriada: Transacao
+                val transacaoCriada: Transacao
 
                 if(id == null) {
                     transacaoCriada = Transacao(
@@ -114,7 +115,7 @@ abstract class FormularioTransacaoDialog(
     }
 
     private fun isValidForm(descricao: String, valor: String): Boolean {
-        if(descricao.isNullOrBlank() || valor.isNullOrBlank()) {
+        if(descricao.isBlank() || valor.isBlank()) {
             return false
         }
 

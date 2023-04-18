@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.*
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import br.com.alura.financask.extension.formataParaBrasileiro
+import br.com.appcasal.util.extension.formataParaBrasileiro
 import br.com.appcasal.R
 import br.com.appcasal.domain.model.GastoViagem
 
@@ -52,8 +52,8 @@ class ListaGastosViagemAdapter(
             itemView.setOnCreateContextMenuListener(this)
         }
 
-        fun bind(gastoViagem: List<GastoViagem>, posicao: Int) {
-            val gastoViagem = gastoViagem[posicao]
+        fun bind(gastosViagem: List<GastoViagem>, posicao: Int) {
+            val gastoViagem = gastosViagem[posicao]
 
             descricaoGasto.text = gastoViagem.descricao
             valorGasto.text = gastoViagem.valor.formataParaBrasileiro()

@@ -3,13 +3,14 @@ package br.com.appcasal.domain.model
 import android.os.Parcelable
 import br.com.appcasal.dao.dto.network.response.ViagemResponseDTO
 import kotlinx.android.parcel.Parcelize
+import java.util.*
 
 @Parcelize
 class Viagem(
     val id: Long = 0L,
     val local: String,
-    val dataInicio: String,
-    val dataFim: String,
+    val dataInicio: Calendar,
+    val dataFim: Calendar,
     val nota: Double?,
     val lugaresVisitados: List<LugarVisitado>,
     val gastosViagens: List<GastoViagem>
@@ -19,8 +20,8 @@ class Viagem(
             Viagem(
                 id = viagemResponseDTO.id ?: 0,
                 local = viagemResponseDTO.local ?: "",
-                dataInicio = viagemResponseDTO.dataInicio ?: "",
-                dataFim = viagemResponseDTO.dataFim ?: "",
+                dataInicio = viagemResponseDTO.dataInicio ?: Calendar.getInstance(),
+                dataFim = viagemResponseDTO.dataFim ?: Calendar.getInstance(),
                 nota = viagemResponseDTO.nota,
                 lugaresVisitados = viagemResponseDTO.lugaresVisitados ?: listOf(),
                 gastosViagens = viagemResponseDTO.gastosViagem ?: listOf()

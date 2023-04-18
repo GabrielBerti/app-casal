@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import br.com.alura.financask.extension.formataParaBrasileiro
+import br.com.appcasal.util.extension.formataParaBrasileiro
 import br.com.appcasal.MainActivity
 import br.com.appcasal.R
 import br.com.appcasal.databinding.ActivityListaTransacoesBinding

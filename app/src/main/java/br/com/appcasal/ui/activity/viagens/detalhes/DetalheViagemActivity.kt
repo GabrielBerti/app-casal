@@ -12,6 +12,7 @@ import br.com.appcasal.domain.model.Viagem
 import br.com.appcasal.ui.activity.viagens.ListaViagensActivity
 import br.com.appcasal.ui.activity.viagens.detalhes.gastos_viagem.GastosViagemFragment
 import br.com.appcasal.ui.activity.viagens.detalhes.lugares_visitados.LugaresVisitadosFragment
+import java.util.*
 
 class DetalheViagemActivity : AppCompatActivity() {
 
@@ -27,7 +28,7 @@ class DetalheViagemActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setListeners()
-        viagem = intent.extras?.getParcelable("viagem") ?: Viagem(0L, "", "", "", 0.0, listOf(), listOf())
+        viagem = intent.extras?.getParcelable("viagem") ?: Viagem(0L, "", Calendar.getInstance(), Calendar.getInstance(), 0.0, listOf(), listOf())
         binding.localViagem.text = viagem.local
 
         instanciaFragmentGastos()

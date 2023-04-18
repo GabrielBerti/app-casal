@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import br.com.alura.financask.extension.formataParaBrasileiro
+import br.com.appcasal.util.extension.formataParaBrasileiro
 import br.com.appcasal.R
 import br.com.appcasal.domain.model.Tipo
 import br.com.appcasal.domain.model.Transacao
@@ -37,8 +37,7 @@ class TransacoesViewHolder(private val context: Context,
     }
 
     private fun adicionaData(transacao: Transacao) {
-        transacaoData.text = transacao.data
-        //.formataParaBrasileiro()
+        transacaoData.text = transacao.data.formataParaBrasileiro()
     }
 
     private fun adicionaDescricao(transacao: Transacao) {

@@ -9,7 +9,7 @@ class Transacao(
     val valor: BigDecimal,
     val descricao: String = "",
     val tipo: Tipo,
-    val data: String //Calendar = Calendar.getInstance())
+    val data: Calendar = Calendar.getInstance()
 ) {
     companion object {
         fun mapFrom(transacaoResponseDTO: TransacaoResponseDTO) =
@@ -18,7 +18,7 @@ class Transacao(
                 valor = transacaoResponseDTO.valor ?: BigDecimal.ZERO,
                 descricao = transacaoResponseDTO.descricao ?: "",
                 tipo = transacaoResponseDTO.tipo ?: Tipo.BIEL,
-                data = transacaoResponseDTO.data ?: Calendar.getInstance().toString()
+                data = transacaoResponseDTO.data ?: Calendar.getInstance()
             )
     }
 }

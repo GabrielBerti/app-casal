@@ -3,12 +3,13 @@
     -- fazer tela de splash
 
 ------------------------------------------------------------------------------------------------------------------------
-    -- trocar datas que estao com tipo string para Date
-        -- ao alterar uma viagem ela sempre vem com o valor do dia atual e nao com a data cadastrada
-    -- colocar filtro debounced na telas de metas, viagens e receitas
+    -- ao alterar uma viagem ela sempre vem com o valor do dia atual e nao com a data cadastrada
     -- ordenacao de todas as listas
-    -- nao recarregar ao sair e voltar para as telas
+    -- colocar filtro debounced na telas de metas, viagens e receitas
 ------------------------------------------------------------------------------------------------------------------------
+-- melhorias futuras:
+    -- separar tela de metas em tabs de concluidas / não concluidas
+    -- nao recarregar ao sair e voltar para as telas(utilizar fragments ao inves de activitys)
 
 
 
