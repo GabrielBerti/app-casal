@@ -75,6 +75,7 @@ class LugaresVisitadosFragment(private val viagem: Viagem) : Fragment(), ClickLu
                 onError { binding.isError = true }
                 onSuccess {
                     lugaresVisitados = it.toMutableList()
+                    viagem.lugaresVisitados = it
                     configuraAdapter()
                 }
             }

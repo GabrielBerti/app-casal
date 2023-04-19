@@ -77,6 +77,7 @@ class GastosViagemFragment(private val viagem: Viagem) : Fragment(), ClickGastoV
                 onError { binding.isError = true }
                 onSuccess {
                     gastosViagem = it.toMutableList()
+                    viagem.gastosViagens = it
                     configuraAdapter()
                     exibeValorTotalGasto()
                 }
