@@ -10,8 +10,6 @@ data class ViagemRequestDTO(
     val dataInicio: String? = null,
     val dataFim: String? = null,
     val nota: Double? = null
-    //val lugaresVisitados: List<LugarVisitado>? = null,
-   // val gastosViagem: List<GastoViagem>? = null
 ) {
     companion object {
         val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
@@ -22,8 +20,6 @@ data class ViagemRequestDTO(
             dataInicio = dateToString(viagem.dataInicio),
             dataFim = dateToString(viagem.dataFim),
             nota = viagem.nota
-            //lugaresVisitados = viagem.lugaresVisitados,
-            //gastosViagem = viagem.gastosViagem
         )
 
         fun dateToString(data: Calendar): String {

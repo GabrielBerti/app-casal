@@ -2,6 +2,7 @@ package br.com.appcasal.dao.datasource.remote
 
 import br.com.appcasal.dao.datasource.CallableDataSource
 import br.com.appcasal.dao.dto.network.request.LugarVisitadoRequestDTO
+import br.com.appcasal.dao.dto.network.request.ViagemRequestDTO
 import br.com.appcasal.dao.dto.network.response.LugarVisitadoResponseDTO
 import br.com.appcasal.dao.service.LugarVisitadoService
 import br.com.appcasal.domain.model.LugarVisitado
@@ -17,12 +18,12 @@ class LugarVisitadoRemoteDataSource(
     }
 
     suspend fun insereLugarVisitado(lugarVisitado: LugarVisitado, viagem: Viagem): LugarVisitadoResponseDTO {
-        val dto = lugarVisitadoService.insereLugarVisitado(LugarVisitadoRequestDTO.mapFrom(lugarVisitado, viagem))
+        val dto = lugarVisitadoService.insereLugarVisitado(LugarVisitadoRequestDTO.mapFrom(lugarVisitado, ViagemRequestDTO.mapFrom(viagem)))
         return dto.body() ?: LugarVisitadoResponseDTO()
     }
 
     suspend fun alteraLugarVisitado(lugarVisitado: LugarVisitado, viagem: Viagem): LugarVisitadoResponseDTO {
-        val dto = lugarVisitadoService.alteraLugarVisitado(LugarVisitadoRequestDTO.mapFrom(lugarVisitado, viagem), lugarVisitado.id)
+        val dto = lugarVisitadoService.alteraLugarVisitado(LugarVisitadoRequestDTO.mapFrom(lugarVisitado, ViagemRequestDTO.mapFrom(viagem)), lugarVisitado.id)
         return dto.body() ?: LugarVisitadoResponseDTO()
     }
 

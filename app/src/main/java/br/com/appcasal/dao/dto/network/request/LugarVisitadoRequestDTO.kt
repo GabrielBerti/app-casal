@@ -7,15 +7,15 @@ data class LugarVisitadoRequestDTO(
     val id: Long? = null,
     val nome: String? = null,
     val nota: Double? = null,
-    var viagem: Viagem? = null
+    var viagem: ViagemRequestDTO? = null
 ) {
     companion object {
-        fun mapFrom(lugarVisitado: LugarVisitado, viagem: Viagem?) =
+        fun mapFrom(lugarVisitado: LugarVisitado, viagemRequestDTO: ViagemRequestDTO?) =
             LugarVisitadoRequestDTO(
                 id = lugarVisitado.id,
                 nome = lugarVisitado.nome,
                 nota = lugarVisitado.nota,
-                viagem = viagem
+                viagem = viagemRequestDTO
             )
     }
 }

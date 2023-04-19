@@ -2,6 +2,7 @@ package br.com.appcasal.dao.datasource.remote
 
 import br.com.appcasal.dao.datasource.CallableDataSource
 import br.com.appcasal.dao.dto.network.request.GastoViagemRequestDTO
+import br.com.appcasal.dao.dto.network.request.ViagemRequestDTO
 import br.com.appcasal.dao.dto.network.response.GastoViagemResponseDTO
 import br.com.appcasal.dao.service.GastoViagemService
 import br.com.appcasal.domain.model.GastoViagem
@@ -17,12 +18,12 @@ class GastoViagemRemoteDataSource(
     }
 
     suspend fun insereGastosViagem(gastoViagem: GastoViagem, viagem: Viagem): GastoViagemResponseDTO {
-        val dto = gastoViagemService.insereGastosViagem(GastoViagemRequestDTO.mapFrom(gastoViagem, viagem))
+        val dto = gastoViagemService.insereGastosViagem(GastoViagemRequestDTO.mapFrom(gastoViagem, ViagemRequestDTO.mapFrom(viagem)))
         return dto.body() ?: GastoViagemResponseDTO()
     }
 
     suspend fun alteraGastosViagem(gastoViagem: GastoViagem, viagem: Viagem): GastoViagemResponseDTO {
-        val dto = gastoViagemService.alteraGastosViagem(GastoViagemRequestDTO.mapFrom(gastoViagem, viagem), gastoViagem.id)
+        val dto = gastoViagemService.alteraGastosViagem(GastoViagemRequestDTO.mapFrom(gastoViagem, ViagemRequestDTO.mapFrom(viagem)), gastoViagem.id)
         return dto.body() ?: GastoViagemResponseDTO()
     }
 
