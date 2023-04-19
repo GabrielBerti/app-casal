@@ -175,11 +175,13 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
     }
 
     private fun salvarOuAlterarReceita() {
+        val nomeReceitaEmTexto = binding.receitaNome.text.toString().substring(0, 1).uppercase() + binding.receitaNome.text.toString().substring(1)
+
         if (receita.id != 0L) {
             viewModel.alteraReceita(
                 Receita(
                     receita.id,
-                    binding.receitaNome.text.toString(),
+                    nomeReceitaEmTexto,
                     binding.receitaDescricao.text.toString(),
                     listOf()
                 )
@@ -188,7 +190,7 @@ class FormReceitasActivity : AppCompatActivity(), ClickIngrediente {
             viewModel.insereReceita(
                 Receita(
                     0,
-                    binding.receitaNome.text.toString(),
+                    nomeReceitaEmTexto,
                     binding.receitaDescricao.text.toString(),
                     listOf()
                 )
