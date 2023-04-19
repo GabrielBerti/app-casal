@@ -12,8 +12,8 @@ class Viagem(
     val dataInicio: Calendar,
     val dataFim: Calendar,
     val nota: Double?,
-    val lugaresVisitados: List<LugarVisitado>,
-    val gastosViagens: List<GastoViagem>
+    var lugaresVisitados: List<LugarVisitado>,
+    var gastosViagens: List<GastoViagem>
 ): Parcelable {
     companion object {
         fun mapFrom(viagemResponseDTO: ViagemResponseDTO) =

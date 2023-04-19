@@ -11,6 +11,7 @@ import android.widget.EditText
 import br.com.appcasal.R
 import br.com.appcasal.domain.model.GastoViagem
 import br.com.appcasal.util.Util
+import br.com.appcasal.util.extension.somentePrimeiraLetraMaiuscula
 
 abstract class FormularioGastoViagemDialog(
         private val context: Context,
@@ -48,7 +49,7 @@ abstract class FormularioGastoViagemDialog(
         val buttonPositive = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
         val buttonNegative = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
         buttonPositive.setOnClickListener {
-            var descricaoGastoEmTexto = campoDescricaoGasto.text.toString()
+            val descricaoGastoEmTexto = campoDescricaoGasto.text.toString().somentePrimeiraLetraMaiuscula()
             val valorGastoEmTexto = campoValorGasto.text.toString()
             val valorGasto = util.converteCampoValor(valorGastoEmTexto, context)
 
@@ -59,7 +60,6 @@ abstract class FormularioGastoViagemDialog(
             } else if(campoValorGasto.text.toString().toDouble() < 0.01) {
                 campoValorGasto.error = context.getString(R.string.valor_gasto_maior_que_zero)
             } else {
-                descricaoGastoEmTexto = descricaoGastoEmTexto.substring(0, 1).uppercase() + descricaoGastoEmTexto.substring(1)
                 val gastoViagemCriada: GastoViagem = if (id == null) {
                     GastoViagem(
                         valor = valorGasto,

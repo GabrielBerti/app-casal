@@ -12,6 +12,7 @@ import android.widget.LinearLayout
 import br.com.appcasal.R
 import br.com.appcasal.domain.model.Ingrediente
 import br.com.appcasal.util.Util
+import br.com.appcasal.util.extension.somentePrimeiraLetraMaiuscula
 
 
 abstract class FormularioIngredienteDialog(
@@ -56,14 +57,12 @@ abstract class FormularioIngredienteDialog(
         val buttonNegative = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
         val button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
         button.setOnClickListener {
-            var campoDescricaoIngredienteEmTexto = campoDescricaoIngrediente.text.toString()
+            val campoDescricaoIngredienteEmTexto = campoDescricaoIngrediente.text.toString().somentePrimeiraLetraMaiuscula()
 
             if (campoDescricaoIngredienteEmTexto.isBlank()) {
                 campoDescricaoIngrediente.error =
                     context.getString(R.string.nome_ingrediente_obrigatorio)
             } else {
-                campoDescricaoIngredienteEmTexto = campoDescricaoIngredienteEmTexto.substring(0, 1).uppercase() + campoDescricaoIngredienteEmTexto.substring(1)
-
                 val ingredienteCriado: Ingrediente = if (id == null) {
                     Ingrediente(
                         //receitaId = idReceita,

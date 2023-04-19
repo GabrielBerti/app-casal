@@ -17,6 +17,7 @@ import br.com.appcasal.R
 import br.com.appcasal.domain.model.Viagem
 import br.com.appcasal.util.Util
 import br.com.appcasal.util.extension.converteParaCalendar
+import br.com.appcasal.util.extension.somentePrimeiraLetraMaiuscula
 import java.util.*
 
 abstract class FormularioViagemDialog(
@@ -76,19 +77,18 @@ abstract class FormularioViagemDialog(
         val buttonPositive = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
         val buttonNegative = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
         buttonPositive.setOnClickListener {
-            var localEmTexto = campoLocal.text.toString()
+            val localEmTexto = campoLocal.text.toString()
             val dataInicioEmTexto = campoDataInicio.text.toString()
             val dataFimEmTexto = campoDataFim.text.toString()
 
             if (localEmTexto.isBlank()) {
                 campoLocal.error = context.getString(R.string.local_obrigatorio)
             } else {
-                localEmTexto = localEmTexto.substring(0, 1).uppercase() + localEmTexto.substring(1)
 
                 val viagemCriada =
                     Viagem(
                         id = id ?: 0,
-                        local = localEmTexto,
+                        local = localEmTexto.somentePrimeiraLetraMaiuscula(),
                         dataInicio = dataInicioEmTexto.converteParaCalendar(),
                         dataFim = dataFimEmTexto.converteParaCalendar(),
                         nota = estrelaMarcarda,
