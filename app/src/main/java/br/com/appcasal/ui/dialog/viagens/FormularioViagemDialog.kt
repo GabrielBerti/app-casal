@@ -41,7 +41,7 @@ abstract class FormularioViagemDialog(
     protected lateinit var cbSemNota: CheckBox
 
     fun chama(id: Long?, linearLayout: LinearLayout, delegate: (viagem: Viagem) -> Unit) {
-        configuraCamposDatas()
+        configuraCamposDatas(id)
         configuraFormulario(id, linearLayout, delegate)
 
         if(viagemSemNota) {
@@ -117,14 +117,18 @@ abstract class FormularioViagemDialog(
         dialog.dismiss()
     }
 
-    private fun configuraCamposDatas() {
+    private fun configuraCamposDatas(id: Long?) {
         val hoje = Calendar.getInstance()
 
         val ano = hoje.get(Calendar.YEAR)
         val mes = hoje.get(Calendar.MONTH)
         val dia = hoje.get(Calendar.DAY_OF_MONTH)
 
-        campoDataInicio.setText(hoje.formataParaBrasileiro())
+        if ((id ?: 0.0) == 0.0) {
+            campoDataInicio.setText(hoje.formataParaBrasileiro())
+            campoDataFim.setText(hoje.formataParaBrasileiro())
+        }
+
         campoDataInicio.setOnClickListener {
             DatePickerDialog(context,
                 { _, ano, mes, dia ->
@@ -135,7 +139,6 @@ abstract class FormularioViagemDialog(
                 .show()
         }
 
-        campoDataFim.setText(hoje.formataParaBrasileiro())
         campoDataFim.setOnClickListener {
             DatePickerDialog(context,
                 { _, ano, mes, dia ->

@@ -6,6 +6,7 @@ import android.widget.LinearLayout
 import br.com.appcasal.R
 import br.com.appcasal.domain.model.Viagem
 import br.com.appcasal.util.Util
+import br.com.appcasal.util.extension.formataParaBrasileiro
 
 class AlteraViagemDialog(
         viewGroup: ViewGroup,
@@ -25,6 +26,8 @@ class AlteraViagemDialog(
         viagemSemNota = viagem.nota == null
         super.chama(id, linearLayout, delegate)
         campoLocal.setText(viagem.local)
+        campoDataInicio.setText(viagem.dataInicio.formataParaBrasileiro())
+        campoDataFim.setText(viagem.dataFim.formataParaBrasileiro())
         estrelaMarcarda = viagem.nota
         util.exibeEstrelas(viagem.nota, estrela1, estrela2, estrela3, estrela4, estrela5)
     }
