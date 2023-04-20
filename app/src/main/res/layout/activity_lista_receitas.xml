@@ -84,7 +84,7 @@
                     app:endIconMode="clear_text"
                     app:endIconTint="@color/white"
                     app:hintEnabled="false"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:visibility="@{isError == true || isLoading == true ? View.GONE : View.VISIBLE}">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etSearch"
