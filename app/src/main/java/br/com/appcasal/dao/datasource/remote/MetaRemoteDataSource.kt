@@ -10,14 +10,8 @@ class MetaRemoteDataSource(
     private val metaService: MetaService
 ): CallableDataSource {
 
-    suspend fun recuperaMetas(): List<MetaResponseDTO> {
-        val dto = metaService.recuperaMetas()
-
-        return dto.body() ?: emptyList()
-    }
-
-    suspend fun recuperaMetasByConcluidas(concluidas: Boolean): List<MetaResponseDTO> {
-        val dto = metaService.recuperaMetasByConcluidas(concluidas)
+    suspend fun recuperaMetas(concluidas: Boolean?, search: String?): List<MetaResponseDTO> {
+        val dto = metaService.recuperaMetas(concluidas, search)
 
         return dto.body() ?: emptyList()
     }

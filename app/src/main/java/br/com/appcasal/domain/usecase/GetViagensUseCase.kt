@@ -6,7 +6,7 @@ import br.com.appcasal.domain.model.Viagem
 class GetViagensUseCase(
     private val viagemRepository: ViagemRepository
 ) {
-    suspend fun runAsync(): List<Viagem> {
-        return viagemRepository.recuperaViagens()
+    suspend fun runAsync(search: String?): List<Viagem> {
+        return viagemRepository.recuperaViagens(search)
     }
 }

@@ -3,6 +3,7 @@ package br.com.appcasal.ui.activity.receitas
 import android.content.Intent
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +18,8 @@ import br.com.appcasal.ui.collectResult
 import br.com.appcasal.ui.collectViewState
 import br.com.appcasal.util.Util
 import br.com.appcasal.viewmodel.ListaReceitasViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -26,8 +29,8 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
     val viewModel: ListaReceitasViewModel by viewModel()
 
     private var util = Util()
-
     private var receitas: List<Receita> = emptyList()
+    private var searchJob: Job? = null
 
     override fun onResume() {
         super.onResume()
@@ -40,6 +43,7 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
 
         setListeners()
         setupSwipeRefresh()
+        setupEditTextSearch()
     }
 
     private fun setupSwipeRefresh() {
@@ -85,6 +89,27 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
     private fun configuraAdapter(receitas: List<Receita>) {
         binding.rvReceitas.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rvReceitas.adapter = ListaReceitasAdapter(receitas, this, this)
+    }
+
+    private fun setupEditTextSearch() {
+        with(binding.etSearch) {
+            doOnTextChanged { text, _, _, _ ->
+                if (hasFocus()) searchDebounced(text.toString())
+            }
+
+            setOnEditorActionListener { v, _, _ ->
+                util.hideKeyboard(this, v.context)
+                true
+            }
+        }
+    }
+
+    private fun searchDebounced(searchText: String) {
+        searchJob?.cancel()
+        searchJob = lifecycleScope.launch {
+            delay(1500)
+            viewModel.recuperaReceitas(searchText)
+        }
     }
 
     private fun createSnackBar(tipoSnackbar: TipoSnackbar, msg: String) {

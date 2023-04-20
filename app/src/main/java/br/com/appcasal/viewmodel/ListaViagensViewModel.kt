@@ -13,6 +13,8 @@ class ListaViagensViewModel(
     private val alteraViagemUseCase: AlteraViagemUseCase,
     private val deletaViagemUseCase: DeletaViagemUseCase
 ) : ViewModel() {
+    var filterByLocal: String? = null
+        private set
 
     private lateinit var viagem: Viagem
 
@@ -28,8 +30,12 @@ class ListaViagensViewModel(
     private val _viagemDeleteResult: MutableSharedFlow<ViewState<Boolean>> = MutableSharedFlow()
     val viagemDeleteResult: SharedFlow<ViewState<Boolean>> get() = _viagemDeleteResult
 
-    fun recuperaViagens() = fetchData(::recuperaViagensUseCase) {
-        onAny { viewState -> _viagemGetResult.update { viewState } }
+    fun recuperaViagens(filterByLocal: String? = null) {
+        this.filterByLocal = filterByLocal
+
+        fetchData(::recuperaViagensUseCase) {
+            onAny { viewState -> _viagemGetResult.update { viewState } }
+        }
     }
 
     fun insereViagem(viagem: Viagem) {
@@ -62,7 +68,7 @@ class ListaViagensViewModel(
         }
     }
 
-    private suspend fun recuperaViagensUseCase() = getViagensUseCase.runAsync()
+    private suspend fun recuperaViagensUseCase() = getViagensUseCase.runAsync(filterByLocal)
 
     private suspend fun insereViagemUseCase() = insereViagemUseCase.runAsync(viagem)
 

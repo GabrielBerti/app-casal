@@ -8,7 +8,7 @@ import retrofit2.http.*
 interface ViagemService {
 
     @GET("/api/viagens")
-    suspend fun recuperaViagens(): Response<List<ViagemResponseDTO>>
+    suspend fun recuperaViagens(@Query("search") search: String?): Response<List<ViagemResponseDTO>>
 
     @POST("/api/viagens")
     suspend fun insereViagem(@Body request: ViagemRequestDTO): Response<ViagemResponseDTO>

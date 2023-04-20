@@ -1,6 +1,5 @@
 -- ajustes gerais:
     -- Nota quebrada(pegar imagem quebrada com a Mari)
-    -- colocar filtro debounced na telas de metas, viagens e receitas
 ------------------------------------------------------------------------------------------------------------------------
 -- melhorias futuras:
     -- fazer tela de splash

@@ -11,6 +11,8 @@ class ListaReceitasViewModel(
     private val getReceitasUseCase: GetReceitasUseCase,
     private val deletaReceitaUseCase: DeletaReceitaUseCase
 ) : ViewModel() {
+    var filterByDescricao: String? = null
+        private set
 
     private lateinit var receita: Receita
 
@@ -20,8 +22,12 @@ class ListaReceitasViewModel(
     private val _receitaDeleteResult: MutableSharedFlow<ViewState<Boolean>> = MutableSharedFlow()
     val receitaDeleteResult: SharedFlow<ViewState<Boolean>> get() = _receitaDeleteResult
 
-    fun recuperaReceitas() = fetchData(::recuperaReceitasUseCase) {
-        onAny { viewState -> _receitaGetResult.update { viewState } }
+    fun recuperaReceitas(filterByDescricao: String? = null) {
+        this.filterByDescricao = filterByDescricao
+
+        fetchData(::recuperaReceitasUseCase) {
+            onAny { viewState -> _receitaGetResult.update { viewState } }
+        }
     }
 
     fun deletaReceita(receita: Receita) {
@@ -34,7 +40,7 @@ class ListaReceitasViewModel(
         }
     }
 
-    private suspend fun recuperaReceitasUseCase() = getReceitasUseCase.runAsync()
+    private suspend fun recuperaReceitasUseCase() = getReceitasUseCase.runAsync(filterByDescricao)
     private suspend fun deletaReceitaUseCase() = deletaReceitaUseCase.runAsync(receita)
 
 }

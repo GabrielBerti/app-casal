@@ -8,7 +8,7 @@ import retrofit2.http.*
 interface ReceitaService {
 
     @GET("/api/receitas")
-    suspend fun recuperaReceitas(): Response<List<ReceitaResponseDTO>>
+    suspend fun recuperaReceitas(@Query("search") search: String?): Response<List<ReceitaResponseDTO>>
 
     @POST("/api/receitas")
     suspend fun insereReceita(@Body request: ReceitaRequestDTO): Response<ReceitaResponseDTO>

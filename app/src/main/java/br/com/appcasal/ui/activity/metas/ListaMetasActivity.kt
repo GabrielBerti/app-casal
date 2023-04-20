@@ -5,6 +5,7 @@ import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +19,8 @@ import br.com.appcasal.ui.dialog.metas.AdicionaMetaDialog
 import br.com.appcasal.ui.dialog.metas.AlteraMetaDialog
 import br.com.appcasal.util.Util
 import br.com.appcasal.viewmodel.ListaMetasViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -27,6 +30,7 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
 
     private var util = Util()
     val viewModel: ListaMetasViewModel by viewModel()
+    private var searchJob: Job? = null
 
     private var metas: List<Meta> = emptyList()
 
@@ -49,7 +53,29 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
         configuraSpinner()
         configuraFab()
         setupSwipeRefresh()
+        setupEditTextSearch()
         //spinnerStatus.background.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP)
+    }
+
+    private fun searchDebounced(searchText: String) {
+        searchJob?.cancel()
+        searchJob = lifecycleScope.launch {
+            delay(1500)
+            viewModel.recuperaMetas(viewModel.filterByConcluidas, searchText)
+        }
+    }
+
+    private fun setupEditTextSearch() {
+        with(binding.etSearch) {
+            doOnTextChanged { text, _, _, _ ->
+                if (hasFocus()) searchDebounced(text.toString())
+            }
+
+            setOnEditorActionListener { v, _, _ ->
+                util.hideKeyboard(this, v.context)
+                true
+            }
+        }
     }
 
     private fun setupListeners() {
@@ -148,11 +174,11 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
                     }
 
                     1 -> {
-                        viewModel.recuperaMetasByFilter(false)
+                        viewModel.recuperaMetas(false)
                     }
 
                     2 -> {
-                        viewModel.recuperaMetasByFilter(true)
+                        viewModel.recuperaMetas(true)
                     }
                 }
             }

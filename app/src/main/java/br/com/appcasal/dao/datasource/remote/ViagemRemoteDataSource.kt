@@ -10,8 +10,8 @@ class ViagemRemoteDataSource(
     private val viagemService: ViagemService
 ): CallableDataSource {
 
-    suspend fun recuperaViagens(): List<ViagemResponseDTO> {
-        val dto = viagemService.recuperaViagens()
+    suspend fun recuperaViagens(search: String?): List<ViagemResponseDTO> {
+        val dto = viagemService.recuperaViagens(search)
 
         return dto.body() ?: emptyList()
     }

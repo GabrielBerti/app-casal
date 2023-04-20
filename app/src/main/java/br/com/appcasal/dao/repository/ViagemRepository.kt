@@ -6,8 +6,8 @@ import br.com.appcasal.domain.model.Viagem
 class ViagemRepository(
     private val viagemRemoteDataSource: ViagemRemoteDataSource
 ) {
-    suspend fun recuperaViagens(): List<Viagem> {
-        val result = viagemRemoteDataSource.recuperaViagens()
+    suspend fun recuperaViagens(search: String?): List<Viagem> {
+        val result = viagemRemoteDataSource.recuperaViagens(search)
         return result.map { Viagem.mapFrom(it) }
     }
 

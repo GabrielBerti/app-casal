@@ -10,8 +10,8 @@ class ReceitaRemoteDataSource(
     private val receitaService: ReceitaService
 ): CallableDataSource {
 
-    suspend fun recuperaReceitas(): List<ReceitaResponseDTO> {
-        val dto = receitaService.recuperaReceitas()
+    suspend fun recuperaReceitas(search: String?): List<ReceitaResponseDTO> {
+        val dto = receitaService.recuperaReceitas(search)
 
         return dto.body() ?: emptyList()
     }

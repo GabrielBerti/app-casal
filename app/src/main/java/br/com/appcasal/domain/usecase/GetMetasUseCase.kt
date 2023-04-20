@@ -6,7 +6,7 @@ import br.com.appcasal.domain.model.Meta
 class GetMetasUseCase(
     private val metaRepository: MetaRepository
 ) {
-    suspend fun runAsync(): List<Meta> {
-        return metaRepository.recuperaMetas()
+    suspend fun runAsync(concluidas: Boolean?, search: String?): List<Meta> {
+        return metaRepository.recuperaMetas(concluidas, search)
     }
 }

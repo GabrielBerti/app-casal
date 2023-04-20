@@ -6,13 +6,8 @@ import br.com.appcasal.domain.model.Meta
 class MetaRepository(
     private val metaRemoteDataSource: MetaRemoteDataSource,
 ) {
-    suspend fun recuperaMetas(): List<Meta> {
-        val result = metaRemoteDataSource.recuperaMetas()
-        return result.map { Meta.mapFrom(it) }
-    }
-
-    suspend fun recuperaMetasByConcluidas(concluidas: Boolean): List<Meta> {
-        val result = metaRemoteDataSource.recuperaMetasByConcluidas(concluidas)
+    suspend fun recuperaMetas(concluidas: Boolean?, search: String?): List<Meta> {
+        val result = metaRemoteDataSource.recuperaMetas(concluidas, search)
         return result.map { Meta.mapFrom(it) }
     }
 

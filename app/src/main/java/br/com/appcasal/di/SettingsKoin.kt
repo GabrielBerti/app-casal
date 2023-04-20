@@ -76,7 +76,6 @@ val settingsRepositoryModule = module {
 
 val settingsUseCaseModule = module {
     factory { GetMetasUseCase(get()) }
-    factory { GetMetasByFilterUseCase(get()) }
     factory { InsereMetaUseCase(get()) }
     factory { AlteraMetaUseCase(get()) }
     factory { DeletaMetaUseCase(get()) }
@@ -117,7 +116,7 @@ val settingsUseCaseModule = module {
 }
 
 val settingsViewModelModule = module {
-    viewModel { ListaMetasViewModel(get(), get(), get(), get(), get()) }
+    viewModel { ListaMetasViewModel(get(), get(), get(), get()) }
     viewModel { ListaTransacoesViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { FormReceitasViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { DetalheReceitaViewModel(get(), get(), get()) }

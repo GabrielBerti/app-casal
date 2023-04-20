@@ -6,8 +6,8 @@ import br.com.appcasal.domain.model.Receita
 class ReceitaRepository(
     private val receitaRemoteDataSource: ReceitaRemoteDataSource
 ) {
-    suspend fun recuperaReceitas(): List<Receita> {
-        val result = receitaRemoteDataSource.recuperaReceitas()
+    suspend fun recuperaReceitas(search: String?): List<Receita> {
+        val result = receitaRemoteDataSource.recuperaReceitas(search)
 
         return result.map { Receita.mapFrom(it) }
     }

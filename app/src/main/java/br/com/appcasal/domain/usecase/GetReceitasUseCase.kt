@@ -6,7 +6,7 @@ import br.com.appcasal.domain.model.Receita
 class GetReceitasUseCase(
     private val receitaRepository: ReceitaRepository
 ) {
-    suspend fun runAsync(): List<Receita> {
-        return receitaRepository.recuperaReceitas()
+    suspend fun runAsync(search: String?): List<Receita> {
+        return receitaRepository.recuperaReceitas(search)
     }
 }

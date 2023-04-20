@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,7 +20,8 @@ import br.com.appcasal.ui.dialog.viagens.AdicionaViagemDialog
 import br.com.appcasal.ui.dialog.viagens.AlteraViagemDialog
 import br.com.appcasal.util.Util
 import br.com.appcasal.viewmodel.ListaViagensViewModel
-import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -28,9 +30,8 @@ class ListaViagensActivity : AppCompatActivity(), ClickViagem {
     private lateinit var binding: ActivityListaViagensBinding
     val viewModel: ListaViagensViewModel by viewModel()
     private var viagens: List<Viagem> = emptyList()
-
+    private var searchJob: Job? = null
     private var util = Util()
-    private lateinit var snackbar: Snackbar
 
     private val viewDaActivity by lazy {
         window.decorView
@@ -50,6 +51,7 @@ class ListaViagensActivity : AppCompatActivity(), ClickViagem {
 
         setListeners()
         setupSwipeRefresh()
+        setupEditTextSearch()
     }
 
     private fun setupSwipeRefresh() {
@@ -122,6 +124,27 @@ class ListaViagensActivity : AppCompatActivity(), ClickViagem {
     private fun configuraAdapter(viagens: List<Viagem>) {
         binding.rvViagens.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rvViagens.adapter = ListaViagensAdapter(viagens, this, this)
+    }
+
+    private fun setupEditTextSearch() {
+        with(binding.etSearch) {
+            doOnTextChanged { text, _, _, _ ->
+                if (hasFocus()) searchDebounced(text.toString())
+            }
+
+            setOnEditorActionListener { v, _, _ ->
+                util.hideKeyboard(this, v.context)
+                true
+            }
+        }
+    }
+
+    private fun searchDebounced(searchText: String) {
+        searchJob?.cancel()
+        searchJob = lifecycleScope.launch {
+            delay(1500)
+            viewModel.recuperaViagens(searchText)
+        }
     }
 
     private fun createSnackBar(tipoSnackbar: TipoSnackbar, msg: String) {

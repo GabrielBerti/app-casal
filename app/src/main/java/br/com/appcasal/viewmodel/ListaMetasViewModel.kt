@@ -9,14 +9,17 @@ import kotlinx.coroutines.flow.*
 
 class ListaMetasViewModel(
     private val getMetasUseCase: GetMetasUseCase,
-    private val getMetasByFilterUseCase: GetMetasByFilterUseCase,
     private val insereMetaUseCase: InsereMetaUseCase,
     private val alteraMetaUseCase: AlteraMetaUseCase,
     private val deletaMetaUseCase: DeletaMetaUseCase
 ) : ViewModel() {
 
     private lateinit var meta: Meta
-    private var filterByConcluidas: Boolean = true
+    var filterByConcluidas: Boolean? = null
+        private set
+
+    var filterByName: String? = null
+        private set
 
     private val _metaGetResult = MutableStateFlow<ViewState<List<Meta>>>(ViewState.Initial())
     val metaGetResult: StateFlow<ViewState<List<Meta>>> get() = _metaGetResult
@@ -30,17 +33,12 @@ class ListaMetasViewModel(
     private val _metaDeleteResult: MutableSharedFlow<ViewState<Boolean>> = MutableSharedFlow()
     val metaDeleteResult: SharedFlow<ViewState<Boolean>> get() = _metaDeleteResult
 
-    fun recuperaMetas() = fetchData(::recuperaMetasUseCase) {
-        onAny { viewState -> _metaGetResult.update { viewState } }
-    }
-
-    fun recuperaMetasByFilter(filterByConcluidas: Boolean) {
+    fun recuperaMetas(filterByConcluidas: Boolean? = null, filterByName: String? = null) {
         this.filterByConcluidas = filterByConcluidas
+        this.filterByName = filterByName
 
-        fetchData(::recuperaMetasByFilter) {
-            onAny { viewState ->
-                _metaGetResult.emit(viewState)
-            }
+        fetchData(::recuperaMetasUseCase) {
+            onAny { viewState -> _metaGetResult.update { viewState } }
         }
     }
 
@@ -74,9 +72,7 @@ class ListaMetasViewModel(
         }
     }
 
-    private suspend fun recuperaMetasUseCase() = getMetasUseCase.runAsync()
-
-    private suspend fun recuperaMetasByFilter() = getMetasByFilterUseCase.runAsync(filterByConcluidas)
+    private suspend fun recuperaMetasUseCase() = getMetasUseCase.runAsync(filterByConcluidas, filterByName)
 
     private suspend fun insereMetaUseCase() = insereMetaUseCase.runAsync(meta)
 
