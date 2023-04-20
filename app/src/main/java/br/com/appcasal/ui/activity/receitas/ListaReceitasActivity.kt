@@ -60,9 +60,13 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
                     if (it) binding.isError = false
                     binding.isLoading = it
                 }
-                onError { binding.isError = true }
+                onError {
+                    binding.isError = true
+                    binding.noResults = false
+                }
                 onSuccess {
                     receitas = it
+                    binding.noResults = receitas.isEmpty() && binding.etSearch.text?.toString() != ""
                     configuraAdapter(it)
                 }
             }
@@ -94,6 +98,8 @@ class ListaReceitasActivity : AppCompatActivity(), ClickReceita {
     private fun setupEditTextSearch() {
         with(binding.etSearch) {
             doOnTextChanged { text, _, _, _ ->
+                binding.etSearch.performClick()
+                binding.etSearch.requestFocus()
                 if (hasFocus()) searchDebounced(text.toString())
             }
 

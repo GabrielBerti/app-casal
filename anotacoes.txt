@@ -2,10 +2,9 @@
     -- Nota quebrada(pegar imagem quebrada com a Mari)
 ------------------------------------------------------------------------------------------------------------------------
 -- melhorias futuras:
-    -- fazer tela de splash
-    -- criar cenario de no results no debounced da viagem, meta e receita
     -- separar tela de metas em tabs de concluidas / não concluidas
     -- nao recarregar ao sair e voltar para as telas(utilizar fragments ao inves de activitys)
+        -- fazer tela de splash
 
 
 

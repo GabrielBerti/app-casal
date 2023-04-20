@@ -3,6 +3,8 @@
     <string name="app_name">App Casal</string>
     <string name="action_settings">Settings</string>
     <string name="buscar_por">Buscar por...</string>
+    <string name="nenhum_resultado_encontrado">Não foram encontrados resultados para a busca inserida.</string>
+    <string name="troque_as_informacoes_tente_novamente">Altere as informações e tente novamente.</string>
 
     <!--modulo financas-->
     <string name="financas">Finanças</string>

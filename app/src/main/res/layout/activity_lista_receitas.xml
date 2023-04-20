@@ -16,6 +16,10 @@
             name="isLoading"
             type="Boolean" />
 
+        <variable
+            name="noResults"
+            type="Boolean" />
+
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -115,6 +119,49 @@
                     android:visibility="@{isError == true || isLoading == true ? View.GONE : View.VISIBLE}"
                     app:layout_anchor="@id/etSearch"
                     app:layout_anchorGravity="top|center_horizontal" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/llcNoResults"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="32dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="@{isLoading == false &amp;&amp; noResults == true ? View.VISIBLE : View.GONE}"
+                    tools:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:background="@drawable/shape_circle"
+                        android:backgroundTint="#FFF8EE"
+                        android:padding="16dp"
+                        android:src="@drawable/ic_warning"
+                        app:tint="#FFAA2C" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="28dp"
+                        android:fontFamily="@font/asap_semi_bold"
+                        android:gravity="center"
+                        android:text="@string/nenhum_resultado_encontrado"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        tools:textColor="@color/black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/nunito_medium"
+                        android:gravity="center"
+                        android:text="@string/troque_as_informacoes_tente_novamente"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        tools:textColor="@color/black"/>
+                </androidx.appcompat.widget.LinearLayoutCompat>
             </LinearLayout>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton

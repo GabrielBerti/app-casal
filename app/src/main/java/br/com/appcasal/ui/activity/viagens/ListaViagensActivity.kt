@@ -68,9 +68,13 @@ class ListaViagensActivity : AppCompatActivity(), ClickViagem {
                     if (it) binding.isError = false
                     binding.isLoading = it
                 }
-                onError { binding.isError = true }
+                onError {
+                    binding.isError = true
+                    binding.noResults = false
+                }
                 onSuccess {
                     viagens = it
+                    binding.noResults = viagens.isEmpty() && binding.etSearch.text?.toString() != ""
                     configuraAdapter(it)
                 }
             }
@@ -129,6 +133,8 @@ class ListaViagensActivity : AppCompatActivity(), ClickViagem {
     private fun setupEditTextSearch() {
         with(binding.etSearch) {
             doOnTextChanged { text, _, _, _ ->
+                binding.etSearch.performClick()
+                binding.etSearch.requestFocus()
                 if (hasFocus()) searchDebounced(text.toString())
             }
 

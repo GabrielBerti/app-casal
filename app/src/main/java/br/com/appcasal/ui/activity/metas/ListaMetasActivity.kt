@@ -33,6 +33,7 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
     private var searchJob: Job? = null
 
     private var metas: List<Meta> = emptyList()
+    private var posicaoSpinner = 0
 
     private val viewDaActivity by lazy {
         window.decorView
@@ -68,6 +69,8 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
     private fun setupEditTextSearch() {
         with(binding.etSearch) {
             doOnTextChanged { text, _, _, _ ->
+                binding.etSearch.performClick()
+                binding.etSearch.requestFocus()
                 if (hasFocus()) searchDebounced(text.toString())
             }
 
@@ -85,9 +88,13 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
                     if (it) binding.isError = false
                     binding.isLoading = it
                 }
-                onError { binding.isError = true }
+                onError {
+                    binding.isError = true
+                    binding.noResults = false
+                }
                 onSuccess {
                     metas = it
+                    binding.noResults = metas.isEmpty() && (binding.etSearch.text?.toString() != "" || posicaoSpinner != 0)
                     configuraAdapter(it)
                 }
             }
@@ -168,6 +175,7 @@ class ListaMetasActivity : AppCompatActivity(), ClickMeta {
                 posicao: Int,
                 id: Long
             ) {
+                posicaoSpinner = posicao
                 when (posicao) {
                     0 -> {
                         viewModel.recuperaMetas()
