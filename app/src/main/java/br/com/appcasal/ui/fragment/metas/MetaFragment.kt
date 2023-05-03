@@ -48,13 +48,10 @@ class MetaFragment : Fragment(), ClickMeta {
         decorView = requireActivity().window.decorView as ViewGroup
 
         setupListeners()
-        viewModel.recuperaMetas()
-
         setClickListeners()
         configuraSpinner()
         configuraFab()
         setupSwipeRefresh()
-        setupEditTextSearch()
         //spinnerStatus.background.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP)
 
         return binding.root
@@ -92,6 +89,10 @@ class MetaFragment : Fragment(), ClickMeta {
     private fun setupListeners() {
         lifecycleScope.launch {
             viewModel.metaGetResult.collectViewState(this) {
+                onStarted {
+                    viewModel.recuperaMetas()
+                    setupEditTextSearch()
+                }
                 onLoading {
                     if (it) binding.isError = false
                     binding.isLoading = it

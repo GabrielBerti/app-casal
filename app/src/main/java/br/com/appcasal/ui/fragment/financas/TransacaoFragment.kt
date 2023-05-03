@@ -49,7 +49,6 @@ class TransacaoFragment : Fragment(), ClickTransacao {
 
         setupListeners()
         setClickListeners()
-        recuperaResumoETransacoes()
         configuraFab()
         setupSwipeRefresh()
 
@@ -59,6 +58,7 @@ class TransacaoFragment : Fragment(), ClickTransacao {
     private fun setupListeners() {
         lifecycleScope.launch {
             viewModel.transacaoGetResult.collectViewState(this) {
+                onStarted { recuperaResumoETransacoes() }
                 onLoading {
                     if (it) binding.isError = false
                     binding.isLoading = it

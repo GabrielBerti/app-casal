@@ -38,16 +38,12 @@ class ReceitaFragment : Fragment(), ClickReceita {
     ): View {
         super.onCreate(savedInstanceState)
         binding = FragmentReceitaBinding.inflate(inflater, container, false)
-
         decorView = requireActivity().window.decorView as ViewGroup
 
         setupListeners()
-        viewModel.recuperaReceitas()
-
         setClickListeners()
         setListeners()
         setupSwipeRefresh()
-        setupEditTextSearch()
 
         return binding.root
     }
@@ -62,6 +58,10 @@ class ReceitaFragment : Fragment(), ClickReceita {
     private fun setupListeners() {
         lifecycleScope.launch {
             viewModel.receitaGetResult.collectViewState(this) {
+                onStarted {
+                    viewModel.recuperaReceitas()
+                    setupEditTextSearch()
+                }
                 onLoading {
                     if (it) binding.isError = false
                     binding.isLoading = it

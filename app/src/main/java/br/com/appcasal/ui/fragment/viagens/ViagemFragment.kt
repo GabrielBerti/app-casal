@@ -42,11 +42,9 @@ class ViagemFragment : Fragment(), ClickViagem {
         decorView = requireActivity().window.decorView as ViewGroup
 
         setupListeners()
-        viewModel.recuperaViagens()
         setClickListeners()
         setListeners()
         setupSwipeRefresh()
-        setupEditTextSearch()
 
         return binding.root
     }
@@ -67,6 +65,10 @@ class ViagemFragment : Fragment(), ClickViagem {
     private fun setupListeners() {
         lifecycleScope.launch {
             viewModel.viagemGetResult.collectViewState(this) {
+                onStarted {
+                    viewModel.recuperaViagens()
+                    setupEditTextSearch()
+                }
                 onLoading {
                     if (it) binding.isError = false
                     binding.isLoading = it
