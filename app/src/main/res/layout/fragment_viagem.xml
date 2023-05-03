@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+
+        <variable
+            name="isError"
+            type="Boolean" />
+
+        <variable
+            name="isLoading"
+            type="Boolean" />
+
+        <variable
+            name="noResults"
+            type="Boolean" />
+
+    </data>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/cl_lista_viagens"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/ll_lista_viagens"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/ivBack"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_margin="16dp"
+                        android:src="@drawable/ic_arrow_left"
+                        app:tint="@color/white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription"
+                        tools:tint="@color/black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_bold"
+                        android:text="@string/viagens"
+                        android:layout_gravity="center"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="@+id/ivBack"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/ivBack"
+                        android:textSize="18sp"
+                        tools:textColor="@color/black"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:progressTint="@color/sucesso"
+                    android:visibility="@{isLoading == true ? View.VISIBLE : View.GONE}"
+                    tools:visibility="gone" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:background="@drawable/shape_error_rounded_rect_border"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    android:visibility="@{isError == true ? View.VISIBLE : View.GONE}"
+                    tools:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/ic_error"
+                        app:tint="@color/red"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/erro_carregar_viagens"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="16dp"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:endIconDrawable="@drawable/ic_x_close"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/white"
+                    app:hintEnabled="false"
+                    android:layout_margin="16dp"
+                    android:visibility="@{isError == true || isLoading == true ? View.GONE : View.VISIBLE}">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etSearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:drawableStart="@drawable/ic_search"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@color/white"
+                        android:fontFamily="@font/nunito_regular"
+                        android:hint="@string/buscar_por"
+                        android:imeOptions="actionSearch"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:paddingHorizontal="8dp"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingVertical="0dp"
+                        android:singleLine="true"
+                        android:textColor="@color/white"
+                        android:background="@drawable/selector_edit_text_background"
+                        android:textSize="14sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_viagens"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{isError == true || isLoading == true ? View.GONE : View.VISIBLE}"
+                    tools:listitem="@layout/viagem_item"/>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/llcNoResults"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="32dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="@{isLoading == false &amp;&amp; noResults == true ? View.VISIBLE : View.GONE}"
+                    tools:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:background="@drawable/shape_circle"
+                        android:backgroundTint="#FFF8EE"
+                        android:padding="16dp"
+                        android:src="@drawable/ic_warning"
+                        app:tint="#FFAA2C" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="28dp"
+                        android:fontFamily="@font/asap_semi_bold"
+                        android:gravity="center"
+                        android:text="@string/nenhum_resultado_encontrado"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        tools:textColor="@color/black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/nunito_medium"
+                        android:gravity="center"
+                        android:text="@string/troque_as_informacoes_tente_novamente"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        tools:textColor="@color/black"/>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </LinearLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_adiciona_viagem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                fab:backgroundTint="@color/colorPrimaryVariant"
+                android:src="@drawable/ic_plus" />
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</layout>

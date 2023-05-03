@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android-extensions'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin' version '2.4.1' apply true
 }
 
 android {
@@ -51,7 +52,7 @@ android {
 dependencies {
     def koinVersion = "2.2.3"
     def lifecycleVersion = "2.5.0-alpha02"
-    def navigationVersion="2.4.0"
+    def navigationVersion="2.5.3"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
@@ -89,6 +90,7 @@ dependencies {
     implementation "io.insert-koin:koin-androidx-viewmodel:$koinVersion"
 
     /** NAVIGATION */
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-dynamic-features-fragment:$navigationVersion"
 }

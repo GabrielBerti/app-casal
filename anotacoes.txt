@@ -3,8 +3,8 @@
 ------------------------------------------------------------------------------------------------------------------------
 -- melhorias futuras:
     -- separar tela de metas em tabs de concluidas / não concluidas
-    -- nao recarregar ao sair e voltar para as telas(utilizar fragments ao inves de activitys)
-        -- fazer tela de splash
+    -- nao recarregar ao sair e voltar para as telas
+    -- fazer tela de splash
 
 
 
