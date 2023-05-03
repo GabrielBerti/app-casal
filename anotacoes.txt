@@ -1,7 +1,6 @@
 -- ajustes gerais:
     -- Nota quebrada(pegar imagem quebrada com a Mari)
     -- Erro na reciclagem quando tem muitos ingredientes na tela de detalhes da receita
-    -- fazer tela de splash
 ------------------------------------------------------------------------------------------------------------------------
 -- melhorias futuras:
     -- separar tela de metas em tabs de concluidas / não concluidas
