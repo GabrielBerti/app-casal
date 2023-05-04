@@ -41,8 +41,10 @@ class ReceitaFragment : Fragment(), ClickReceita {
         decorView = requireActivity().window.decorView as ViewGroup
 
         setupListeners()
+        viewModel.recuperaReceitas()
         setClickListeners()
         setListeners()
+        setupEditTextSearch()
         setupSwipeRefresh()
 
         return binding.root
@@ -58,10 +60,6 @@ class ReceitaFragment : Fragment(), ClickReceita {
     private fun setupListeners() {
         lifecycleScope.launch {
             viewModel.receitaGetResult.collectViewState(this) {
-                onStarted {
-                    viewModel.recuperaReceitas()
-                    setupEditTextSearch()
-                }
                 onLoading {
                     if (it) binding.isError = false
                     binding.isLoading = it

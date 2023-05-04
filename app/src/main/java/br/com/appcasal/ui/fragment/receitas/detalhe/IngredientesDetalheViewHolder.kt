@@ -44,7 +44,6 @@ class IngredientesDetalheViewHolder(
         checkBoxIngrediente.isChecked = ingrediente.marcado
         if (checkBoxIngrediente.isChecked) {
             ingredienteDescricao.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-        } else {
         }
     }
 

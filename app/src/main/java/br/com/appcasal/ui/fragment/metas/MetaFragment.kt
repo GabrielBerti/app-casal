@@ -218,25 +218,25 @@ class MetaFragment : Fragment(), ClickMeta {
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
-        if(binding.rvMetas.adapter != null) {
+        if (binding.rvMetas.adapter != null) {
             val posicao: Int = (binding.rvMetas.adapter as ListaMetasAdapter).posicao
 
             when (item.itemId) {
                 1 -> {
                     metas[posicao].concluido = !metas[posicao].concluido
 
-                    val msgSnackbar: String = if(metas[posicao].concluido) {
-                        resources.getString(R.string.meta_concluida_sucesso)
-                    } else {
-                        resources.getString(R.string.meta_desconcluida_sucesso)
-                    }
+//                    val msgSnackbar: String = if(metas[posicao].concluido) {
+//                        resources.getString(R.string.meta_concluida_sucesso)
+//                    } else {
+//                        resources.getString(R.string.meta_desconcluida_sucesso)
+//                    }
+
+//                    createSnackBar(
+//                        TipoSnackbar.SUCESSO,
+//                        msgSnackbar
+//                    )
 
                     viewModel.alteraMeta(metas[posicao])
-
-                    createSnackBar(
-                        TipoSnackbar.SUCESSO,
-                        msgSnackbar
-                    )
                 }
 
                 2 -> {

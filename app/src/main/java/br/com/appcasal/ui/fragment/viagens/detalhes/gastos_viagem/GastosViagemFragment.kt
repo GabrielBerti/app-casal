@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import br.com.appcasal.util.extension.formataParaBrasileiro
 import br.com.appcasal.R
 import br.com.appcasal.databinding.FragmentGastosViagemBinding
 import br.com.appcasal.domain.model.*
@@ -17,6 +16,7 @@ import br.com.appcasal.ui.collectViewState
 import br.com.appcasal.ui.dialog.gastos_viagem.AdicionaGastoViagemDialog
 import br.com.appcasal.ui.dialog.gastos_viagem.AlteraGastoViagemDialog
 import br.com.appcasal.util.Util
+import br.com.appcasal.util.extension.formataParaBrasileiro
 import br.com.appcasal.viewmodel.GastosViagemViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
@@ -27,30 +27,20 @@ class GastosViagemFragment(private val viagem: Viagem) : Fragment(), ClickGastoV
 
     private lateinit var binding: FragmentGastosViagemBinding
     val viewModel: GastosViagemViewModel by viewModel()
-
     private var gastosViagem: List<GastoViagem> = listOf()
+    private lateinit var decorView: ViewGroup
 
     private lateinit var snackbar: Snackbar
     private var util = Util()
 
-    private val viewDaActivity by lazy {
-        requireActivity().window.decorView
-    }
-
-    private val viewGroupDaActivity by lazy {
-        viewDaActivity as ViewGroup
-    }
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentGastosViagemBinding.inflate(layoutInflater)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        super.onCreate(savedInstanceState)
+        binding = FragmentGastosViagemBinding.inflate(inflater, container, false)
+        decorView = requireActivity().window.decorView as ViewGroup
 
         gastosViagem = viagem.gastosViagens
         setupListeners()
@@ -58,6 +48,8 @@ class GastosViagemFragment(private val viagem: Viagem) : Fragment(), ClickGastoV
         exibeValorTotalGasto()
         configuraAdapter()
         setupSwipeRefresh()
+
+        return binding.root
     }
 
     private fun setupSwipeRefresh() {
@@ -167,14 +159,14 @@ class GastosViagemFragment(private val viagem: Viagem) : Fragment(), ClickGastoV
     }
 
     private fun chamaDialogDeAdicao() {
-        AdicionaGastoViagemDialog(viewGroupDaActivity, requireContext())
+        AdicionaGastoViagemDialog(decorView, requireContext())
             .chama(null) { gastoViagemCriado ->
                 viewModel.insereGastoViagem(gastoViagemCriado, viagem)
             }
     }
 
     private fun chamaDialogDeAlteracao(gastoViagem: GastoViagem) {
-        AlteraGastoViagemDialog(viewGroupDaActivity, requireContext())
+        AlteraGastoViagemDialog(decorView, requireContext())
             .chamaAlteracao(gastoViagem, gastoViagem.id) { gastoViagemAlterado ->
                 viewModel.alteraGastoViagem(gastoViagemAlterado, viagem)
             }
@@ -182,7 +174,7 @@ class GastosViagemFragment(private val viagem: Viagem) : Fragment(), ClickGastoV
 
     private fun createSnackBar(tipoSnackbar: TipoSnackbar, msg: String) {
         snackbar = util.createSnackBarWithReturn(
-            requireActivity().findViewById(R.id.cl_detalhe_viagem),
+            binding.clListaGastosViagem,
             msg,
             resources,
             tipoSnackbar

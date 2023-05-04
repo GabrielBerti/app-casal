@@ -27,6 +27,11 @@ class ListaViagensAdapter(
         return ViagemViewHolder(viewCriada)
     }
 
+    override fun onViewRecycled(holder: ListaViagensAdapter.ViagemViewHolder) {
+        holder.itemView.setOnLongClickListener(null)
+        super.onViewRecycled(holder)
+    }
+
     override fun onBindViewHolder(holder: ViagemViewHolder, position: Int) {
         val viagem = viagens[position]
 

@@ -21,6 +21,8 @@ class DetalheViagemFragment : Fragment() {
     private lateinit var viagem: Viagem
     private lateinit var decorView: ViewGroup
     private val args: DetalheViagemFragmentArgs by navArgs()
+    private lateinit var fragmentGastosViagem: GastosViagemFragment
+    private lateinit var fragmentLugaresVisitadosViagem: LugaresVisitadosFragment
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,19 +68,21 @@ class DetalheViagemFragment : Fragment() {
     }
 
     private fun instanciaFragmentGastos() {
-        val fragment = GastosViagemFragment(viagem)
-        val transaction = requireActivity().supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fl_detalhes_viagem, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
+        fragmentGastosViagem = GastosViagemFragment(viagem)
+
+        childFragmentManager.beginTransaction()
+            .replace(R.id.fl_detalhes_viagem, fragmentGastosViagem)
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun instanciaFragmentLugaresVisitados() {
-        val fragment = LugaresVisitadosFragment(viagem)
-        val transaction = requireActivity().supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fl_detalhes_viagem, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
+        fragmentLugaresVisitadosViagem = LugaresVisitadosFragment(viagem)
+
+        childFragmentManager.beginTransaction()
+            .replace(R.id.fl_detalhes_viagem, fragmentLugaresVisitadosViagem)
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun setShapeButtonSelectAndUnselected(

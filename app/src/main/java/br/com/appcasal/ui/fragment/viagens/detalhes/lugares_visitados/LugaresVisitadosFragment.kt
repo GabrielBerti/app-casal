@@ -29,33 +29,26 @@ class LugaresVisitadosFragment(private val viagem: Viagem) : Fragment(), ClickLu
     val viewModel: LugaresVisitadosViewModel by viewModel()
     private var lugaresVisitados: List<LugarVisitado> = listOf()
 
+    private lateinit var decorView: ViewGroup
     private lateinit var snackbar: Snackbar
     private var util = Util()
 
-    private val viewDaActivity by lazy {
-        requireActivity().window.decorView
-    }
-
-    private val viewGroupDaActivity by lazy {
-        viewDaActivity as ViewGroup
-    }
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentLugaresVisitadosViagemBinding.inflate(layoutInflater)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        super.onCreate(savedInstanceState)
+        binding = FragmentLugaresVisitadosViagemBinding.inflate(inflater, container, false)
+        decorView = requireActivity().window.decorView as ViewGroup
 
         lugaresVisitados = viagem.lugaresVisitados
         setupListeners()
         configuraAdapter()
         setListeners()
         setupSwipeRefresh()
+
+        return binding.root
     }
 
     private fun setupSwipeRefresh() {
@@ -149,14 +142,14 @@ class LugaresVisitadosFragment(private val viagem: Viagem) : Fragment(), ClickLu
     }
 
     private fun chamaDialogDeAdicao() {
-        AdicionaLugarVisitadoDialog(viewGroupDaActivity, requireContext())
+        AdicionaLugarVisitadoDialog(decorView, requireContext())
             .chama(null) { lugarVisitadoCriado ->
                 viewModel.insereLugarVisitado(lugarVisitadoCriado, viagem)
             }
     }
 
     private fun chamaDialogDeAlteracao(lugarVisitado: LugarVisitado) {
-        AlteraLugarVisitadoDialog(viewGroupDaActivity, requireContext())
+        AlteraLugarVisitadoDialog(decorView, requireContext())
             .chamaAlteracao(lugarVisitado, lugarVisitado.id) { lugarVisitadoAlterado ->
                 viewModel.alteraLugarVisitado(lugarVisitadoAlterado, viagem)
             }

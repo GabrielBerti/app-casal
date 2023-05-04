@@ -26,7 +26,6 @@ class FormReceitasFragment : Fragment(), ClickIngrediente {
     private lateinit var binding: FragmentFormReceitasBinding
     private val viewModel: FormReceitasViewModel by viewModel()
     private val args: FormReceitasFragmentArgs by navArgs()
-    private lateinit var adapter: ListaIngredientesAdapter
     private lateinit var receita: Receita
     private var util = Util()
 
@@ -295,7 +294,7 @@ class FormReceitasFragment : Fragment(), ClickIngrediente {
         when (item.itemId) {
             1 -> {
                 remove(posicao)
-                adapter.notifyItemRemoved(posicao)
+                (binding.rvIngredientes.adapter as ListaIngredientesAdapter).notifyItemRemoved(posicao)
             }
         }
 
@@ -307,7 +306,7 @@ class FormReceitasFragment : Fragment(), ClickIngrediente {
             viewModel.deletaIngrediente(ingredientes[posicao])
         } else {
             ingredientes.remove(ingredientes[posicao])
-            adapter.notifyItemRemoved(posicao)
+            (binding.rvIngredientes.adapter as ListaIngredientesAdapter).notifyItemRemoved(posicao)
             atualizaIngredientes()
         }
     }
