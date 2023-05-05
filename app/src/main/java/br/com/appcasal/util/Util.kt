@@ -108,82 +108,92 @@ class Util {
 
     fun exibeEstrelas(
         nota: Double?,
-        estrela1: ImageView,
-        estrela2: ImageView,
-        estrela3: ImageView,
-        estrela4: ImageView,
-        estrela5: ImageView
+        estrela05: ImageView,
+        estrela10: ImageView,
+        estrela15: ImageView,
+        estrela20: ImageView,
+        estrela25: ImageView,
+        estrela30: ImageView,
+        estrela35: ImageView,
+        estrela40: ImageView,
+        estrela45: ImageView,
+        estrela50: ImageView
     ) {
         when (nota) {
-            1.0 -> {
-                estrela1.alpha = 1f
-            }
-            2.0 -> {
-                estrela1.alpha = 1f
-                estrela2.alpha = 1f
-            }
-            3.0 -> {
-                estrela1.alpha = 1f
-                estrela2.alpha = 1f
-                estrela3.alpha = 1f
-            }
-            4.0 -> {
-                estrela1.alpha = 1f
-                estrela2.alpha = 1f
-                estrela3.alpha = 1f
-                estrela4.alpha = 1f
-
-            }
-            5.0 -> {
-                estrela1.alpha = 1f
-                estrela2.alpha = 1f
-                estrela3.alpha = 1f
-                estrela4.alpha = 1f
-                estrela5.alpha = 1f
-            }
-        }
-    }
-
-    fun exibeEEscondeEstrelas(
-        nota: Double?,
-        estrela1: ImageView,
-        estrela2: ImageView,
-        estrela3: ImageView,
-        estrela4: ImageView,
-        estrela5: ImageView
-    ) {
-        when (nota) {
-            null -> {
-                estrela1.visibility = View.GONE
-                estrela2.visibility = View.GONE
-                estrela3.visibility = View.GONE
-                estrela4.visibility = View.GONE
-                estrela5.visibility = View.GONE
+            0.5 -> {
+                estrela05.alpha = 1f
             }
             1.0 -> {
-                estrela1.alpha = 1f
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+            }
+            1.5 -> {
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                estrela15.alpha = 1f
             }
             2.0 -> {
-                estrela1.alpha = 1f
-                estrela2.alpha = 1f
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                estrela15.alpha = 1f
+                estrela20.alpha = 1f
+            }
+            2.5 -> {
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                estrela15.alpha = 1f
+                estrela20.alpha = 1f
+                estrela25.alpha = 1f
             }
             3.0 -> {
-                estrela1.alpha = 1f
-                estrela2.alpha = 1f
-                estrela3.alpha = 1f
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                estrela15.alpha = 1f
+                estrela20.alpha = 1f
+                estrela25.alpha = 1f
+                estrela30.alpha = 1f
+            }
+            3.5 -> {
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                estrela15.alpha = 1f
+                estrela20.alpha = 1f
+                estrela25.alpha = 1f
+                estrela30.alpha = 1f
+                estrela35.alpha = 1f
             }
             4.0 -> {
-                estrela1.alpha = 1f
-                estrela2.alpha = 1f
-                estrela3.alpha = 1f
-                estrela4.alpha = 1f
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                estrela15.alpha = 1f
+                estrela20.alpha = 1f
+                estrela25.alpha = 1f
+                estrela30.alpha = 1f
+                estrela35.alpha = 1f
+                estrela40.alpha = 1f
+            }
+            4.5 -> {
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                estrela15.alpha = 1f
+                estrela20.alpha = 1f
+                estrela25.alpha = 1f
+                estrela30.alpha = 1f
+                estrela35.alpha = 1f
+                estrela40.alpha = 1f
+                estrela45.alpha = 1f
             }
             5.0 -> {
-                estrela1.alpha = 1f
-                estrela2.alpha = 1f
-                estrela3.alpha = 1f
-                estrela4.alpha = 1f
-                estrela5.alpha = 1f
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                estrela15.alpha = 1f
+                estrela20.alpha = 1f
+                estrela25.alpha = 1f
+                estrela30.alpha = 1f
+                estrela35.alpha = 1f
+                estrela40.alpha = 1f
+                estrela45.alpha = 1f
+                estrela50.alpha = 1f
             }
         }
     }

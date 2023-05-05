@@ -13,7 +13,10 @@ class ListaLugaresVisitadosViagemAdapter(
     private var clickLugarVisitadoViagem: ClickLugarVisitadoViagem
 ) :
     RecyclerView.Adapter<ListaLugaresVisitadosViagemAdapter.LugarVisitadoViagemViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LugarVisitadoViagemViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): LugarVisitadoViagemViewHolder {
         val viewCriada: View = LayoutInflater.from(context)
             .inflate(R.layout.lugar_visitado_item, parent, false)
 
@@ -53,26 +56,7 @@ class ListaLugaresVisitadosViagemAdapter(
             val lugarVisitado = lugaresVisitados[posicao]
 
             binding.nomeLugarVisitado.text = lugarVisitado.nome
-            when (lugarVisitado.nota) {
-                0.0 -> {
-                    aplicaERetiraOpacidadeEstrelas(0.0)
-                }
-                1.0 -> {
-                    aplicaERetiraOpacidadeEstrelas(1.0)
-                }
-                2.0 -> {
-                    aplicaERetiraOpacidadeEstrelas(2.0)
-                }
-                3.0 -> {
-                    aplicaERetiraOpacidadeEstrelas(3.0)
-                }
-                4.0 -> {
-                    aplicaERetiraOpacidadeEstrelas(4.0)
-                }
-                5.0 -> {
-                    aplicaERetiraOpacidadeEstrelas(5.0)
-                }
-            }
+            aplicaERetiraOpacidadeEstrelas(lugarVisitado.nota)
         }
 
         override fun onCreateContextMenu(
@@ -84,46 +68,141 @@ class ListaLugaresVisitadosViagemAdapter(
         }
 
         private fun aplicaERetiraOpacidadeEstrelas(nota: Double) {
-            if(nota == 0.0) {
-                binding.estrela1.alpha = 0.3f
-                binding.estrela2.alpha = 0.3f
-                binding.estrela3.alpha = 0.3f
-                binding.estrela4.alpha = 0.3f
-                binding.estrela5.alpha = 0.3f
-            } else if(nota == 1.0) {
-                binding.estrela2.alpha = 0.3f
-                binding.estrela3.alpha = 0.3f
-                binding.estrela4.alpha = 0.3f
-                binding.estrela5.alpha = 0.3f
+            if (nota == 0.0) {
+                binding.estrelaViagem05.alpha = 0.3f
+                binding.estrelaViagem10.alpha = 0.3f
+                binding.estrelaViagem15.alpha = 0.3f
+                binding.estrelaViagem20.alpha = 0.3f
+                binding.estrelaViagem25.alpha = 0.3f
+                binding.estrelaViagem30.alpha = 0.3f
+                binding.estrelaViagem35.alpha = 0.3f
+                binding.estrelaViagem40.alpha = 0.3f
+                binding.estrelaViagem45.alpha = 0.3f
+                binding.estrelaViagem50.alpha = 0.3f
 
-                binding.estrela1.alpha = 1f
-            } else if(nota == 2.0) {
-                binding.estrela3.alpha = 0.3f
-                binding.estrela4.alpha = 0.3f
-                binding.estrela5.alpha = 0.3f
+            } else if (nota == 0.5) {
+                binding.estrelaViagem10.alpha = 0.3f
+                binding.estrelaViagem15.alpha = 0.3f
+                binding.estrelaViagem20.alpha = 0.3f
+                binding.estrelaViagem25.alpha = 0.3f
+                binding.estrelaViagem30.alpha = 0.3f
+                binding.estrelaViagem35.alpha = 0.3f
+                binding.estrelaViagem40.alpha = 0.3f
+                binding.estrelaViagem45.alpha = 0.3f
+                binding.estrelaViagem50.alpha = 0.3f
 
-                binding.estrela1.alpha = 1f
-                binding.estrela2.alpha = 1f
-            } else if(nota == 3.0) {
-                binding.estrela4.alpha = 0.3f
-                binding.estrela5.alpha = 0.3f
+                binding.estrelaViagem05.alpha = 1.0f
+            } else if (nota == 1.0) {
+                binding.estrelaViagem15.alpha = 0.3f
+                binding.estrelaViagem20.alpha = 0.3f
+                binding.estrelaViagem25.alpha = 0.3f
+                binding.estrelaViagem30.alpha = 0.3f
+                binding.estrelaViagem35.alpha = 0.3f
+                binding.estrelaViagem40.alpha = 0.3f
+                binding.estrelaViagem45.alpha = 0.3f
+                binding.estrelaViagem50.alpha = 0.3f
 
-                binding.estrela1.alpha = 1f
-                binding.estrela2.alpha = 1f
-                binding.estrela3.alpha = 1f
-            } else if(nota == 4.0) {
-                binding.estrela5.alpha = 0.3f
+                binding.estrelaViagem05.alpha = 1.0f
+                binding.estrelaViagem10.alpha = 1.0f
+            } else if (nota == 1.5) {
+                binding.estrelaViagem20.alpha = 0.3f
+                binding.estrelaViagem25.alpha = 0.3f
+                binding.estrelaViagem30.alpha = 0.3f
+                binding.estrelaViagem35.alpha = 0.3f
+                binding.estrelaViagem40.alpha = 0.3f
+                binding.estrelaViagem45.alpha = 0.3f
+                binding.estrelaViagem50.alpha = 0.3f
 
-                binding.estrela1.alpha = 1f
-                binding.estrela2.alpha = 1f
-                binding.estrela3.alpha = 1f
-                binding.estrela4.alpha = 1f
-            } else if(nota == 5.0) {
-                binding.estrela1.alpha = 1f
-                binding.estrela2.alpha = 1f
-                binding.estrela3.alpha = 1f
-                binding.estrela4.alpha = 1f
-                binding.estrela5.alpha = 1f
+                binding.estrelaViagem05.alpha = 1.0f
+                binding.estrelaViagem10.alpha = 1.0f
+                binding.estrelaViagem15.alpha = 1.0f
+            } else if (nota == 2.0) {
+                binding.estrelaViagem25.alpha = 0.3f
+                binding.estrelaViagem30.alpha = 0.3f
+                binding.estrelaViagem35.alpha = 0.3f
+                binding.estrelaViagem40.alpha = 0.3f
+                binding.estrelaViagem45.alpha = 0.3f
+                binding.estrelaViagem50.alpha = 0.3f
+
+                binding.estrelaViagem05.alpha = 1.0f
+                binding.estrelaViagem10.alpha = 1.0f
+                binding.estrelaViagem15.alpha = 1.0f
+                binding.estrelaViagem20.alpha = 1.0f
+            } else if (nota == 2.5) {
+                binding.estrelaViagem30.alpha = 0.3f
+                binding.estrelaViagem35.alpha = 0.3f
+                binding.estrelaViagem40.alpha = 0.3f
+                binding.estrelaViagem45.alpha = 0.3f
+                binding.estrelaViagem50.alpha = 0.3f
+
+                binding.estrelaViagem05.alpha = 1.0f
+                binding.estrelaViagem10.alpha = 1.0f
+                binding.estrelaViagem15.alpha = 1.0f
+                binding.estrelaViagem20.alpha = 1.0f
+                binding.estrelaViagem25.alpha = 1.0f
+
+            } else if (nota == 3.0) {
+                binding.estrelaViagem35.alpha = 0.3f
+                binding.estrelaViagem40.alpha = 0.3f
+                binding.estrelaViagem45.alpha = 0.3f
+                binding.estrelaViagem50.alpha = 0.3f
+
+                binding.estrelaViagem05.alpha = 1.0f
+                binding.estrelaViagem10.alpha = 1.0f
+                binding.estrelaViagem15.alpha = 1.0f
+                binding.estrelaViagem20.alpha = 1.0f
+                binding.estrelaViagem25.alpha = 1.0f
+                binding.estrelaViagem30.alpha = 1.0f
+
+            } else if (nota == 3.5) {
+                binding.estrelaViagem40.alpha = 0.3f
+                binding.estrelaViagem45.alpha = 0.3f
+                binding.estrelaViagem50.alpha = 0.3f
+
+                binding.estrelaViagem05.alpha = 1.0f
+                binding.estrelaViagem10.alpha = 1.0f
+                binding.estrelaViagem15.alpha = 1.0f
+                binding.estrelaViagem20.alpha = 1.0f
+                binding.estrelaViagem25.alpha = 1.0f
+                binding.estrelaViagem30.alpha = 1.0f
+                binding.estrelaViagem35.alpha = 1.0f
+
+            } else if (nota == 4.0) {
+                binding.estrelaViagem45.alpha = 0.3f
+                binding.estrelaViagem50.alpha = 0.3f
+
+                binding.estrelaViagem05.alpha = 1.0f
+                binding.estrelaViagem10.alpha = 1.0f
+                binding.estrelaViagem15.alpha = 1.0f
+                binding.estrelaViagem20.alpha = 1.0f
+                binding.estrelaViagem25.alpha = 1.0f
+                binding.estrelaViagem30.alpha = 1.0f
+                binding.estrelaViagem35.alpha = 1.0f
+                binding.estrelaViagem40.alpha = 1.0f
+            } else if (nota == 4.5) {
+                binding.estrelaViagem50.alpha = 0.3f
+
+                binding.estrelaViagem05.alpha = 1.0f
+                binding.estrelaViagem10.alpha = 1.0f
+                binding.estrelaViagem15.alpha = 1.0f
+                binding.estrelaViagem20.alpha = 1.0f
+                binding.estrelaViagem25.alpha = 1.0f
+                binding.estrelaViagem30.alpha = 1.0f
+                binding.estrelaViagem35.alpha = 1.0f
+                binding.estrelaViagem40.alpha = 1.0f
+                binding.estrelaViagem45.alpha = 1.0f
+
+            } else if (nota == 5.0) {
+                binding.estrelaViagem05.alpha = 1.0f
+                binding.estrelaViagem10.alpha = 1.0f
+                binding.estrelaViagem15.alpha = 1.0f
+                binding.estrelaViagem20.alpha = 1.0f
+                binding.estrelaViagem25.alpha = 1.0f
+                binding.estrelaViagem30.alpha = 1.0f
+                binding.estrelaViagem35.alpha = 1.0f
+                binding.estrelaViagem40.alpha = 1.0f
+                binding.estrelaViagem45.alpha = 1.0f
+                binding.estrelaViagem50.alpha = 1.0f
             }
         }
     }

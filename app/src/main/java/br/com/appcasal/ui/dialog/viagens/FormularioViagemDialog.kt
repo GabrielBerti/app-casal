@@ -34,11 +34,17 @@ abstract class FormularioViagemDialog(
 
     protected var estrelaMarcarda: Double? = 1.0
     protected var viagemSemNota: Boolean = false
-    protected lateinit var estrela1: ImageView
-    protected lateinit var estrela2: ImageView
-    protected lateinit var estrela3: ImageView
-    protected lateinit var estrela4: ImageView
-    protected lateinit var estrela5: ImageView
+
+    protected lateinit var estrela05: ImageView
+    protected lateinit var estrela10: ImageView
+    protected lateinit var estrela15: ImageView
+    protected lateinit var estrela20: ImageView
+    protected lateinit var estrela25: ImageView
+    protected lateinit var estrela30: ImageView
+    protected lateinit var estrela35: ImageView
+    protected lateinit var estrela40: ImageView
+    protected lateinit var estrela45: ImageView
+    protected lateinit var estrela50: ImageView
     protected lateinit var cbSemNota: CheckBox
 
     fun chama(id: Long?, linearLayout: LinearLayout, delegate: (viagem: Viagem) -> Unit) {
@@ -163,11 +169,16 @@ abstract class FormularioViagemDialog(
         campoLocal = view.findViewById<EditText>(R.id.form_local)
         campoDataInicio = view.findViewById<EditText>(R.id.form_data_inicio_viagem)
         campoDataFim = view.findViewById<EditText>(R.id.form_data_final_viagem)
-        estrela1 = view.findViewById<ImageView>(R.id.form_viagem_estrela1)
-        estrela2 = view.findViewById<ImageView>(R.id.form_viagem_estrela2)
-        estrela3 = view.findViewById<ImageView>(R.id.form_viagem_estrela3)
-        estrela4 = view.findViewById<ImageView>(R.id.form_viagem_estrela4)
-        estrela5 = view.findViewById<ImageView>(R.id.form_viagem_estrela5)
+        estrela05 = view.findViewById<ImageView>(R.id.formViagemEstrelaViagem05)
+        estrela10 = view.findViewById<ImageView>(R.id.formViagemEstrelaViagem10)
+        estrela15 = view.findViewById<ImageView>(R.id.formViagemEstrelaViagem15)
+        estrela20 = view.findViewById<ImageView>(R.id.formViagemEstrelaViagem20)
+        estrela25 = view.findViewById<ImageView>(R.id.formViagemEstrelaViagem25)
+        estrela30 = view.findViewById<ImageView>(R.id.formViagemEstrelaViagem30)
+        estrela35 = view.findViewById<ImageView>(R.id.formViagemEstrelaViagem35)
+        estrela40 = view.findViewById<ImageView>(R.id.formViagemEstrelaViagem40)
+        estrela45 = view.findViewById<ImageView>(R.id.formViagemEstrelaViagem45)
+        estrela50 = view.findViewById<ImageView>(R.id.formViagemEstrelaViagem50)
         cbSemNota = view.findViewById<CheckBox>(R.id.cb_sem_nota)
 
         setListeners()
@@ -185,56 +196,131 @@ abstract class FormularioViagemDialog(
             }
         }
 
-        estrela1.setOnClickListener {
+        estrela05.setOnClickListener {
             if (!cbSemNota.isChecked) {
                 desmarcaEstrelas()
 
-                if (estrelaMarcarda == 1.0) {
+                if (estrelaMarcarda == 0.5) {
                     estrelaMarcarda = 0.0
                 } else {
                     it.alpha = 1f
-                    estrelaMarcarda = 1.0
+                    estrelaMarcarda = 0.5
                 }
             }
         }
 
-        estrela2.setOnClickListener {
+        estrela10.setOnClickListener {
             if (!cbSemNota.isChecked) {
                 desmarcaEstrelas()
-                estrela1.alpha = 1f
+                estrela05.alpha = 1f
+                it.alpha = 1f
+                estrelaMarcarda = 1.0
+            }
+        }
+
+        estrela15.setOnClickListener {
+            if (!cbSemNota.isChecked) {
+                desmarcaEstrelas()
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                it.alpha = 1f
+                estrelaMarcarda = 1.5
+            }
+        }
+
+        estrela20.setOnClickListener {
+            if (!cbSemNota.isChecked) {
+                desmarcaEstrelas()
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                estrela15.alpha = 1f
                 it.alpha = 1f
                 estrelaMarcarda = 2.0
             }
         }
 
-        estrela3.setOnClickListener {
+        estrela25.setOnClickListener {
             if (!cbSemNota.isChecked) {
                 desmarcaEstrelas()
-                estrela1.alpha = 1f
-                estrela2.alpha = 1f
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                estrela15.alpha = 1f
+                estrela20.alpha = 1f
+                it.alpha = 1f
+                estrelaMarcarda = 2.5
+            }
+        }
+
+        estrela30.setOnClickListener {
+            if (!cbSemNota.isChecked) {
+                desmarcaEstrelas()
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                estrela15.alpha = 1f
+                estrela20.alpha = 1f
+                estrela25.alpha = 1f
                 it.alpha = 1f
                 estrelaMarcarda = 3.0
             }
         }
 
-        estrela4.setOnClickListener {
+        estrela35.setOnClickListener {
             if (!cbSemNota.isChecked) {
                 desmarcaEstrelas()
-                estrela1.alpha = 1f
-                estrela2.alpha = 1f
-                estrela3.alpha = 1f
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                estrela15.alpha = 1f
+                estrela20.alpha = 1f
+                estrela25.alpha = 1f
+                estrela30.alpha = 1f
+                it.alpha = 1f
+                estrelaMarcarda = 3.5
+            }
+        }
+
+        estrela40.setOnClickListener {
+            if (!cbSemNota.isChecked) {
+                desmarcaEstrelas()
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                estrela15.alpha = 1f
+                estrela20.alpha = 1f
+                estrela25.alpha = 1f
+                estrela30.alpha = 1f
+                estrela35.alpha = 1f
                 it.alpha = 1f
                 estrelaMarcarda = 4.0
             }
         }
 
-        estrela5.setOnClickListener {
+        estrela45.setOnClickListener {
             if (!cbSemNota.isChecked) {
                 desmarcaEstrelas()
-                estrela1.alpha = 1f
-                estrela2.alpha = 1f
-                estrela3.alpha = 1f
-                estrela4.alpha = 1f
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                estrela15.alpha = 1f
+                estrela20.alpha = 1f
+                estrela25.alpha = 1f
+                estrela30.alpha = 1f
+                estrela35.alpha = 1f
+                estrela40.alpha = 1f
+                it.alpha = 1f
+                estrelaMarcarda = 4.5
+            }
+        }
+
+        estrela50.setOnClickListener {
+            if (!cbSemNota.isChecked) {
+                desmarcaEstrelas()
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                estrela15.alpha = 1f
+                estrela20.alpha = 1f
+                estrela25.alpha = 1f
+                estrela30.alpha = 1f
+                estrela35.alpha = 1f
+                estrela40.alpha = 1f
+                estrela45.alpha = 1f
                 it.alpha = 1f
                 estrelaMarcarda = 5.0
             }
@@ -242,10 +328,15 @@ abstract class FormularioViagemDialog(
     }
 
     private fun desmarcaEstrelas() {
-        estrela1.alpha = 0.3f
-        estrela2.alpha = 0.3f
-        estrela3.alpha = 0.3f
-        estrela4.alpha = 0.3f
-        estrela5.alpha = 0.3f
+        estrela05.alpha = 0.3f
+        estrela10.alpha = 0.3f
+        estrela15.alpha = 0.3f
+        estrela20.alpha = 0.3f
+        estrela25.alpha = 0.3f
+        estrela30.alpha = 0.3f
+        estrela35.alpha = 0.3f
+        estrela40.alpha = 0.3f
+        estrela45.alpha = 0.3f
+        estrela50.alpha = 0.3f
     }
 }

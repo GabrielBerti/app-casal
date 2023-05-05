@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
@@ -23,53 +23,116 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:textSize="20sp"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 tools:text="Canoa Bonita" />
-
         </LinearLayout>
 
-        <ImageView android:id="@+id/estrela1"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginEnd="2dp"
-            android:alpha="1"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_estrela" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp">
 
-        <ImageView android:id="@+id/estrela2"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginEnd="2dp"
-            android:alpha="0.3"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_estrela" />
+            <ImageView
+                android:id="@+id/estrelaViagem05"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:alpha="0.3"
+                android:src="@drawable/estrela_esquerda"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView android:id="@+id/estrela3"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginEnd="2dp"
-            android:layout_gravity="center"
-            android:alpha="0.3"
-            android:src="@drawable/ic_estrela" />
+            <ImageView
+                android:id="@+id/estrelaViagem10"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="-10.1dp"
+                android:alpha="0.3"
+                android:src="@drawable/estrela_direita"
+                app:layout_constraintStart_toEndOf="@id/estrelaViagem05"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView android:id="@+id/estrela4"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginEnd="2dp"
-            android:layout_gravity="center"
-            android:alpha="0.3"
-            android:src="@drawable/ic_estrela" />
+            <ImageView
+                android:id="@+id/estrelaViagem15"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:alpha="0.3"
+                android:src="@drawable/estrela_esquerda"
+                app:layout_constraintStart_toEndOf="@id/estrelaViagem10"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView android:id="@+id/estrela5"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginEnd="7dp"
-            android:layout_gravity="center"
-            android:alpha="0.3"
-            android:src="@drawable/ic_estrela" />
+            <ImageView
+                android:id="@+id/estrelaViagem20"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="-10.1dp"
+                android:alpha="0.3"
+                android:src="@drawable/estrela_direita"
+                app:layout_constraintStart_toEndOf="@id/estrelaViagem15"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/estrelaViagem25"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:alpha="0.3"
+                android:src="@drawable/estrela_esquerda"
+                app:layout_constraintStart_toEndOf="@id/estrelaViagem20"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/estrelaViagem30"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="-10.1dp"
+                android:alpha="0.3"
+                android:src="@drawable/estrela_direita"
+                app:layout_constraintStart_toEndOf="@id/estrelaViagem25"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/estrelaViagem35"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:alpha="0.3"
+                android:src="@drawable/estrela_esquerda"
+                app:layout_constraintStart_toEndOf="@id/estrelaViagem30"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/estrelaViagem40"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="-10.1dp"
+                android:alpha="0.3"
+                android:src="@drawable/estrela_direita"
+                app:layout_constraintStart_toEndOf="@id/estrelaViagem35"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/estrelaViagem45"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:alpha="0.3"
+                android:src="@drawable/estrela_esquerda"
+                app:layout_constraintStart_toEndOf="@id/estrelaViagem40"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/estrelaViagem50"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="-10.1dp"
+                android:alpha="0.3"
+                android:src="@drawable/estrela_direita"
+                app:layout_constraintStart_toEndOf="@id/estrelaViagem45"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     </LinearLayout>
 
 </LinearLayout>

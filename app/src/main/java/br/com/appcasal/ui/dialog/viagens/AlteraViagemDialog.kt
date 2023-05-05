@@ -29,6 +29,6 @@ class AlteraViagemDialog(
         campoDataInicio.setText(viagem.dataInicio.formataParaBrasileiro())
         campoDataFim.setText(viagem.dataFim.formataParaBrasileiro())
         estrelaMarcarda = viagem.nota
-        util.exibeEstrelas(viagem.nota, estrela1, estrela2, estrela3, estrela4, estrela5)
+        util.exibeEstrelas(viagem.nota, estrela05, estrela10, estrela15, estrela20, estrela25, estrela30, estrela35, estrela40, estrela45, estrela50)
     }
 }

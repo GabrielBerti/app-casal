@@ -1,7 +1,5 @@
--- ajustes gerais:
-    -- Nota quebrada(pegar imagem quebrada com a Mari)
-------------------------------------------------------------------------------------------------------------------------
--- melhorias futuras:
+-- melhorias:
+    -- Deixar Mari decidir qual a foto do splash e mostrar opção preto e branca
     -- separar tela de metas em tabs de concluidas / não concluidas
 
 
