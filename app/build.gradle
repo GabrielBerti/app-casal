@@ -23,8 +23,9 @@ android {
         debug {
             buildConfigField "String", "BASE_URL", '"http://192.168.15.159:8080"'
             //buildConfigField "String", "BASE_URL", '"http://192.168.15.158:8080"'
-        }
+            //buildConfigField "String", "BASE_URL", '"https://app-casal-backend-production.up.railway.app"'
 
+        }
         release {
             buildConfigField "String", "BASE_URL", '"https://issuer-gf-mfm-account.uat.sippe.com.br"'
             minifyEnabled false

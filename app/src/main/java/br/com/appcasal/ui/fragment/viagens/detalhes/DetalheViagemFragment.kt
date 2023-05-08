@@ -72,7 +72,6 @@ class DetalheViagemFragment : Fragment() {
 
         childFragmentManager.beginTransaction()
             .replace(R.id.fl_detalhes_viagem, fragmentGastosViagem)
-            .addToBackStack(null)
             .commit()
     }
 
@@ -81,7 +80,6 @@ class DetalheViagemFragment : Fragment() {
 
         childFragmentManager.beginTransaction()
             .replace(R.id.fl_detalhes_viagem, fragmentLugaresVisitadosViagem)
-            .addToBackStack(null)
             .commit()
     }
 

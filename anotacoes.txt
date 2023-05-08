@@ -1,5 +1,4 @@
 -- melhorias:
-    -- erro ao entrar na tela de detalhes da viagem e clicar em voltar pelo SO
     -- separar tela de metas em tabs de concluidas / não concluidas
 
 
