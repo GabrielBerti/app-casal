@@ -18,6 +18,7 @@ import br.com.appcasal.viewmodel.ListaReceitasViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.bind
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ReceitaFragment : Fragment(), ClickReceita {
@@ -72,6 +73,7 @@ class ReceitaFragment : Fragment(), ClickReceita {
                     receitas = it
                     binding.noResults = receitas.isEmpty() && binding.etSearch.text?.toString() != ""
                     configuraAdapter(it)
+                    focarCampoDeBusca()
                 }
             }
 
@@ -94,6 +96,15 @@ class ReceitaFragment : Fragment(), ClickReceita {
         }
     }
 
+    private fun focarCampoDeBusca() {
+        if(binding.etSearch.text.toString() != "") {
+            binding.etSearch.performClick()
+            binding.etSearch.requestFocus()
+        } else {
+            util.hideKeyboard(binding.etSearch, requireContext())
+        }
+    }
+
     private fun configuraAdapter(receitas: List<Receita>) {
         binding.rvReceitas.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.rvReceitas.adapter = ListaReceitasAdapter(receitas, requireContext(), this)
@@ -102,8 +113,6 @@ class ReceitaFragment : Fragment(), ClickReceita {
     private fun setupEditTextSearch() {
         with(binding.etSearch) {
             doOnTextChanged { text, _, _, _ ->
-                binding.etSearch.performClick()
-                binding.etSearch.requestFocus()
                 if (hasFocus()) searchDebounced(text.toString())
             }
 

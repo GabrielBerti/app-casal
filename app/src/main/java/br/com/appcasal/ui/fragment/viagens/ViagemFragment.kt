@@ -81,6 +81,7 @@ class ViagemFragment : Fragment(), ClickViagem {
                     viagens = it
                     binding.noResults = viagens.isEmpty() && binding.etSearch.text?.toString() != ""
                     configuraAdapter(it)
+                    focarCampoDeBusca()
                 }
             }
 
@@ -122,6 +123,15 @@ class ViagemFragment : Fragment(), ClickViagem {
         }
     }
 
+    private fun focarCampoDeBusca() {
+        if(binding.etSearch.text.toString() != "") {
+            binding.etSearch.performClick()
+            binding.etSearch.requestFocus()
+        } else {
+            util.hideKeyboard(binding.etSearch, requireContext())
+        }
+    }
+
     private fun handleError(msg: Int) {
         util.retiraOpacidadeFundo(binding.llListaViagens)
         createSnackBar(
@@ -139,8 +149,6 @@ class ViagemFragment : Fragment(), ClickViagem {
     private fun setupEditTextSearch() {
         with(binding.etSearch) {
             doOnTextChanged { text, _, _, _ ->
-                binding.etSearch.performClick()
-                binding.etSearch.requestFocus()
                 if (hasFocus()) searchDebounced(text.toString())
             }
 

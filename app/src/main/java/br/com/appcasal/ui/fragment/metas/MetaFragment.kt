@@ -74,8 +74,6 @@ class MetaFragment : Fragment(), ClickMeta {
     private fun setupEditTextSearch() {
         with(binding.etSearch) {
             doOnTextChanged { text, _, _, _ ->
-                binding.etSearch.performClick()
-                binding.etSearch.requestFocus()
                 if (hasFocus()) searchDebounced(text.toString())
             }
 
@@ -105,6 +103,7 @@ class MetaFragment : Fragment(), ClickMeta {
                     metas = it
                     binding.noResults = metas.isEmpty() && (binding.etSearch.text?.toString() != "" || posicaoSpinner != 0)
                     configuraAdapter(it)
+                    focarCampoDeBusca()
                 }
             }
 
@@ -143,6 +142,15 @@ class MetaFragment : Fragment(), ClickMeta {
                     binding.rvMetas.adapter?.notifyDataSetChanged()
                 }
             }
+        }
+    }
+
+    private fun focarCampoDeBusca() {
+        if(binding.etSearch.text.toString() != "") {
+            binding.etSearch.performClick()
+            binding.etSearch.requestFocus()
+        } else {
+            util.hideKeyboard(binding.etSearch, requireContext())
         }
     }
 
