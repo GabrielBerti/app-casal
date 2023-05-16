@@ -16,13 +16,13 @@ import br.com.appcasal.ui.collectViewState
 import br.com.appcasal.ui.dialog.metas.AdicionaMetaDialog
 import br.com.appcasal.ui.dialog.metas.AlteraMetaDialog
 import br.com.appcasal.util.Util
-import br.com.appcasal.viewmodel.ListaMetasViewModel
+import br.com.appcasal.viewmodel.MetasViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MetaListFragment : Fragment(), ClickMeta {
     lateinit var binding: FragmentMetaListaBinding
-    val viewModel: ListaMetasViewModel by viewModel()
+    val viewModel: MetasViewModel by viewModel()
     private var util = Util()
     private lateinit var decorView: ViewGroup
 

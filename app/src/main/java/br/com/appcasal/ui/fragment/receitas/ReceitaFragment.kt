@@ -14,17 +14,16 @@ import br.com.appcasal.domain.model.TipoSnackbar
 import br.com.appcasal.ui.collectResult
 import br.com.appcasal.ui.collectViewState
 import br.com.appcasal.util.Util
-import br.com.appcasal.viewmodel.ListaReceitasViewModel
+import br.com.appcasal.viewmodel.ReceitasViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.bind
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ReceitaFragment : Fragment(), ClickReceita {
 
     private lateinit var binding: FragmentReceitaBinding
-    val viewModel: ListaReceitasViewModel by viewModel()
+    val viewModel: ReceitasViewModel by viewModel()
 
     private var util = Util()
     private var receitas: List<Receita> = emptyList()

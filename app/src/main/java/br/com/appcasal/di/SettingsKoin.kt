@@ -116,12 +116,12 @@ val settingsUseCaseModule = module {
 }
 
 val settingsViewModelModule = module {
-    viewModel { ListaMetasViewModel(get(), get(), get(), get()) }
-    viewModel { ListaTransacoesViewModel(get(), get(), get(), get(), get(), get()) }
+    viewModel { MetasViewModel(get(), get(), get(), get()) }
+    viewModel { TransacoesViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { FormReceitasViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { DetalheReceitaViewModel(get(), get(), get()) }
-    viewModel { ListaReceitasViewModel(get(), get()) }
-    viewModel { ListaViagensViewModel(get(), get(), get(), get()) }
+    viewModel { ReceitasViewModel(get(), get()) }
+    viewModel { ViagensViewModel(get(), get(), get(), get()) }
     viewModel { LugaresVisitadosViewModel(get(), get(), get(), get()) }
     viewModel { GastosViagemViewModel(get(), get(), get(), get()) }
 }

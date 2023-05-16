@@ -7,7 +7,7 @@ import br.com.appcasal.ui.ViewState
 import br.com.appcasal.ui.fetchData
 import kotlinx.coroutines.flow.*
 
-class ListaViagensViewModel(
+class ViagensViewModel(
     private val getViagensUseCase: GetViagensUseCase,
     private val insereViagemUseCase: InsereViagemUseCase,
     private val alteraViagemUseCase: AlteraViagemUseCase,

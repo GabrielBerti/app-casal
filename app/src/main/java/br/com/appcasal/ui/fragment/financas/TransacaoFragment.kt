@@ -16,7 +16,7 @@ import br.com.appcasal.ui.dialog.financas.AdicionaTransacaoDialog
 import br.com.appcasal.ui.dialog.financas.AlteraTransacaoDialog
 import br.com.appcasal.util.Util
 import br.com.appcasal.util.extension.formataParaBrasileiro
-import br.com.appcasal.viewmodel.ListaTransacoesViewModel
+import br.com.appcasal.viewmodel.TransacoesViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -25,7 +25,7 @@ import java.math.BigDecimal
 class TransacaoFragment : Fragment(), ClickTransacao {
 
     private lateinit var binding: FragmentTransacaoBinding
-    val viewModel: ListaTransacoesViewModel by viewModel()
+    val viewModel: TransacoesViewModel by viewModel()
 
     private var util = Util()
     private var snackbar: Snackbar? = null

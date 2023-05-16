@@ -7,7 +7,7 @@ import br.com.appcasal.ui.ViewState
 import br.com.appcasal.ui.fetchData
 import kotlinx.coroutines.flow.*
 
-class ListaReceitasViewModel(
+class ReceitasViewModel(
     private val getReceitasUseCase: GetReceitasUseCase,
     private val deletaReceitaUseCase: DeletaReceitaUseCase
 ) : ViewModel() {

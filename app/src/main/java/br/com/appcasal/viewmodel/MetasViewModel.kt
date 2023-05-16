@@ -7,7 +7,7 @@ import br.com.appcasal.ui.ViewState
 import br.com.appcasal.ui.fetchData
 import kotlinx.coroutines.flow.*
 
-class ListaMetasViewModel(
+class MetasViewModel(
     private val getMetasUseCase: GetMetasUseCase,
     private val insereMetaUseCase: InsereMetaUseCase,
     private val alteraMetaUseCase: AlteraMetaUseCase,

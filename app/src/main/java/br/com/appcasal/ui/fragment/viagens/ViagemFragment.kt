@@ -16,7 +16,7 @@ import br.com.appcasal.ui.collectViewState
 import br.com.appcasal.ui.dialog.viagens.AdicionaViagemDialog
 import br.com.appcasal.ui.dialog.viagens.AlteraViagemDialog
 import br.com.appcasal.util.Util
-import br.com.appcasal.viewmodel.ListaViagensViewModel
+import br.com.appcasal.viewmodel.ViagensViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -25,7 +25,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class ViagemFragment : Fragment(), ClickViagem {
 
     private lateinit var binding: FragmentViagemBinding
-    val viewModel: ListaViagensViewModel by viewModel()
+    val viewModel: ViagensViewModel by viewModel()
     private var viagens: List<Viagem> = emptyList()
     private var searchJob: Job? = null
     private var util = Util()
