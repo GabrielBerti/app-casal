@@ -1,5 +1,3 @@
--- melhorias:
-    -- separar tela de metas em tabs de concluidas / não concluidas
 
 
 

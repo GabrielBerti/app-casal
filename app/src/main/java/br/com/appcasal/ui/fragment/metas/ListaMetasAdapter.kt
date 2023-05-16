@@ -62,7 +62,7 @@ class ListaMetasAdapter(
             val meta = metas[posicao]
             metaConcluida = meta.concluido
 
-            adicionaIcone()
+            adicionaIcone(meta)
             adicionaDescricao(meta)
             adicionaCheckBox(meta)
         }
@@ -71,8 +71,12 @@ class ListaMetasAdapter(
             binding.metaDescricao.text = meta.descricao
         }
 
-        private fun adicionaIcone() {
-            binding.metaIcone.setBackgroundResource(R.drawable.ic_alvo)
+        private fun adicionaIcone(meta: Meta) {
+            if(meta.concluido) {
+                binding.metaIcone.setBackgroundResource(R.drawable.ic_check)
+            } else {
+                binding.metaIcone.setBackgroundResource(R.drawable.ic_alvo)
+            }
         }
 
         private fun adicionaCheckBox(meta: Meta) {

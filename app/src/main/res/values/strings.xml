@@ -35,6 +35,7 @@
     <string name="metas">Metas</string>
     <string name="altera_meta">Altera meta</string>
     <string name="meta_concluida">Concluída</string>
+    <string name="metas_concluidas">Concluídas</string>
     <string name="meta_nao_concluida">A fazer</string>
     <string name="todas">Todas</string>
     <string name="adiciona_meta">Adiciona meta</string>
