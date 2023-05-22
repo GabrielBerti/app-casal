@@ -81,23 +81,19 @@ class ListaMetasAdapter(
 
         private fun adicionaCheckBox(meta: Meta) {
             if (meta.concluido) {
-                binding.metaConcluido.setText(R.string.meta_concluida)
-                binding.linearMetaItem.setBackgroundColor(
+                binding.clMetaItem.setBackgroundColor(
                     ContextCompat.getColor(
                         context,
                         R.color.colorPrimaryVariant
                     )
                 )
-                binding.metaConcluido.setTextColor(ContextCompat.getColor(context, R.color.black))
             } else {
-                binding.metaConcluido.setText(R.string.meta_nao_concluida)
-                binding.linearMetaItem.setBackgroundColor(
+                binding.clMetaItem.setBackgroundColor(
                     ContextCompat.getColor(
                         context,
                         R.color.colorDark
                     )
                 )
-                binding.metaConcluido.setTextColor(ContextCompat.getColor(context, R.color.white))
             }
         }
 

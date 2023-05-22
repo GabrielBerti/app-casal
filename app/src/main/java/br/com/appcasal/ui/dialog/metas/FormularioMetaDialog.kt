@@ -52,13 +52,13 @@ abstract class FormularioMetaDialog(
         val buttonPositive = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
         val buttonNegative = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
         buttonPositive.setOnClickListener {
-            val descricaoEmTexto = campoDescricao.text.toString().somentePrimeiraLetraMaiuscula()
-
-            if(descricaoEmTexto.isBlank()) {
+            if(campoDescricao.text.toString().isBlank()) {
                 campoDescricao.error = context.getString(R.string.descricao_obrigatorio)
-            } else if (verificaMetaComMesmaDescricao(descricaoEmTexto)) {
+            } else if (verificaMetaComMesmaDescricao(campoDescricao.text.toString())) {
                 campoDescricao.error = context.getString(R.string.descricao_meta_ja_existe)
             } else {
+                val descricaoEmTexto = campoDescricao.text.toString().somentePrimeiraLetraMaiuscula()
+
                 val metaCriada: Meta = if (id == null) {
                     Meta(
                         descricao = descricaoEmTexto,
