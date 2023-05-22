@@ -98,7 +98,7 @@ class MetaFragment : Fragment() {
         searchJob?.cancel()
         searchJob = lifecycleScope.launch {
             trocouDeAba = false
-            delay(1500)
+            delay(1000)
             if (!trocouDeAba) {
                 if (positionTab == 0) {
                     metasNaoConcluidasFragment.viewModel.recuperaMetas(false, searchText)

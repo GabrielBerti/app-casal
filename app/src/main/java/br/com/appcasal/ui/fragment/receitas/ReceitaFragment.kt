@@ -125,7 +125,7 @@ class ReceitaFragment : Fragment(), ClickReceita {
     private fun searchDebounced(searchText: String) {
         searchJob?.cancel()
         searchJob = lifecycleScope.launch {
-            delay(1500)
+            delay(1000)
             viewModel.recuperaReceitas(searchText)
         }
     }
