@@ -1,4 +1,4 @@
-package br.com.alura.financask.extension
+package br.com.appcasal.util.extension
 
 import java.math.BigDecimal
 import java.text.DecimalFormat

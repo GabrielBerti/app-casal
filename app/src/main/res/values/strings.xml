@@ -2,6 +2,9 @@
     <!--geral-->
     <string name="app_name">App Casal</string>
     <string name="action_settings">Settings</string>
+    <string name="buscar_por">Buscar por...</string>
+    <string name="nenhum_resultado_encontrado">Não foram encontrados resultados para a busca inserida.</string>
+    <string name="troque_as_informacoes_tente_novamente">Altere as informações e tente novamente.</string>
 
     <!--modulo financas-->
     <string name="financas">Finanças</string>
@@ -19,9 +22,12 @@
     <string name="altera_lancamento_biel">Altera Lançamento</string>
     <string name="altera_lancamento_mari">Altera Lançamento</string>
     <string name="transacao_inserida_sucesso">Transação %s inserida com sucesso !</string>
-    <string name="transacao_alterada_sucesso">Transação alterada com sucesso !</string>
-    <string name="transacao_removida_sucesso">Transação %s removida com sucesso !</string>
+    <string name="transacao_alterada_sucesso">Transação %s alterada com sucesso !</string>
+    <string name="transacao_removida_sucesso">Transação removida com sucesso !</string>
     <string name="transacoes_removidas_sucesso">Transações removidas com sucesso !</string>
+    <string name="erro_remover_transacoes">Erro ao remover as transações.</string>
+    <string name="erro_carregar_transacoes">Erro ao carregar as transações.</string>
+    <string name="erro_carregar_resumo_transacoes">Erro ao carregar o resumo das transações.</string>
     <string name="descricao_financas_obrigatorio">"Campo descrição obrigatório"</string>
     <string name="valor_obrigatorio">"Campo valor obrigatório"</string>
 
@@ -29,15 +35,16 @@
     <string name="metas">Metas</string>
     <string name="altera_meta">Altera meta</string>
     <string name="meta_concluida">Concluída</string>
+    <string name="metas_concluidas">Concluídas</string>
     <string name="meta_nao_concluida">A fazer</string>
     <string name="todas">Todas</string>
     <string name="adiciona_meta">Adiciona meta</string>
     <string name="meta_inserida_sucesso" formatted="false">Meta %s inserida com sucesso !</string>
     <string name="meta_alterada_sucesso">Meta alterada com sucesso !</string>
-    <string name="meta_removida_sucesso">Meta %s removida com sucesso !</string>
-    <string name="metas_removidas_sucesso">Metas removidas com sucesso !</string>
+    <string name="meta_removida_sucesso">Meta removida com sucesso !</string>
     <string name="meta_concluida_sucesso">Meta concluída com sucesso !</string>
     <string name="meta_desconcluida_sucesso">Meta desconcluída com sucesso !</string>
+    <string name="erro_carregar_metas">Erro ao carregar as metas.</string>
     <string name="descricao_obrigatorio">"Campo descrição obrigatório"</string>
     <string name="descricao_meta_ja_existe">"Esta meta já existe!"</string>
 
@@ -48,9 +55,8 @@
     <string name="inserir_ingrediente">Inserir ingrediente</string>
     <string name="salvar_receita">Salvar receita</string>
     <string name="receita_inserida_sucesso">Receita %s inserida com sucesso !</string>
-    <string name="receita_alterada_sucesso">Receita alterada com sucesso !</string>
-    <string name="receita_removida_sucesso">Receita %s removida com sucesso !</string>
-    <string name="receitas_removidas_sucesso">Receitas removidas com sucesso !</string>
+    <string name="receita_alterada_sucesso">Receita %s alterada com sucesso !</string>
+    <string name="receita_removida_sucesso">Receita removida com sucesso !</string>
     <string name="altera_receita">Alterar receita</string>
     <string name="detalhe_receita">Detalhe receita</string>
     <string name="altera_ingrediente">Altera ingrediente</string>
@@ -61,7 +67,11 @@
     <string name="adiciona_receita">Adiciona receita</string>
     <string name="adiciona_ingrediente">Adiciona ingrediente</string>
     <string name="desmarcar_tudo">Desmarcar tudo</string>
+    <string name="erro_desmarcar_tudo">Erro ao desmarcar ingredientes.</string>
+    <string name="erro_marcar_desmarcar">Erro ao marcar/desmarcar ingrediente.</string>
     <string name="fechar">Fechar</string>
+    <string name="erro_carregar_receitas">Erro ao carregar as receitas.</string>
+    <string name="erro_carregar_ingredientes">Erro ao carregar os ingredientes.</string>
     <string name="nome_ingrediente_obrigatorio">"Nome do ingrediente obrigatório"</string>
     <string name="campos_receita_obrigatorios">Nome da receita e ao menos um ingrediente são obrigatórios</string>
     <string name="receita_ja_existe">"Esta receita já existe!"</string>
@@ -76,10 +86,11 @@
     <string name="local_obrigatorio">"Campo local obrigatório"</string>
     <string name="altera_viagem">Altera viagem</string>
     <string name="adiciona_viagem">Adiciona viagem</string>
+    <string name="sem_nota">Sem nota</string>
     <string name="viagem_inserida_sucesso">Viagem %s inserida com sucesso !</string>
-    <string name="viagem_alterada_sucesso">Viagem alterada com sucesso !</string>
-    <string name="viagem_removida_sucesso">Viagem %s removida com sucesso !</string>
-    <string name="viagens_removidas_sucesso">Viagens removidas com sucesso !</string>
+    <string name="viagem_alterada_sucesso">Viagem %s alterada com sucesso !</string>
+    <string name="viagem_removida_sucesso">Viagem removida com sucesso !</string>
+    <string name="erro_carregar_viagens">Erro ao carregar as viagens.</string>
 
     <string name="botao_gastos_viagem">Gastos</string>
     <string name="botao_lugares_visitados">Lugares visitados</string>
@@ -92,7 +103,8 @@
     <string name="adiciona_gasto_viagem">Adiciona gasto viagem</string>
     <string name="gasto_viagem_inserido_sucesso">Gasto %s inserido com sucesso !</string>
     <string name="gasto_viagem_alterado_sucesso">Gasto %s alterado com sucesso !</string>
-    <string name="gasto_viagem_removido_sucesso">Gasto %s removido com sucesso !</string>
+    <string name="gasto_viagem_removido_sucesso">Gasto removido com sucesso !</string>
+    <string name="erro_carregar_gastos_viagem">Erro ao carregar os gastos da viagem.</string>
 
     <string name="lugar_visitado_hint">Lugar visitado</string>
     <string name="tv_legal">Foi legal?</string>
@@ -100,11 +112,17 @@
     <string name="nao">Não</string>
     <string name="lugar_visitado_inserido_sucesso">Lugar %s inserido com sucesso !</string>
     <string name="lugar_visitado_alterado_sucesso">Lugar %s alterado com sucesso !</string>
-    <string name="lugar_visitado_removido_sucesso">Lugar %s removido com sucesso !</string>
+    <string name="lugar_visitado_removido_sucesso">Lugar removido com sucesso !</string>
     <string name="altera_lugar_visitado">Altera lugar visitado</string>
     <string name="adiciona_lugar_visitado">Adiciona lugar visitado</string>
     <string name="nome_lugar_visitado_obrigatorio">"Campo lugar visitado obrigatório"</string>
     <string name="add_lugar">"Adicionar lugar visitado"</string>
+    <string name="erro_carregar_lugares_visitados">Erro ao carregar os lugares visitados da viagem.</string>
+
+    <!--mensagens de erros padrões-->
+    <string name="erro_inserir">Erro ao inserir %s.</string>
+    <string name="erro_alterar">Erro ao alterar %s.</string>
+    <string name="erro_deletar">Erro ao deletar %s.</string>
 
     <!--exemplo de array-->
     <string-array name="lista_status">

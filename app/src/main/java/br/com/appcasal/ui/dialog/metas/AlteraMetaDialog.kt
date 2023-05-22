@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import br.com.appcasal.R
-import br.com.appcasal.model.Meta
+import br.com.appcasal.domain.model.Meta
 
 class AlteraMetaDialog(
         viewGroup: ViewGroup,

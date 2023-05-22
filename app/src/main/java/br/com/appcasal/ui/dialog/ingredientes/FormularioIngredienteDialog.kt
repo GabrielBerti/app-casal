@@ -10,8 +10,9 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
 import br.com.appcasal.R
-import br.com.appcasal.model.Ingrediente
+import br.com.appcasal.domain.model.Ingrediente
 import br.com.appcasal.util.Util
+import br.com.appcasal.util.extension.somentePrimeiraLetraMaiuscula
 
 
 abstract class FormularioIngredienteDialog(
@@ -24,13 +25,12 @@ abstract class FormularioIngredienteDialog(
     protected lateinit var campoDescricaoIngrediente: EditText
     abstract protected val tituloBotaoPositivo: String
 
-    fun chama(id: Long?, idReceita: Long, linearLayout: LinearLayout, delegate: (ingrediente: Ingrediente) -> Unit) {
-        configuraFormulario(id, idReceita, linearLayout, delegate)
+    fun chama(id: Long?, linearLayout: LinearLayout, delegate: (ingrediente: Ingrediente) -> Unit) {
+        configuraFormulario(id, linearLayout, delegate)
     }
 
     private fun configuraFormulario(
         id: Long?,
-        idReceita: Long,
         linearLayout: LinearLayout,
         delegate: (ingrediente: Ingrediente) -> Unit
     ) {
@@ -57,22 +57,22 @@ abstract class FormularioIngredienteDialog(
         val buttonNegative = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
         val button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
         button.setOnClickListener {
-            val campoDescricaoIngredienteEmTexto = campoDescricaoIngrediente.text.toString()
+            val campoDescricaoIngredienteEmTexto = campoDescricaoIngrediente.text.toString().somentePrimeiraLetraMaiuscula()
 
-            if (campoDescricaoIngredienteEmTexto.isNullOrBlank()) {
+            if (campoDescricaoIngredienteEmTexto.isBlank()) {
                 campoDescricaoIngrediente.error =
                     context.getString(R.string.nome_ingrediente_obrigatorio)
             } else {
                 val ingredienteCriado: Ingrediente = if (id == null) {
                     Ingrediente(
-                        receitaId = idReceita,
+                        //receitaId = idReceita,
                         descricao = campoDescricaoIngredienteEmTexto,
                         marcado = false
                     )
                 } else {
                     Ingrediente(
                         id = id,
-                        receitaId = idReceita,
+                       // receitaId = idReceita,
                         descricao = campoDescricaoIngredienteEmTexto,
                         marcado = false
                     )

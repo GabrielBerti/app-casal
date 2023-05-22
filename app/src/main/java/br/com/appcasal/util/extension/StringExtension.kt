@@ -1,10 +1,10 @@
-package br.com.alura.financask.extension
+package br.com.appcasal.util.extension
 
 import java.text.SimpleDateFormat
 import java.util.*
 
-fun String.limitaEmAte(caracteres: Int) : String{
-    if(this.length > caracteres){
+fun String.limitaEmAte(caracteres: Int): String {
+    if (this.length > caracteres) {
         val primeiroCaracter = 0
         return "${this.substring(primeiroCaracter, caracteres)}..."
     }
@@ -18,3 +18,5 @@ fun String.converteParaCalendar(): Calendar {
     data.time = dataConvertida
     return data
 }
+
+fun String.somentePrimeiraLetraMaiuscula(): String = this.substring(0, 1).uppercase() + this.substring(1).lowercase()

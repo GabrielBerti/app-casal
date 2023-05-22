@@ -3,13 +3,14 @@ package br.com.appcasal.ui.dialog.financas
 import android.content.Context
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import br.com.appcasal.util.extension.formataParaBrasileiro
 import br.com.appcasal.R
-import br.com.appcasal.model.Tipo
-import br.com.appcasal.model.Transacao
+import br.com.appcasal.domain.model.Tipo
+import br.com.appcasal.domain.model.Transacao
 
 class AlteraTransacaoDialog(
         viewGroup: ViewGroup,
-        private val context: Context
+        context: Context
 ) : FormularioTransacaoDialog(context, viewGroup) {
 
     override val tituloBotaoPositivo: String
@@ -36,7 +37,7 @@ class AlteraTransacaoDialog(
     }
 
     private fun inicializaCampoData(transacao: Transacao) {
-        campoData.setText(transacao.data/*.formataParaBrasileiro()*/)
+        campoData.setText(transacao.data.formataParaBrasileiro())
     }
 
     private fun inicializaCampoValor(transacao: Transacao) {

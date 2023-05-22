@@ -11,7 +11,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.view.updatePadding
 import br.com.appcasal.R
-import br.com.appcasal.model.TipoSnackbar
+import br.com.appcasal.domain.model.TipoSnackbar
 import com.google.android.material.snackbar.Snackbar
 import java.math.BigDecimal
 
@@ -24,7 +24,7 @@ class Util {
 
     fun hideKeyboard(campo: EditText, context: Context) {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(campo.windowToken, 0);
+        imm.hideSoftInputFromWindow(campo.windowToken, 0)
     }
 
     fun createSnackBar(view: View, msg: String, resources: Resources, tipoSnackbar: TipoSnackbar) {
@@ -40,7 +40,7 @@ class Util {
             .setActionTextColor(Color.WHITE)
             .setBackgroundTint(colorBackground)
             .setAction(resources.getString(R.string.fechar)) {
-                null
+
             }
 
         val layout = snackbar.view
@@ -51,13 +51,18 @@ class Util {
     }
 
     fun createSnackBarWithReturn(
-        view: View, msg: String, resources: Resources, tipoSnackbar: TipoSnackbar,
-        visibility: Int
+        view: View, msg: String, resources: Resources, tipoSnackbar: TipoSnackbar
     ): Snackbar {
-        val colorBackground = if (tipoSnackbar == TipoSnackbar.SUCESSO) {
-            resources.getColor(R.color.colorPrimaryVariant)
-        } else {
-            resources.getColor(R.color.red)
+        val colorBackground = when (tipoSnackbar) {
+            TipoSnackbar.SUCESSO -> {
+                resources.getColor(R.color.sucesso)
+            }
+            TipoSnackbar.ALERTA -> {
+                resources.getColor(R.color.alerta)
+            }
+            else -> {
+                resources.getColor(R.color.erro)
+            }
         }
 
         // Create the Snackbar
@@ -66,16 +71,15 @@ class Util {
             .setActionTextColor(Color.WHITE)
             .setBackgroundTint(colorBackground)
             .setAction(resources.getString(R.string.fechar)) {
-                null
+
             }
 
         val layout = snackbar.view
 
         layout.setPadding(40, 15, 15, 50)
         layout.updatePadding(0, 0, 0, 50)
-        if (visibility == View.VISIBLE) {
-            snackbar.show()
-        }
+
+        snackbar.show()
 
         return snackbar
     }
@@ -103,38 +107,93 @@ class Util {
     }
 
     fun exibeEstrelas(
-        nota: Int,
-        estrela1: ImageView,
-        estrela2: ImageView,
-        estrela3: ImageView,
-        estrela4: ImageView,
-        estrela5: ImageView
+        nota: Double?,
+        estrela05: ImageView,
+        estrela10: ImageView,
+        estrela15: ImageView,
+        estrela20: ImageView,
+        estrela25: ImageView,
+        estrela30: ImageView,
+        estrela35: ImageView,
+        estrela40: ImageView,
+        estrela45: ImageView,
+        estrela50: ImageView
     ) {
         when (nota) {
-            1 -> {
-                estrela1.alpha = 1f
+            0.5 -> {
+                estrela05.alpha = 1f
             }
-            2 -> {
-                estrela1.alpha = 1f
-                estrela2.alpha = 1f
+            1.0 -> {
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
             }
-            3 -> {
-                estrela1.alpha = 1f
-                estrela2.alpha = 1f
-                estrela3.alpha = 1f
+            1.5 -> {
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                estrela15.alpha = 1f
             }
-            4 -> {
-                estrela1.alpha = 1f
-                estrela2.alpha = 1f
-                estrela3.alpha = 1f
-                estrela4.alpha = 1f
+            2.0 -> {
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                estrela15.alpha = 1f
+                estrela20.alpha = 1f
             }
-            5 -> {
-                estrela1.alpha = 1f
-                estrela2.alpha = 1f
-                estrela3.alpha = 1f
-                estrela4.alpha = 1f
-                estrela5.alpha = 1f
+            2.5 -> {
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                estrela15.alpha = 1f
+                estrela20.alpha = 1f
+                estrela25.alpha = 1f
+            }
+            3.0 -> {
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                estrela15.alpha = 1f
+                estrela20.alpha = 1f
+                estrela25.alpha = 1f
+                estrela30.alpha = 1f
+            }
+            3.5 -> {
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                estrela15.alpha = 1f
+                estrela20.alpha = 1f
+                estrela25.alpha = 1f
+                estrela30.alpha = 1f
+                estrela35.alpha = 1f
+            }
+            4.0 -> {
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                estrela15.alpha = 1f
+                estrela20.alpha = 1f
+                estrela25.alpha = 1f
+                estrela30.alpha = 1f
+                estrela35.alpha = 1f
+                estrela40.alpha = 1f
+            }
+            4.5 -> {
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                estrela15.alpha = 1f
+                estrela20.alpha = 1f
+                estrela25.alpha = 1f
+                estrela30.alpha = 1f
+                estrela35.alpha = 1f
+                estrela40.alpha = 1f
+                estrela45.alpha = 1f
+            }
+            5.0 -> {
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                estrela15.alpha = 1f
+                estrela20.alpha = 1f
+                estrela25.alpha = 1f
+                estrela30.alpha = 1f
+                estrela35.alpha = 1f
+                estrela40.alpha = 1f
+                estrela45.alpha = 1f
+                estrela50.alpha = 1f
             }
         }
     }

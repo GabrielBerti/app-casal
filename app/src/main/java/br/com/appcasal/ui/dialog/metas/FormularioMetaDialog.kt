@@ -10,8 +10,9 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
 import br.com.appcasal.R
-import br.com.appcasal.model.Meta
+import br.com.appcasal.domain.model.Meta
 import br.com.appcasal.util.Util
+import br.com.appcasal.util.extension.somentePrimeiraLetraMaiuscula
 
 
 abstract class FormularioMetaDialog(
@@ -51,14 +52,14 @@ abstract class FormularioMetaDialog(
         val buttonPositive = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
         val buttonNegative = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
         buttonPositive.setOnClickListener {
-            val descricaoEmTexto = campoDescricao.text.toString()
-
-            if(descricaoEmTexto.isNullOrBlank()) {
+            if(campoDescricao.text.toString().isBlank()) {
                 campoDescricao.error = context.getString(R.string.descricao_obrigatorio)
-            } else if (verificaMetaComMesmaDescricao(descricaoEmTexto)) {
+            } else if (verificaMetaComMesmaDescricao(campoDescricao.text.toString())) {
                 campoDescricao.error = context.getString(R.string.descricao_meta_ja_existe)
             } else {
-                var metaCriada: Meta = if (id == null) {
+                val descricaoEmTexto = campoDescricao.text.toString().somentePrimeiraLetraMaiuscula()
+
+                val metaCriada: Meta = if (id == null) {
                     Meta(
                         descricao = descricaoEmTexto,
                         concluido = false

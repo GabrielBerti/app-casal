@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="br.com.appcasal">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -11,8 +15,20 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.AppCasal"
         tools:targetApi="31">
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="br.com.appcasal.AppCasalInitializer"
+                android:value="androidx.startup" />
+        </provider>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -24,48 +40,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".ui.activity.financas.ListaTransacoesActivity"
-            android:exported="true"
-            android:label="@string/financas"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".ui.activity.metas.ListaMetasActivity"
-            android:exported="true"
-            android:label="@string/metas"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".ui.activity.receitas.ListaReceitasActivity"
-            android:exported="true"
-            android:label="@string/receitas"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".ui.activity.receitas.cadastro.FormReceitasActivity"
-            android:exported="true"
-            android:label="@string/adicionar_receita"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".ui.activity.receitas.detalhe.DetalheReceitaActivity"
-            android:exported="true"
-            android:label="@string/detalhe_receita"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".ui.activity.viagens.ListaViagensActivity"
-            android:exported="true"
-            android:label="@string/viagens"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".ui.activity.viagens.detalhes.DetalheViagemActivity"
-            android:exported="true"
-            android:label="@string/detalhe_viagem"
-            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

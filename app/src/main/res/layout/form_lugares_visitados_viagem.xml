@@ -45,40 +45,95 @@
             android:layout_marginEnd="5dp"
             android:text="@string/tv_legal" />
 
-        <ImageView android:id="@+id/form_estrela1"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="7dp"
-            android:alpha="1"
-            android:src="@drawable/ic_estrela" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <ImageView android:id="@+id/form_estrela2"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="7dp"
-            android:alpha="0.3"
-            android:src="@drawable/ic_estrela" />
+            <ImageView android:id="@+id/formLvViagemEstrelaViagem05"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:alpha="0.3"
+                android:src="@drawable/estrela_esquerda"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
 
-        <ImageView android:id="@+id/form_estrela3"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="7dp"
-            android:alpha="0.3"
-            android:src="@drawable/ic_estrela" />
+            <ImageView android:id="@+id/formLvViagemEstrelaViagem10"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:alpha="0.3"
+                app:layout_constraintStart_toEndOf="@id/formLvViagemEstrelaViagem05"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/estrela_direita" />
 
-        <ImageView android:id="@+id/form_estrela4"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="7dp"
-            android:alpha="0.3"
-            android:src="@drawable/ic_estrela" />
+            <ImageView android:id="@+id/formLvViagemEstrelaViagem15"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:alpha="0.3"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/estrela_esquerda"
+                app:layout_constraintStart_toEndOf="@id/formLvViagemEstrelaViagem10"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView android:id="@+id/form_estrela5"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="7dp"
-            android:alpha="0.3"
-            android:src="@drawable/ic_estrela" />
+            <ImageView android:id="@+id/formLvViagemEstrelaViagem20"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:alpha="0.3"
+                app:layout_constraintStart_toEndOf="@id/formLvViagemEstrelaViagem15"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/estrela_direita" />
 
+            <ImageView android:id="@+id/formLvViagemEstrelaViagem25"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:alpha="0.3"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/estrela_esquerda"
+                app:layout_constraintStart_toEndOf="@id/formLvViagemEstrelaViagem20"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView android:id="@+id/formLvViagemEstrelaViagem30"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:alpha="0.3"
+                app:layout_constraintStart_toEndOf="@id/formLvViagemEstrelaViagem25"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/estrela_direita" />
+
+            <ImageView android:id="@+id/formLvViagemEstrelaViagem35"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:alpha="0.3"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/estrela_esquerda"
+                app:layout_constraintStart_toEndOf="@id/formLvViagemEstrelaViagem30"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView android:id="@+id/formLvViagemEstrelaViagem40"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:alpha="0.3"
+                app:layout_constraintStart_toEndOf="@id/formLvViagemEstrelaViagem35"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/estrela_direita" />
+
+            <ImageView android:id="@+id/formLvViagemEstrelaViagem45"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:alpha="0.3"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/estrela_esquerda"
+                app:layout_constraintStart_toEndOf="@id/formLvViagemEstrelaViagem40"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView android:id="@+id/formLvViagemEstrelaViagem50"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:alpha="0.3"
+                app:layout_constraintStart_toEndOf="@id/formLvViagemEstrelaViagem45"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/estrela_direita" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </LinearLayout>

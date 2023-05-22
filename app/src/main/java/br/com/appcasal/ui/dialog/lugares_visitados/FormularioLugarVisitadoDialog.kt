@@ -10,8 +10,9 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import br.com.appcasal.R
-import br.com.appcasal.model.LugarVisitado
+import br.com.appcasal.domain.model.LugarVisitado
 import br.com.appcasal.util.Util
+import br.com.appcasal.util.extension.somentePrimeiraLetraMaiuscula
 
 abstract class FormularioLugarVisitadoDialog(
         private val context: Context,
@@ -19,21 +20,26 @@ abstract class FormularioLugarVisitadoDialog(
 
     private var util = Util()
     private val viewCriada = criaLayout()
-    protected var estrelaMarcarda = 1
+    protected var estrelaMarcarda: Double = 1.0
 
     protected lateinit var nomeLugarVisitado: EditText
     abstract protected val tituloBotaoPositivo: String
-    protected lateinit var estrela1: ImageView
-    protected lateinit var estrela2: ImageView
-    protected lateinit var estrela3: ImageView
-    protected lateinit var estrela4: ImageView
-    protected lateinit var estrela5: ImageView
+    protected lateinit var estrela05: ImageView
+    protected lateinit var estrela10: ImageView
+    protected lateinit var estrela15: ImageView
+    protected lateinit var estrela20: ImageView
+    protected lateinit var estrela25: ImageView
+    protected lateinit var estrela30: ImageView
+    protected lateinit var estrela35: ImageView
+    protected lateinit var estrela40: ImageView
+    protected lateinit var estrela45: ImageView
+    protected lateinit var estrela50: ImageView
 
-    fun chama(id: Long?, idViagem: Long, delegate: (lugarVisitado: LugarVisitado) -> Unit) {
-        configuraFormulario(id, idViagem, delegate)
+    fun chama(id: Long?, delegate: (lugarVisitado: LugarVisitado) -> Unit) {
+        configuraFormulario(id, delegate)
     }
 
-    private fun configuraFormulario(id: Long?, idViagem: Long, delegate: (lugarVisitado: LugarVisitado) -> Unit) {
+    private fun configuraFormulario(id: Long?, delegate: (lugarVisitado: LugarVisitado) -> Unit) {
         val titulo = tituloPor()
 
         val dialog = AlertDialog.Builder(context)
@@ -55,23 +61,21 @@ abstract class FormularioLugarVisitadoDialog(
         val buttonPositive = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
         val buttonNegative = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
         buttonPositive.setOnClickListener {
-            val nomeLugarVisitadoEmTexto = nomeLugarVisitado.text.toString()
+            val nomeLugarVisitadoEmTexto = nomeLugarVisitado.text.toString().somentePrimeiraLetraMaiuscula()
 
             if(nomeLugarVisitadoEmTexto.isBlank()) {
                 nomeLugarVisitado.error = context.getString(R.string.nome_lugar_visitado_obrigatorio)
             } else {
-                var lugarVisitadoCriado: LugarVisitado = if (id == null) {
+                val lugarVisitadoCriado: LugarVisitado = if (id == null) {
                     LugarVisitado(
                         nome = nomeLugarVisitadoEmTexto,
-                        legal = estrelaMarcarda,
-                        viagemId = idViagem
+                        nota = estrelaMarcarda,
                     )
                 } else {
                     LugarVisitado(
                         id = id,
                         nome = nomeLugarVisitadoEmTexto,
-                        legal = estrelaMarcarda,
-                        viagemId = idViagem
+                        nota = estrelaMarcarda,
                     )
                 }
 
@@ -103,11 +107,16 @@ abstract class FormularioLugarVisitadoDialog(
                         false)
 
         nomeLugarVisitado = view.findViewById<EditText>(R.id.form_nome_lugar_visitado)
-        estrela1 = view.findViewById<ImageView>(R.id.form_estrela1)
-        estrela2 = view.findViewById<ImageView>(R.id.form_estrela2)
-        estrela3 = view.findViewById<ImageView>(R.id.form_estrela3)
-        estrela4 = view.findViewById<ImageView>(R.id.form_estrela4)
-        estrela5 = view.findViewById<ImageView>(R.id.form_estrela5)
+        estrela05 = view.findViewById<ImageView>(R.id.formLvViagemEstrelaViagem05)
+        estrela10 = view.findViewById<ImageView>(R.id.formLvViagemEstrelaViagem10)
+        estrela15 = view.findViewById<ImageView>(R.id.formLvViagemEstrelaViagem15)
+        estrela20 = view.findViewById<ImageView>(R.id.formLvViagemEstrelaViagem20)
+        estrela25 = view.findViewById<ImageView>(R.id.formLvViagemEstrelaViagem25)
+        estrela30 = view.findViewById<ImageView>(R.id.formLvViagemEstrelaViagem30)
+        estrela35 = view.findViewById<ImageView>(R.id.formLvViagemEstrelaViagem35)
+        estrela40 = view.findViewById<ImageView>(R.id.formLvViagemEstrelaViagem40)
+        estrela45 = view.findViewById<ImageView>(R.id.formLvViagemEstrelaViagem45)
+        estrela50 = view.findViewById<ImageView>(R.id.formLvViagemEstrelaViagem50)
 
         setListeners()
 
@@ -115,52 +124,128 @@ abstract class FormularioLugarVisitadoDialog(
     }
 
     private fun setListeners() {
-        estrela1.setOnClickListener {
-            desmarcaEstrelas()
-            it.alpha = 1f
-            estrelaMarcarda = 1
+
+        estrela05.setOnClickListener {
+                desmarcaEstrelas()
+                if (estrelaMarcarda == 0.5) {
+                    estrelaMarcarda = 0.0
+                } else {
+                    it.alpha = 1f
+                    estrelaMarcarda = 0.5
+                }
         }
 
-        estrela2.setOnClickListener {
-            desmarcaEstrelas()
-            estrela1.alpha = 1f
-            it.alpha = 1f
-            estrelaMarcarda = 2
+        estrela10.setOnClickListener {
+                desmarcaEstrelas()
+                estrela05.alpha = 1f
+                it.alpha = 1f
+                estrelaMarcarda = 1.0
         }
 
-        estrela3.setOnClickListener {
-            desmarcaEstrelas()
-            estrela1.alpha = 1f
-            estrela2.alpha = 1f
-            it.alpha = 1f
-            estrelaMarcarda = 3
+        estrela15.setOnClickListener {
+                desmarcaEstrelas()
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                it.alpha = 1f
+                estrelaMarcarda = 1.5
         }
 
-        estrela4.setOnClickListener {
-            desmarcaEstrelas()
-            estrela1.alpha = 1f
-            estrela2.alpha = 1f
-            estrela3.alpha = 1f
-            it.alpha = 1f
-            estrelaMarcarda = 4
+        estrela20.setOnClickListener {
+                desmarcaEstrelas()
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                estrela15.alpha = 1f
+                it.alpha = 1f
+                estrelaMarcarda = 2.0
         }
 
-        estrela5.setOnClickListener {
-            desmarcaEstrelas()
-            estrela1.alpha = 1f
-            estrela2.alpha = 1f
-            estrela3.alpha = 1f
-            estrela4.alpha = 1f
-            it.alpha = 1f
-            estrelaMarcarda = 5
+        estrela25.setOnClickListener {
+                desmarcaEstrelas()
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                estrela15.alpha = 1f
+                estrela20.alpha = 1f
+                it.alpha = 1f
+                estrelaMarcarda = 2.5
+        }
+
+        estrela30.setOnClickListener {
+                desmarcaEstrelas()
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                estrela15.alpha = 1f
+                estrela20.alpha = 1f
+                estrela25.alpha = 1f
+                it.alpha = 1f
+                estrelaMarcarda = 3.0
+        }
+
+        estrela35.setOnClickListener {
+                desmarcaEstrelas()
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                estrela15.alpha = 1f
+                estrela20.alpha = 1f
+                estrela25.alpha = 1f
+                estrela30.alpha = 1f
+                it.alpha = 1f
+                estrelaMarcarda = 3.5
+        }
+
+        estrela40.setOnClickListener {
+                desmarcaEstrelas()
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                estrela15.alpha = 1f
+                estrela20.alpha = 1f
+                estrela25.alpha = 1f
+                estrela30.alpha = 1f
+                estrela35.alpha = 1f
+                it.alpha = 1f
+                estrelaMarcarda = 4.0
+        }
+
+        estrela45.setOnClickListener {
+                desmarcaEstrelas()
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                estrela15.alpha = 1f
+                estrela20.alpha = 1f
+                estrela25.alpha = 1f
+                estrela30.alpha = 1f
+                estrela35.alpha = 1f
+                estrela40.alpha = 1f
+                it.alpha = 1f
+                estrelaMarcarda = 4.5
+            }
+
+
+        estrela50.setOnClickListener {
+                desmarcaEstrelas()
+                estrela05.alpha = 1f
+                estrela10.alpha = 1f
+                estrela15.alpha = 1f
+                estrela20.alpha = 1f
+                estrela25.alpha = 1f
+                estrela30.alpha = 1f
+                estrela35.alpha = 1f
+                estrela40.alpha = 1f
+                estrela45.alpha = 1f
+                it.alpha = 1f
+                estrelaMarcarda = 5.0
         }
     }
 
     private fun desmarcaEstrelas() {
-        estrela1.alpha = 0.3f
-        estrela2.alpha = 0.3f
-        estrela3.alpha = 0.3f
-        estrela4.alpha = 0.3f
-        estrela5.alpha = 0.3f
+        estrela05.alpha = 0.3f
+        estrela10.alpha = 0.3f
+        estrela15.alpha = 0.3f
+        estrela20.alpha = 0.3f
+        estrela25.alpha = 0.3f
+        estrela30.alpha = 0.3f
+        estrela35.alpha = 0.3f
+        estrela40.alpha = 0.3f
+        estrela45.alpha = 0.3f
+        estrela50.alpha = 0.3f
     }
 }
