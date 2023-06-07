@@ -17,7 +17,6 @@ import br.com.appcasal.R
 import br.com.appcasal.domain.model.Viagem
 import br.com.appcasal.util.Util
 import br.com.appcasal.util.extension.converteParaCalendar
-import br.com.appcasal.util.extension.somentePrimeiraLetraMaiuscula
 import java.util.*
 
 abstract class FormularioViagemDialog(
@@ -94,7 +93,7 @@ abstract class FormularioViagemDialog(
                 val viagemCriada =
                     Viagem(
                         id = id ?: 0,
-                        local = localEmTexto.somentePrimeiraLetraMaiuscula(),
+                        local = localEmTexto,
                         dataInicio = dataInicioEmTexto.converteParaCalendar(),
                         dataFim = dataFimEmTexto.converteParaCalendar(),
                         nota = estrelaMarcarda,

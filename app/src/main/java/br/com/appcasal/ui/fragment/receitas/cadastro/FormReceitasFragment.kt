@@ -16,7 +16,6 @@ import br.com.appcasal.ui.collectResult
 import br.com.appcasal.ui.dialog.ingredientes.AdicionaIngredienteDialog
 import br.com.appcasal.ui.dialog.ingredientes.AlteraIngredienteDialog
 import br.com.appcasal.util.Util
-import br.com.appcasal.util.extension.somentePrimeiraLetraMaiuscula
 import br.com.appcasal.viewmodel.FormReceitasViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -177,7 +176,7 @@ class FormReceitasFragment : Fragment(), ClickIngrediente {
     }
 
     private fun salvarOuAlterarReceita() {
-        val nomeReceitaEmTexto = binding.receitaNome.text.toString().somentePrimeiraLetraMaiuscula()
+        val nomeReceitaEmTexto = binding.receitaNome.text.toString()
 
         if (receita.id != 0L) {
             viewModel.alteraReceita(

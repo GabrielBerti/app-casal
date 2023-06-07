@@ -11,7 +11,6 @@ import android.widget.EditText
 import br.com.appcasal.R
 import br.com.appcasal.domain.model.GastoViagem
 import br.com.appcasal.util.Util
-import br.com.appcasal.util.extension.somentePrimeiraLetraMaiuscula
 
 abstract class FormularioGastoViagemDialog(
         private val context: Context,
@@ -49,7 +48,7 @@ abstract class FormularioGastoViagemDialog(
         val buttonPositive = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
         val buttonNegative = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
         buttonPositive.setOnClickListener {
-            val descricaoGastoEmTexto = campoDescricaoGasto.text.toString().somentePrimeiraLetraMaiuscula()
+            val descricaoGastoEmTexto = campoDescricaoGasto.text.toString()
             val valorGastoEmTexto = campoValorGasto.text.toString()
             val valorGasto = util.converteCampoValor(valorGastoEmTexto, context)
 

@@ -12,7 +12,6 @@ import android.widget.ImageView
 import br.com.appcasal.R
 import br.com.appcasal.domain.model.LugarVisitado
 import br.com.appcasal.util.Util
-import br.com.appcasal.util.extension.somentePrimeiraLetraMaiuscula
 
 abstract class FormularioLugarVisitadoDialog(
         private val context: Context,
@@ -61,7 +60,7 @@ abstract class FormularioLugarVisitadoDialog(
         val buttonPositive = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
         val buttonNegative = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
         buttonPositive.setOnClickListener {
-            val nomeLugarVisitadoEmTexto = nomeLugarVisitado.text.toString().somentePrimeiraLetraMaiuscula()
+            val nomeLugarVisitadoEmTexto = nomeLugarVisitado.text.toString()
 
             if(nomeLugarVisitadoEmTexto.isBlank()) {
                 nomeLugarVisitado.error = context.getString(R.string.nome_lugar_visitado_obrigatorio)

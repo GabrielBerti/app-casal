@@ -12,8 +12,6 @@ import android.widget.LinearLayout
 import br.com.appcasal.R
 import br.com.appcasal.domain.model.Ingrediente
 import br.com.appcasal.util.Util
-import br.com.appcasal.util.extension.somentePrimeiraLetraMaiuscula
-
 
 abstract class FormularioIngredienteDialog(
     private val context: Context,
@@ -57,7 +55,7 @@ abstract class FormularioIngredienteDialog(
         val buttonNegative = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
         val button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
         button.setOnClickListener {
-            val campoDescricaoIngredienteEmTexto = campoDescricaoIngrediente.text.toString().somentePrimeiraLetraMaiuscula()
+            val campoDescricaoIngredienteEmTexto = campoDescricaoIngrediente.text.toString()
 
             if (campoDescricaoIngredienteEmTexto.isBlank()) {
                 campoDescricaoIngrediente.error =

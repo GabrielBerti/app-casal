@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.appcasal.R
 import br.com.appcasal.domain.model.Receita
-import br.com.appcasal.util.extension.somentePrimeiraLetraMaiuscula
 
 class ReceitasViewHolder(
     private val context: Context,
@@ -33,7 +32,7 @@ class ReceitasViewHolder(
     }
 
     private fun adicionaNomeReceita(receita: Receita) {
-        receitaNome.text = receita.nome.somentePrimeiraLetraMaiuscula()
+        receitaNome.text = receita.nome
     }
 
     private fun adicionaIcone() {
