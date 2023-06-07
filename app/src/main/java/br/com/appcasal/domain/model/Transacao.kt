@@ -12,13 +12,17 @@ class Transacao(
     val data: Calendar = Calendar.getInstance()
 ) {
     companion object {
-        fun mapFrom(transacaoResponseDTO: TransacaoResponseDTO) =
-            Transacao(
+        fun mapFrom(transacaoResponseDTO: TransacaoResponseDTO): Transacao {
+            transacaoResponseDTO.data?.add(Calendar.HOUR_OF_DAY, 3)
+
+            return Transacao(
                 id = transacaoResponseDTO.id ?: 0,
                 valor = transacaoResponseDTO.valor ?: BigDecimal.ZERO,
                 descricao = transacaoResponseDTO.descricao ?: "",
                 tipo = transacaoResponseDTO.tipo ?: Tipo.BIEL,
                 data = transacaoResponseDTO.data ?: Calendar.getInstance()
             )
+        }
+
     }
 }

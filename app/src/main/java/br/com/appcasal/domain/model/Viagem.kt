@@ -16,8 +16,11 @@ class Viagem(
     var gastosViagens: List<GastoViagem>
 ): Parcelable {
     companion object {
-        fun mapFrom(viagemResponseDTO: ViagemResponseDTO) =
-            Viagem(
+        fun mapFrom(viagemResponseDTO: ViagemResponseDTO): Viagem {
+            viagemResponseDTO.dataInicio?.add(Calendar.HOUR_OF_DAY, 3)
+            viagemResponseDTO.dataFim?.add(Calendar.HOUR_OF_DAY, 3)
+
+            return Viagem(
                 id = viagemResponseDTO.id ?: 0,
                 local = viagemResponseDTO.local ?: "",
                 dataInicio = viagemResponseDTO.dataInicio ?: Calendar.getInstance(),
@@ -26,5 +29,6 @@ class Viagem(
                 lugaresVisitados = viagemResponseDTO.lugaresVisitados ?: listOf(),
                 gastosViagens = viagemResponseDTO.gastosViagem ?: listOf()
             )
+        }
     }
 }

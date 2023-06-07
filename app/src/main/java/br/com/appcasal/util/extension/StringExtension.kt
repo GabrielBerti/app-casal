@@ -12,7 +12,7 @@ fun String.limitaEmAte(caracteres: Int): String {
 }
 
 fun String.converteParaCalendar(): Calendar {
-    val formatoBrasileiro = SimpleDateFormat("dd/MM/yyyy")
+    val formatoBrasileiro = SimpleDateFormat("dd/MM/yyyy", Locale("pt", "BR"))
     val dataConvertida: Date = formatoBrasileiro.parse(this)
     val data = Calendar.getInstance()
     data.time = dataConvertida
