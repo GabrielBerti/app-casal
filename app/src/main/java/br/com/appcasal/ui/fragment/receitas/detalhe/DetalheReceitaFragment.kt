@@ -16,8 +16,8 @@ import br.com.appcasal.databinding.FragmentReceitaDetalheBinding
 import br.com.appcasal.domain.model.Ingrediente
 import br.com.appcasal.domain.model.Receita
 import br.com.appcasal.domain.model.TipoSnackbar
-import br.com.appcasal.ui.fragment.receitas.detalhe.ListaIngredientesDetalheAdapter.CheckouIngrediente
 import br.com.appcasal.ui.collectResult
+import br.com.appcasal.ui.fragment.receitas.detalhe.ListaIngredientesDetalheAdapter.CheckouIngrediente
 import br.com.appcasal.util.Util
 import br.com.appcasal.viewmodel.DetalheReceitaViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -46,6 +46,7 @@ class DetalheReceitaFragment : Fragment(), CheckouIngrediente {
 
         decorView = requireActivity().window.decorView as ViewGroup
         receita = args.receita
+        binding.fragment = this
 
         setupListeners()
         setListeners()
@@ -132,7 +133,11 @@ class DetalheReceitaFragment : Fragment(), CheckouIngrediente {
             binding.rvIngredientes.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.rvIngredientes.adapter =
-            ListaIngredientesDetalheAdapter(receita.ingredientes ?: listOf(), requireContext(), this)
+            ListaIngredientesDetalheAdapter(
+                receita.ingredientes ?: listOf(),
+                requireContext(),
+                this
+            )
 
     }
 
@@ -156,6 +161,12 @@ class DetalheReceitaFragment : Fragment(), CheckouIngrediente {
 
         val alertDialog: AlertDialog = builder.create()
         alertDialog.show()
+    }
+
+    fun abreTelaDeAlteracao() {
+        findNavController().navigate(
+            DetalheReceitaFragmentDirections.actionDetalheReceitaFragmentToFormReceitaFragment(receita)
+        )
     }
 
     override fun atualizaIngrediente(position: Int, isChecked: Boolean) {

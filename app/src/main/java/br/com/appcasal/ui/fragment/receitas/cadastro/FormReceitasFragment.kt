@@ -2,6 +2,7 @@ package br.com.appcasal.ui.fragment.receitas.cadastro
 
 import android.os.Bundle
 import android.view.*
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -47,12 +48,21 @@ class FormReceitasFragment : Fragment(), ClickIngrediente {
         setListeners()
         configuraAdapter()
         setupSwipeRefresh()
+        setupOnBackPressed()
 
         return binding.root
     }
 
     private fun setClickListeners() {
         binding.ivBack.setOnClickListener {
+            findNavController().popBackStack(R.id.detalheReceitaFragment, false)
+            findNavController().popBackStack()
+        }
+    }
+
+    private fun setupOnBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            findNavController().popBackStack(R.id.detalheReceitaFragment, false)
             findNavController().popBackStack()
         }
     }

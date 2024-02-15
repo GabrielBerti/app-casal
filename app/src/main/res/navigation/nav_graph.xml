@@ -100,6 +100,21 @@
             android:name="receita"
             app:argType="br.com.appcasal.domain.model.Receita" />
 
+        <action
+            android:id="@+id/action_detalheReceitaFragment_to_formReceitaFragment"
+            app:destination="@id/formReceitaFragment">
+
+            <argument
+                android:name="receita"
+                android:defaultValue="@null"
+                app:nullable="true"
+                app:argType="br.com.appcasal.domain.model.Receita"
+                app:popUpTo="@id/detalheReceitaFragment"
+                app:popUpToInclusive="true"
+                app:destination="@id/receitaFragment"/>
+
+        </action>
+
     </fragment>
 
     <fragment
