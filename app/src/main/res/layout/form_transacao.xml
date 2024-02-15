@@ -11,20 +11,20 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColorHint="@drawable/text_input_layout"
         app:boxStrokeWidth="0dp"
         app:boxStrokeWidthFocused="0dp"
-        android:layout_marginTop="10dp">
+        android:textColorHint="@drawable/text_input_layout">
 
         <EditText
-            android:id="@+id/form_transacao_valor"
+            android:id="@+id/descricao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_edittext"
+            android:hint="@string/descricao_hint"
+            android:layout_marginTop="10dp"
             android:textColor="@android:color/black"
-            android:hint="@string/valor"
-            android:inputType="numberDecimal"
-            android:imeOptions="actionDone" />
+            android:background="@drawable/rounded_edittext"
+            android:imeOptions="actionDone"
+            android:inputType="text" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -53,21 +53,21 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColorHint="@drawable/text_input_layout"
+        android:layout_marginBottom="30dp"
         app:boxStrokeWidth="0dp"
         app:boxStrokeWidthFocused="0dp"
-        android:textColorHint="@drawable/text_input_layout">
+        android:layout_marginTop="10dp">
 
         <EditText
-            android:id="@+id/descricao"
+            android:id="@+id/form_transacao_valor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/descricao_hint"
-            android:layout_marginTop="10dp"
-            android:textColor="@android:color/black"
             android:background="@drawable/rounded_edittext"
-            android:layout_marginBottom="30dp"
-            android:imeOptions="actionDone"
-            android:inputType="text" />
+            android:textColor="@android:color/black"
+            android:hint="@string/valor"
+            android:inputType="numberDecimal"
+            android:imeOptions="actionDone" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
